@@ -18,7 +18,7 @@ The objective was to transform the template into a "Real-Time V1" prototype focu
   1. White Town 1BHK - 1st Floor
   2. White Town 1BHK - 2nd Floor
   3. White Town 2BHK - 1st Floor
-  4. TempleAndTowns Nature Retreat (Auroville)
+  4. TempleAndTowns Nature Retreat (Near Auroville)
 - Removed all numerical `price` and `from` values, replacing them with the string `"Request to book"`.
 - Removed Bengaluru references completely.
 
@@ -36,7 +36,7 @@ The objective was to transform the template into a "Real-Time V1" prototype focu
 - Updated all numerical prices across the `ThingsScreen` and `ExperienceScreen` to say `"Request to book"`.
 
 ### Nature Retreat Landing Page (`components/retreat.jsx`)
-- Created a brand-new, customized landing page specifically for the Auroville Nature Retreat.
+- Created a brand-new, customized landing page specifically for the Near Auroville Nature Retreat.
 - Features a beautiful UI with alternating image/text layouts for their specific curated events: *Experience Local Artisans, Garden Fun for Kids, Poolside Evenings, and Robotics & Creative Tech*.
 - Registered this new component in `index.html` router (`screen === 'retreat'`) and updated the Navbar in `components/shell.jsx` to link to **"Nature Retreat"** instead of the generic "Events" page.
 

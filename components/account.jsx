@@ -217,9 +217,9 @@ const ListPage = ({ eyebrow, title, sub, items }) => (
   </div>
 );
 
-const ExperienceScreen = ({ go }) => <ListPage eyebrow="Experiences" title={<>Curated days, <span className="tt-italic-soft" style={{ color: 'var(--accent)' }}>locally led.</span></>} sub="Pottery in Pondicherry. Yoga at Auroville." items={[
+const ExperienceScreen = ({ go }) => <ListPage eyebrow="Experiences" title={<>Curated days, <span className="tt-italic-soft" style={{ color: 'var(--accent)' }}>locally led.</span></>} sub="Pottery in Pondicherry. Yoga Near Auroville." items={[
   { cat: 'Pondicherry', t: 'Pottery & wheel throwing', d: 'Half day in a French quarter studio.', price: 'Request to book', label: 'pottery', tone: 'oklch(0.85 0.06 60)' },
-  { cat: 'Auroville', t: 'Sunrise yoga & breakfast', d: 'Two hours of yoga, then a slow breakfast.', price: 'Request to book', label: 'yoga', tone: 'oklch(0.88 0.05 145)' },
+  { cat: 'Near Auroville', t: 'Sunrise yoga & breakfast', d: 'Two hours of yoga, then a slow breakfast.', price: 'Request to book', label: 'yoga', tone: 'oklch(0.88 0.05 145)' },
   { cat: 'Coast', t: 'Catamaran sunset', d: 'Local fishermen, bottled water, biscuits.', price: 'Request to book', label: 'boat', tone: 'oklch(0.85 0.06 215)' },
   { cat: 'Pondicherry', t: 'Indo-French dinner', d: 'Pop-up at a private home in White Town.', price: 'Request to book', label: 'dinner', tone: 'oklch(0.84 0.06 30)' },
 ]} />;
@@ -232,11 +232,11 @@ const ThingsScreen = ({ go }) => <ListPage eyebrow="Things to do" title={<>Beyon
 ]} />;
 window.ThingsScreen = ThingsScreen;
 
-const EventsScreen = ({ go }) => <ListPage eyebrow="Nature Retreat Events" title={<>Meaningful memories.</>} sub="At Temple And Towns Resorts Nature Retreat - enjoy simple, thoughtfully curated experiences that connect you with nature, local culture and the peaceful spirit of Auroville. 🪷" items={[
-  { cat: 'Auroville', t: 'Experience Local Artisans', d: 'Discover the charm of local craftsmanship through simple demonstrations and hands-on workshops. Meet local artisans, explore handmade jewellery, weaving and jute crafts. Take home a little piece of Auroville with you.', price: 'Request to book', label: 'craft', tone: 'oklch(0.85 0.06 30)' },
-  { cat: 'Auroville', t: 'Garden Fun for Kids', d: 'Let the little hands explore nature through simple gardening and outdoor activities. A fun and joyful way for children to play, learn and enjoy the beauty of nature.', price: 'Request to book', label: 'garden', tone: 'oklch(0.84 0.07 145)' },
-  { cat: 'Auroville', t: 'Poolside Evenings & Summer Fun', d: 'Relax, unwind and enjoy refreshing moments by the pool. During special weekends and group stays - guests can enjoy cheerful poolside gatherings, family fun and summer vibes.', price: 'Request to book', label: 'coastal', tone: 'oklch(0.87 0.05 200)' },
-  { cat: 'Auroville', t: 'Robotics & Creative Tech', d: 'Beginner-friendly robotics and creative technology sessions designed for curious young minds. Led by our in-house tech enthusiast - children can explore, build, and learn through hands-on activities.', price: 'Request to book', label: 'tech', tone: 'oklch(0.86 0.05 250)' },
+const EventsScreen = ({ go }) => <ListPage eyebrow="Nature Retreat Events" title={<>Meaningful memories.</>} sub="At Temple And Towns Resorts Nature Retreat - enjoy simple, thoughtfully curated experiences that connect you with nature, local culture and the peaceful spirit of Near Auroville. 🪷" items={[
+  { cat: 'Near Auroville', t: 'Experience Local Artisans', d: 'Discover the charm of local craftsmanship through simple demonstrations and hands-on workshops. Meet local artisans, explore handmade jewellery, weaving and jute crafts. Take home a little piece of Near Auroville with you.', price: 'Request to book', label: 'craft', tone: 'oklch(0.85 0.06 30)' },
+  { cat: 'Near Auroville', t: 'Garden Fun for Kids', d: 'Let the little hands explore nature through simple gardening and outdoor activities. A fun and joyful way for children to play, learn and enjoy the beauty of nature.', price: 'Request to book', label: 'garden', tone: 'oklch(0.84 0.07 145)' },
+  { cat: 'Near Auroville', t: 'Poolside Evenings & Summer Fun', d: 'Relax, unwind and enjoy refreshing moments by the pool. During special weekends and group stays - guests can enjoy cheerful poolside gatherings, family fun and summer vibes.', price: 'Request to book', label: 'coastal', tone: 'oklch(0.87 0.05 200)' },
+  { cat: 'Near Auroville', t: 'Robotics & Creative Tech', d: 'Beginner-friendly robotics and creative technology sessions designed for curious young minds. Led by our in-house tech enthusiast - children can explore, build, and learn through hands-on activities.', price: 'Request to book', label: 'tech', tone: 'oklch(0.86 0.05 250)' },
 ]} />;
 window.EventsScreen = EventsScreen;
 

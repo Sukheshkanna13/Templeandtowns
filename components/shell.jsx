@@ -42,7 +42,7 @@ const PHOTO_LIBRARY = {
   'loft suite interior': 'photo-1631049307264-da0ec9d70304',
   'residence atrium pool': 'photo-1551882547-ff40c63fe5fa',
   'pondicherry · skyline placeholder': 'photo-1582553081821-5b8fcfd94850',
-  'auroville · skyline placeholder': 'photo-1596176530529-78163a4f7af2',
+  'near auroville · skyline placeholder': 'photo-1596176530529-78163a4f7af2',
   'bedroom': 'photo-1611892440504-42a792e24d32',
   'bathroom': 'photo-1552321554-5fefe8c9ef14',
   'lobby': 'photo-1590490360182-c33d57733427',
@@ -220,7 +220,7 @@ const Footer = () => (
         </div>
         <div>
           <h4>Stay</h4>
-          <ul><li><a>Pondicherry</a></li><li><a>Auroville</a></li><li><a>Long stays</a></li><li><a>Group bookings</a></li><li><a>Sacred circuits</a></li></ul>
+          <ul><li><a>Pondicherry</a></li><li><a>Near Auroville</a></li><li><a>Long stays</a></li><li><a>Group bookings</a></li><li><a>Sacred circuits</a></li></ul>
         </div>
         <div></div>
         <div>
@@ -229,7 +229,7 @@ const Footer = () => (
         </div>
       </div>
       <div className="tt-footer-bottom" style={{ marginTop: 64, paddingTop: 28, borderTop: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', fontSize: 13, color: 'var(--text-muted)' }}>
-        <span>© 2026 Temple And Towns Resorts LLP · Pondicherry &amp; Auroville</span>
+        <span>© 2026 Temple And Towns Resorts LLP · Pondicherry &amp; Near Auroville</span>
         <span>INR · English ·</span>
       </div>
     </div>

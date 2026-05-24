@@ -4,7 +4,7 @@ const EventsPage = ({ go }) => {
   const events = [
     {
       title: 'Experience Local Artisans',
-      desc: 'Discover the charm of local craftsmanship through simple demonstrations and hands-on workshops. Meet local artisans, explore handmade jewellery, weaving and jute crafts. Take home a little piece of Auroville with you.',
+      desc: 'Discover the charm of local craftsmanship through simple demonstrations and hands-on workshops. Meet local artisans, explore handmade jewellery, weaving and jute crafts. Take home a little piece of Near Auroville with you.',
       icon: 'spark',
       accent: 'oklch(0.58 0.16 30)',
     },
@@ -39,13 +39,13 @@ const EventsPage = ({ go }) => {
 
       {/* Header */}
       <div style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto 64px' }}>
-        <div className="tt-eyebrow">Nature Retreat · Auroville</div>
+        <div className="tt-eyebrow">Nature Retreat · Near Auroville</div>
         <h1 className="tt-h1" style={{ marginTop: 12, marginBottom: 16 }}>
           Meaningful <span className="tt-italic-soft" style={{ color: 'var(--accent)' }}>memories.</span>
         </h1>
         <p style={{ color: 'var(--text-soft)', fontSize: 17, lineHeight: 1.65 }}>
           Simple, thoughtfully curated experiences that connect you with nature, local culture 
-          and the peaceful spirit of Auroville. 🪷
+          and the peaceful spirit of Near Auroville. 🪷
         </p>
       </div>
 
@@ -86,7 +86,7 @@ const EventsPage = ({ go }) => {
                   <button 
                     className="tt-btn tt-btn-primary tt-btn-sm" 
                     onClick={() => {
-                      const msg = `Hi, I am interested in booking the "${ev.title}" experience at the Nature Retreat in Auroville.`;
+                      const msg = `Hi, I am interested in booking the "${ev.title}" experience at the Nature Retreat Near Auroville.`;
                       window.open(`https://wa.me/918553441449?text=${encodeURIComponent(msg)}`, '_blank');
                     }}
                   >

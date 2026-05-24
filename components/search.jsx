@@ -29,7 +29,7 @@ const SearchScreen = ({ go, searchCtx, setSearchCtx }) => {
         <div className="tt-search-cell">
           <span className="lbl">Where</span>
           <select value={cityFilter} onChange={e => setCityFilter(e.target.value)}>
-            <option>Pondicherry</option><option>Auroville</option><option>Both cities</option>
+            <option>Pondicherry</option><option>Near Auroville</option><option>Both cities</option>
           </select>
         </div>
         <div className="tt-search-cell">
@@ -62,7 +62,7 @@ const SearchScreen = ({ go, searchCtx, setSearchCtx }) => {
             <div style={{ flex: '0 0 380px', position: 'relative', borderRadius: 4, overflow: 'hidden' }}>
               <img src={p.cover} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               <div className="tt-card-tags">
-                <span className="tt-tag">{p.city === 'pondicherry' ? 'White Town' : 'Auroville'}</span>
+                <span className="tt-tag">{p.city === 'pondicherry' ? 'White Town' : 'Near Auroville'}</span>
                 <span className="tt-tag tt-tag-dark">★ {p.rating}</span>
               </div>
             </div>
@@ -120,7 +120,7 @@ const PropertyScreen = ({ go, params, searchCtx, startBooking }) => {
     <div className="tt-page" style={{ paddingTop: 32, paddingBottom: isMobile ? 120 : 96 }}>
       <div style={{ display: 'flex', gap: 8, fontSize: 13, color: 'var(--text-muted)', marginBottom: 24 }}>
         <span style={{ cursor: 'pointer' }} onClick={() => go('home')}>Stays</span><span>/</span>
-        <span style={{ cursor: 'pointer' }} onClick={() => go('search')}>{property.city === 'pondicherry' ? 'White Town' : 'Auroville'}</span><span>/</span>
+        <span style={{ cursor: 'pointer' }} onClick={() => go('search')}>{property.city === 'pondicherry' ? 'White Town' : 'Near Auroville'}</span><span>/</span>
         <span style={{ color: 'var(--ink)' }}>{property.name}</span>
       </div>
 

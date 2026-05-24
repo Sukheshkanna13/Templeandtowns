@@ -68,7 +68,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
               <span className="lbl">Where</span>
               <select value={city} onChange={e => setCity(e.target.value)}>
                 <option>Pondicherry</option>
-                <option>Auroville</option>
+                <option>Near Auroville</option>
                 <option>Both cities</option>
               </select>
             </div>
@@ -110,11 +110,11 @@ const HomeScreen = ({ go, setSearchCtx }) => {
           </div>
           <div className="tt-moments-grid">
             {[
-              { label: 'pottery', cap: 'Pottery, Auroville' },
+              { label: 'pottery', cap: 'Pottery, Near Auroville' },
               { label: 'temple-courtyard', cap: 'Sandalwood courtyards' },
               { label: 'sea-evening', cap: 'Promenade, dusk' },
               { label: 'street-food', cap: 'White Town evenings' },
-              { label: 'morning-yoga', cap: 'Yoga at Auroville' },
+              { label: 'morning-yoga', cap: 'Yoga Near Auroville' },
               { label: 'banyan-tree', cap: 'Nature walks' },
             ].map(m => (
               <div key={m.label} className="tt-moment">
@@ -143,7 +143,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
               {[
                 { cat: 'Retreat', title: 'Mangroove', loc: 'Pondicherry', label: 'nature' },
                 { cat: 'Heritage', title: 'Coastline', loc: 'White-Town', label: 'coastal' },
-                { cat: 'Culture', title: 'Culture', loc: 'Auroville', label: 'temple' },
+                { cat: 'Culture', title: 'Culture', loc: 'Near Auroville', label: 'temple' },
               ].map(j => (
                 <div key={j.title} className="tt-journey">
                   <img src={`images/${j.label}.png`} alt={j.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
@@ -177,7 +177,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
                 <div className="tt-card-media">
                   <img src={p.cover} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   <div className="tt-card-tags">
-                    <span className="tt-tag">{p.city === 'pondicherry' ? 'White Town' : 'Auroville'}</span>
+                    <span className="tt-tag">{p.city === 'pondicherry' ? 'White Town' : 'Near Auroville'}</span>
                     <span className="tt-tag tt-tag-dark">★ {p.rating}</span>
                   </div>
                 </div>
