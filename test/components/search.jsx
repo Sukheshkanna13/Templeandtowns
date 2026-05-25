@@ -10,7 +10,9 @@ const SearchScreen = ({ go, searchCtx, setSearchCtx }) => {
 
   const matches = useMemo(() => TT_DATA.properties.filter(p => {
     if (cityFilter === 'Both cities') return true;
-    return p.city === cityFilter.toLowerCase();
+    const filterNorm = cityFilter.toLowerCase().includes('auroville') ? 'auroville' : cityFilter.toLowerCase();
+    const cityNorm = p.city.toLowerCase().includes('auroville') ? 'auroville' : p.city.toLowerCase();
+    return cityNorm === filterNorm;
   }).sort((a, b) => b.rating - a.rating),
     [cityFilter]);
 
