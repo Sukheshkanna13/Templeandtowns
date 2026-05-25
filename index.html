@@ -1,97 +1,324 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Temple And Towns Resorts — Stays in Pondicherry & Near Auroville</title>
-<link rel="stylesheet" href="styles.css"/>
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script src="data.js"></script>
-<script type="text/babel" src="components/shell.jsx"></script>
-<script type="text/babel" src="components/home.jsx"></script>
-<script type="text/babel" src="components/search.jsx"></script>
-<script type="text/babel" src="components/booking.jsx"></script>
-<script type="text/babel" src="components/account.jsx"></script>
-<script type="text/babel" src="components/retreat.jsx"></script>
-<script type="text/babel" src="components/events.jsx"></script>
-<script type="text/babel" src="tweaks-panel.jsx"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Temple And Towns Resorts — Luxury Stays Coming Soon</title>
+  
+  <!-- Premium Fonts (Including Instrument Serif for the elegant cursive italic) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      /* Clean white-themed design token system */
+      --bg: #f9f9f8;
+      --bg-surface: rgba(255, 255, 255, 0.75);
+      --border: rgba(10, 22, 40, 0.07);
+      --ink: #0a1628; /* Deep navy text from main theme */
+      --text-soft: #4a5468;
+      --text-muted: #7a8290;
+      --accent: #4a4ce0; /* Brand electric indigo */
+      --accent-soft: rgba(74, 76, 224, 0.08);
+      --accent-glow: rgba(74, 76, 224, 0.04);
+      
+      /* Apple system fonts & Instrument Serif cursive stack */
+      --font-apple-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+      --font-cursive: 'Instrument Serif', Georgia, serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-apple-display);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2.5rem 1.5rem;
+      overflow-x: hidden;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient elegant blur spots (Warm sunlight + soft brand indigo) */
+    .ambient-glow-1 {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(230, 190, 160, 0.15) 0%, transparent 70%);
+      top: -100px;
+      left: 10%;
+      z-index: 1;
+      filter: blur(50px);
+      pointer-events: none;
+    }
+
+    .ambient-glow-2 {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      bottom: -150px;
+      right: 10%;
+      z-index: 1;
+      filter: blur(60px);
+      pointer-events: none;
+    }
+
+    /* Header styling */
+    header {
+      z-index: 10;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .brand-logo {
+      font-family: var(--font-apple-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .brand-logo span {
+      font-weight: 300;
+      opacity: 0.6;
+    }
+
+    /* Content Area */
+    .main-content {
+      max-width: 620px;
+      width: 100%;
+      text-align: center;
+      z-index: 10;
+      margin: 3.5rem 0;
+    }
+
+    /* Premium glassmorphic white card */
+    .glass-card {
+      background: var(--bg-surface);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3.5rem 2.5rem;
+      box-shadow: 
+        0 10px 30px rgba(10, 22, 40, 0.03), 
+        0 30px 70px rgba(10, 22, 40, 0.04), 
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      animation: slideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Elegant prelaunch badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-soft);
+      border: 1px solid rgba(74, 76, 224, 0.15);
+      color: var(--accent);
+      padding: 0.45rem 1rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2.2rem;
+    }
+
+    .badge-dot {
+      width: 5px;
+      height: 5px;
+      background-color: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--accent);
+      animation: pulse 2.2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+
+    /* Premium typography with cursive italics */
+    .title {
+      font-family: var(--font-apple-display);
+      font-size: clamp(2.2rem, 5vw, 3rem);
+      line-height: 1.15;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      margin-bottom: 1.4rem;
+    }
+
+    .cursive-italic {
+      font-family: var(--font-cursive);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+      display: inline-block;
+    }
+
+    .subtitle {
+      color: var(--text-soft);
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 400;
+    }
+
+    /* Minimalist luxury newsletter form */
+    .notify-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 480px) {
+      .notify-form {
+        flex-direction: row;
+        background: #ffffff;
+        border: 1px solid rgba(10, 22, 40, 0.08);
+        padding: 0.35rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(10, 22, 40, 0.02);
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+      
+      .notify-form:focus-within {
+        border-color: var(--accent);
+        box-shadow: 0 4px 16px rgba(74, 76, 224, 0.08);
+      }
+    }
+
+    .notify-form input {
+      background: #ffffff;
+      border: 1px solid rgba(10, 22, 40, 0.08);
+      color: var(--ink);
+      padding: 0.95rem 1.25rem;
+      border-radius: 10px;
+      font-family: var(--font-apple-display);
+      font-size: 0.9rem;
+      outline: none;
+      width: 100%;
+      transition: all 0.3s;
+    }
+
+    @media (min-width: 480px) {
+      .notify-form input {
+        border: none;
+        background: transparent;
+        border-radius: 0;
+      }
+    }
+
+    .notify-form input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .notify-form button {
+      background: var(--ink);
+      color: #ffffff;
+      border: none;
+      padding: 0.9rem 1.6rem;
+      border-radius: 8px;
+      font-family: var(--font-apple-display);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .notify-form button:hover {
+      background: var(--accent);
+      box-shadow: 0 4px 12px rgba(74, 76, 224, 0.25);
+    }
+
+    /* Footer structure */
+    footer {
+      z-index: 10;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+
+    .location-info {
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+  </style>
 </head>
 <body>
-<div id="root"></div>
 
-<script type="text/babel">
-const { useState, useEffect } = React;
+  <!-- Soft light elegant background blobs -->
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
 
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "accentHue": 202,
-  "buttonShape": "pill"
-}/*EDITMODE-END*/;
+  <!-- Header -->
+  <header>
+    <div class="brand-logo">
+      TEMPLE <span>AND</span> TOWNS
+    </div>
+  </header>
 
-function App() {
-  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
-  const [screen, setScreen] = useState('home');
-  const [params, setParams] = useState({});
-  const [searchCtx, setSearchCtx] = useState({ city: 'Pondicherry', checkIn: '2026-05-12', checkOut: '2026-05-15', guests: '2 guests · 1 room' });
-  const [pendingBookCtx, setPendingBookCtx] = useState(null);
-  const [activeBooking, setActiveBooking] = useState(null);
+  <!-- Main glass card -->
+  <div class="main-content">
+    <div class="glass-card">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Pre-launching Soon
+      </div>
+      
+      <h1 class="title">
+        Curated stays, <br>
+        <span class="cursive-italic">thoughtfully designed.</span>
+      </h1>
+      
+      <p class="subtitle">
+        We are crafting a beautiful collection of peaceful escapes in Pondicherry &amp; Near Auroville. Sign up to get exclusive early-access and grand launch offers.
+      </p>
 
-  useEffect(() => {
-    const root = document.documentElement;
-    root.style.setProperty('--accent', `oklch(0.58 0.16 ${tweaks.accentHue})`);
-    root.style.setProperty('--accent-deep', `oklch(0.34 0.13 ${tweaks.accentHue})`);
-    root.style.setProperty('--accent-soft', `oklch(0.96 0.04 ${tweaks.accentHue})`);
-    root.style.setProperty('--pill', tweaks.buttonShape === 'pill' ? '980px' : '12px');
-  }, [tweaks]);
+      <form class="notify-form" onsubmit="event.preventDefault(); alert('Thank you! We will notify you at ' + this.email.value);">
+        <input type="email" name="email" placeholder="Enter your email address" required />
+        <button type="submit">Notify Me</button>
+      </form>
+    </div>
+  </div>
 
-  const go = (s, p = {}) => {
-    setScreen(s); setParams(p); window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const startBooking = ({ property, room }) => {
-    setPendingBookCtx({ property, room, ...searchCtx });
-    go('book');
-  };
-
-  const submitBookingRequest = (ctx) => {
-    setActiveBooking(ctx);
-    go('wa-sent');
-  };
-
-  return (
-    <>
-      <UtilityBar go={go}/>
-      <Navbar screen={screen} go={go}/>
-      <main>
-        {screen === 'home'     && <HomeScreen go={go} setSearchCtx={setSearchCtx}/>}
-        {screen === 'search'   && <SearchScreen go={go} searchCtx={searchCtx} setSearchCtx={setSearchCtx}/>}
-        {screen === 'property' && <PropertyScreen go={go} params={params} searchCtx={searchCtx} startBooking={startBooking}/>}
-        {screen === 'book'     && pendingBookCtx && <BookingWizard go={go} ctx={{...pendingBookCtx, ...searchCtx}} onSubmit={submitBookingRequest}/>}
-        {screen === 'wa-sent'  && <WhatsAppSentScreen go={go} booking={activeBooking}/>}
-        {screen === 'loyalty'  && <LoyaltyScreen go={go}/>}
-        {screen === 'things'   && <ThingsScreen go={go}/>}
-        {screen === 'retreat'  && <NatureRetreatScreen go={go}/>}
-        {screen === 'events'   && <EventsPage go={go}/>}
-      </main>
-      <Footer/>
-      <WhatsAppFab/>
-
-      <TweaksPanel title="Tweaks">
-        <TweakSection title="Color">
-          <TweakSlider label="Accent hue" min={180} max={280} value={tweaks.accentHue} onChange={v => setTweak('accentHue', v)} />
-        </TweakSection>
-        <TweakSection title="Shape">
-          <TweakRadio label="Buttons" value={tweaks.buttonShape} onChange={v => setTweak('buttonShape', v)}
-            options={[{value:'pill', label:'Pill'},{value:'rounded', label:'Rounded'}]}/>
-        </TweakSection>
-      </TweaksPanel>
-    </>
-  );
-}
-
-ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
-</script>
+  <!-- Footer -->
+  <footer>
+    <p class="location-info">Pondicherry &amp; Near Auroville</p>
+    <p>&copy; 2026 Temple And Towns Resorts LLP. All rights reserved.</p>
+  </footer>
 
 </body>
 </html>

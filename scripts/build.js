@@ -5,13 +5,7 @@ const root = path.resolve(__dirname, "..");
 const dist = path.join(root, "dist");
 const entries = [
   "index.html",
-  "styles.css",
-  "data.js",
-  "tweaks-panel.jsx",
-  "components",
-  "images",
-  "logo.png",
-  "logo_name.png"
+  "test"
 ];
 
 fs.rmSync(dist, { recursive: true, force: true });
