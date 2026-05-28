@@ -214,7 +214,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
                   { n: '03', t: 'You pay & arrive', d: 'A secure payment link arrives via WhatsApp. Confirm your booking, receive check-in details, and pack your bag.' },
                 ].map(s => (
                   <div key={s.n} style={{ borderTop: '1px solid var(--ink)', paddingTop: 20 }}>
-                    <div style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 32, fontStyle: 'italic', color: 'var(--accent)' }}>{s.n}</div>
+                    <div style={{ fontFamily: "SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Monaco, monospace", fontSize: 26, fontWeight: '600', color: 'var(--accent)' }}>{s.n}</div>
                     <h3 className="tt-h3" style={{ marginTop: 14, marginBottom: 8 }}>{s.t}</h3>
                     <p style={{ color: 'var(--text-soft)', margin: 0, lineHeight: 1.55, fontSize: 15 }}>{s.d}</p>
                   </div>

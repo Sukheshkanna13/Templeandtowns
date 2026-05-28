@@ -45,8 +45,12 @@ function App() {
     root.style.setProperty('--pill', tweaks.buttonShape === 'pill' ? '980px' : '12px');
   }, [tweaks]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [screen, params]);
+
   const go = (s, p = {}) => {
-    setScreen(s); setParams(p); window.scrollTo({ top: 0, behavior: 'smooth' });
+    setScreen(s); setParams(p);
   };
 
   const startBooking = ({ property, room }) => {

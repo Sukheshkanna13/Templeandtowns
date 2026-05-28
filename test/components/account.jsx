@@ -64,7 +64,7 @@ const LoyaltyScreen = ({ go }) => (
         { n: 'Gold', min: '2,000+', perks: ['10% off every stay', 'Room upgrades', 'Priority queue'] },
       ].map(t => (
         <div key={t.n} className="tt-loyalty-tier-card" style={{ padding: 28, border: '1px solid var(--line)', borderRadius: 6 }}>
-          <div style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 36, fontStyle: 'italic', color: 'var(--ink)' }}>{t.n}</div>
+          <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', sans-serif", fontSize: 28, fontWeight: '700', color: 'var(--ink)' }}>{t.n}</div>
           <div className="tt-muted" style={{ fontSize: 13, marginTop: 4 }}>{t.min} pts</div>
           <ul style={{ margin: '16px 0 0', padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}>
             {t.perks.map(p => (

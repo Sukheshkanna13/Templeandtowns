@@ -23,7 +23,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
                 calm, and unmistakably Indian.
               </h1>
               <p className="tt-sub" style={{ marginTop: 28, maxWidth: 560 }}>
-                Inspired by the spirit of Temple And Towns Resorts. Clean design, smooth booking, and a platform built to scale.
+                Modern, calm, Indian. A small, hand-picked collection of stays across temple towns and quiet coastlines.
               </p>
               <div style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
                 <button className="tt-btn tt-btn-primary" onClick={submit}>Find a stay <Ico name="arrow" size={14} /></button>
@@ -36,7 +36,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
             </div>
 
             {/* RIGHT — shorter featured photo card, no search inside */}
-            <div className="tt-featured-card" style={{ aspectRatio: 'unset', height: 280 }}>
+            <div className="tt-featured-card" style={{ aspectRatio: 'unset', height: 350 }}>
               <img src="images/hero_resort.png" alt="Featured Resort" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,22,40,0.35) 0%, rgba(10,22,40,0.05) 40%, rgba(10,22,40,0.55) 100%)', zIndex: 2 }} />
               <span className="tt-featured-label">Featured</span>
@@ -214,7 +214,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
                   { n: '03', t: 'You pay & arrive', d: 'A secure payment link arrives via WhatsApp. Confirm your booking, receive check-in details, and pack your bag.' },
                 ].map(s => (
                   <div key={s.n} style={{ borderTop: '1px solid var(--ink)', paddingTop: 20 }}>
-                    <div style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 32, fontStyle: 'italic', color: 'var(--accent)' }}>{s.n}</div>
+                    <div style={{ fontFamily: "SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Monaco, monospace", fontSize: 26, fontWeight: '600', color: 'var(--accent)' }}>{s.n}</div>
                     <h3 className="tt-h3" style={{ marginTop: 14, marginBottom: 8 }}>{s.t}</h3>
                     <p style={{ color: 'var(--text-soft)', margin: 0, lineHeight: 1.55, fontSize: 15 }}>{s.d}</p>
                   </div>

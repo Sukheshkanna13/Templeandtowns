@@ -171,7 +171,7 @@ const WhatsAppSentScreen = ({ go, booking }) => (
           { n: '03', t: 'Pack your bags', d: 'Booking confirmed. All check-in details arrive before your stay.' },
         ].map(s => (
           <div key={s.n} style={{ display: 'flex', gap: 16, marginTop: 20, alignItems: 'flex-start' }}>
-            <span style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 22, fontStyle: 'italic', color: 'var(--accent)', flexShrink: 0, lineHeight: 1.3 }}>{s.n}</span>
+            <span style={{ fontFamily: "SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Monaco, monospace", fontSize: 18, fontWeight: '600', color: 'var(--accent)', flexShrink: 0 }}>{s.n}</span>
             <div>
               <div style={{ fontWeight: 600, fontSize: 15 }}>{s.t}</div>
               <div style={{ fontSize: 14, color: 'var(--text-soft)', marginTop: 4, lineHeight: 1.5 }}>{s.d}</div>
