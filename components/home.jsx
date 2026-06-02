@@ -4,8 +4,8 @@ const { useState, useMemo } = React;
 // ---------- HOME ----------
 const HomeScreen = ({ go, setSearchCtx }) => {
   const [city, setCity] = useState('Pondicherry');
-  const [checkIn, setCheckIn] = useState('2026-05-12');
-  const [checkOut, setCheckOut] = useState('2026-05-15');
+  const [checkIn, setCheckIn] = useState(tt.todayISO(1));
+  const [checkOut, setCheckOut] = useState(tt.todayISO(4));
   const [guests, setGuests] = useState('2 guests · 1 room');
 
   const submit = () => { setSearchCtx({ city, checkIn, checkOut, guests }); go('search'); };
@@ -23,11 +23,11 @@ const HomeScreen = ({ go, setSearchCtx }) => {
                 calm, and unmistakably Indian.
               </h1>
               <p className="tt-sub" style={{ marginTop: 28, maxWidth: 560 }}>
-                Modern, calm, Indian. A small, hand-picked collection of stays across temple towns and quiet coastlines.
+                Inspired by the spirit of Temple And Towns Resorts. Clean design, smooth booking, and a platform built to scale.
               </p>
               <div style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
                 <button className="tt-btn tt-btn-primary" onClick={submit}>Find a stay <Ico name="arrow" size={14} /></button>
-                <a href="https://api.whatsapp.com/send/?phone=918553441449&text=Hi%2C+I%27d+like+to+chat+about+Temple+And+Towns+Resorts.&type=phone_number&app_absent=0"
+                <a href="https://api.whatsapp.com/send/?phone=0000000000&text=Hi%2C+I%27d+like+to+chat+about+Temple+And+Towns+Resorts.&type=phone_number&app_absent=0"
                   target="_blank" rel="noopener noreferrer"
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 26px', background: 'var(--whatsapp)', color: '#fff', borderRadius: 'var(--pill)', fontSize: 15, fontWeight: 500, textDecoration: 'none' }}>
                   <Ico name="wa" size={15} /> Chat with us
@@ -36,7 +36,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
             </div>
 
             {/* RIGHT — shorter featured photo card, no search inside */}
-            <div className="tt-featured-card" style={{ aspectRatio: 'unset', height: 350 }}>
+            <div className="tt-featured-card" style={{ aspectRatio: 'unset', height: 280 }}>
               <img src="images/hero_resort.png" alt="Featured Resort" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,22,40,0.35) 0%, rgba(10,22,40,0.05) 40%, rgba(10,22,40,0.55) 100%)', zIndex: 2 }} />
               <span className="tt-featured-label">Featured</span>
@@ -202,16 +202,16 @@ const HomeScreen = ({ go, setSearchCtx }) => {
             <div className="tt-how-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 80 }}>
               <div>
                 <div className="tt-eyebrow">How booking works</div>
-                <h2 className="tt-h2" style={{ marginTop: 14 }}>Request, approve, confirm.</h2>
+                <h2 className="tt-h2" style={{ marginTop: 14 }}>Browse, redirect, confirm.</h2>
                 <p style={{ color: 'var(--text-soft)', marginTop: 16, fontSize: 16, lineHeight: 1.6 }}>
-                  Every stay is reviewed by the property host before payment. Personal hospitality, certain bookings.
+                  Our curated stays are hosted on Airbnb or Booking.com for a secure, fast, and instantly confirmed reservation experience.
                 </p>
               </div>
               <div className="tt-how-steps" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 32 }}>
                 {[
-                  { n: '01', t: 'You request', d: 'Pick dates and submit. We hold the room for ten minutes while we route your request to the host.' },
-                  { n: '02', t: 'Host approves', d: 'A real person reviews and either approves or proposes alternatives.' },
-                  { n: '03', t: 'You pay & arrive', d: 'A secure payment link arrives via WhatsApp. Confirm your booking, receive check-in details, and pack your bag.' },
+                  { n: '01', t: 'Select property', d: 'Browse our collection of hand-picked stays in Pondicherry and Near Auroville to find the perfect fit.' },
+                  { n: '02', t: 'Redirect securely', d: 'Click book on your selected stay to redirect immediately to its official Airbnb or Booking.com page.' },
+                  { n: '03', t: 'Instantly confirm', d: 'Complete your booking on the partner platform with secure payment, and receive instant checkout confirmation.' },
                 ].map(s => (
                   <div key={s.n} style={{ borderTop: '1px solid var(--ink)', paddingTop: 20 }}>
                     <div style={{ fontFamily: "SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Monaco, monospace", fontSize: 26, fontWeight: '600', color: 'var(--accent)' }}>{s.n}</div>
@@ -238,7 +238,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
               <p style={{ fontSize: 17, color: 'rgba(255,255,255,0.78)', lineHeight: 1.55, maxWidth: 480, margin: 0 }}>
                 Earn points every night. Unlock early check-ins, room upgrades, and exclusive rates. Launching soon — our earliest guests earn first.
               </p>
-              <a href="https://api.whatsapp.com/send/?phone=918553441449&text=Hi%2C+I%27d+like+to+chat+about+Temple+And+Towns+Resorts.&type=phone_number&app_absent=0"
+              <a href="https://api.whatsapp.com/send/?phone=0000000000&text=Hi%2C+I%27d+like+to+chat+about+Temple+And+Towns+Resorts.&type=phone_number&app_absent=0"
                 target="_blank" rel="noopener noreferrer"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 32, padding: '18px 34px', background: '#fff', color: '#0a1628', borderRadius: 'var(--pill)', fontSize: 16, fontWeight: 600, textDecoration: 'none' }}>
                 <Ico name="wa" size={15} /> Join the waitlist

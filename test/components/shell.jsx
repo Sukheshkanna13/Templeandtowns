@@ -124,7 +124,15 @@ const nightsBetween = (a, b) => {
   const da = new Date(a + 'T00:00:00'); const db = new Date(b + 'T00:00:00');
   return Math.max(0, Math.round((db - da) / 86400000));
 };
-window.tt = { inr, fmtDate, fmtDateLong, nightsBetween };
+const todayISO = (offset = 0) => {
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+};
+window.tt = { inr, fmtDate, fmtDateLong, nightsBetween, todayISO };
 
 // ---------- Logo system revised to use single files (TTR-Logo.png / nature-retreat-Logo.png) ----------
 
@@ -173,8 +181,8 @@ const Navbar = ({ screen, go }) => {
               className={`tt-nav-link${isActive(l.id) ? ' active' : ''}`}
               onClick={() => { go(l.id); close(); }}>{l.label}</span>
           ))}
-          <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="tt-nav-wa-btn">
-            <Ico name="wa" size={15} /> Book via WhatsApp
+          <a onClick={() => go('search')} className="tt-nav-wa-btn" style={{ cursor: 'pointer' }}>
+            Book Now
           </a>
         </div>
         <button className="tt-hamburger" onClick={() => setMenuOpen(v => !v)} aria-label="Toggle menu">
@@ -186,8 +194,8 @@ const Navbar = ({ screen, go }) => {
           {links.map(l => (
             <span key={l.id} className="tt-mobile-link" onClick={() => { go(l.id); close(); }}>{l.label}</span>
           ))}
-          <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="tt-mobile-wa" onClick={close}>
-            <Ico name="wa" size={16} /> Book via WhatsApp
+          <a onClick={() => { go('search'); close(); }} className="tt-mobile-wa" style={{ cursor: 'pointer' }}>
+            Book Now
           </a>
         </div>
       )}
@@ -197,43 +205,51 @@ const Navbar = ({ screen, go }) => {
 window.Navbar = Navbar;
 
 // ---------- Footer ----------
-const Footer = ({ screen }) => (
-  <footer className="tt-footer">
-    <div className="tt-page">
-      <div className="tt-footer-grid">
-        <div>
-          <div className="tt-logo" style={{ marginBottom: 18 }}>
-            <img src={screen === 'retreat' ? 'nature-retreat-Logo.png' : 'TTR-Logo.png'} alt="Temple And Towns Resorts" className="tt-logo-img" style={{ height: 48, width: 48 }} />
+const Footer = ({ screen }) => {
+  const helpWaUrl = (topic) => {
+    const text = `Hi, I need assistance with the following: ${topic}.`;
+    return `https://api.whatsapp.com/send/?phone=0000000000&text=${encodeURIComponent(text)}&type=phone_number&app_absent=0`;
+  };
+
+  return (
+    <footer className="tt-footer">
+      <div className="tt-page">
+        <div className="tt-footer-grid">
+          <div>
+            <div className="tt-logo" style={{ marginBottom: 18 }}>
+              <img src={screen === 'retreat' ? 'nature-retreat-Logo.png' : 'TTR-Logo.png'} alt="Temple And Towns Resorts" className="tt-logo-img" style={{ height: 48, width: 48 }} />
+            </div>
+            <p style={{ color: 'var(--text-soft)', fontSize: 14, maxWidth: 340, lineHeight: 1.6, margin: 0 }}>
+              Modern, calm, unmistakably Indian. A small, hand-picked collection of stays across temple towns and quiet coastlines — designed to feel premium without feeling heavy.
+            </p>
+            <div style={{ display: 'flex', gap: 12, marginTop: 24, fontSize: 13, color: 'var(--text-muted)' }}>
+              <a>Instagram</a><span>·</span><a>Journal</a>
+            </div>
           </div>
-          <p style={{ color: 'var(--text-soft)', fontSize: 14, maxWidth: 340, lineHeight: 1.6, margin: 0 }}>
-            Modern, calm, unmistakably Indian. A small, hand-picked collection of stays across temple towns and quiet coastlines — designed to feel premium without feeling heavy.
-          </p>
-          <div style={{ display: 'flex', gap: 12, marginTop: 24, fontSize: 13, color: 'var(--text-muted)' }}>
-            <a>Instagram</a><span>·</span><a>Journal</a>
+          <div>
+            <h4>Help</h4>
+            <ul>
+              <li><a href={helpWaUrl('Cancellation')} target="_blank" rel="noopener noreferrer">Cancellation</a></li>
+              <li><a href={helpWaUrl('Contact host')} target="_blank" rel="noopener noreferrer">Contact host</a></li>
+              <li><a href={helpWaUrl('Privacy')} target="_blank" rel="noopener noreferrer">Privacy</a></li>
+              <li><a href={helpWaUrl('Terms')} target="_blank" rel="noopener noreferrer">Terms</a></li>
+              <li><a href={helpWaUrl('Sitemap')} target="_blank" rel="noopener noreferrer">Sitemap</a></li>
+            </ul>
           </div>
         </div>
-        <div>
-          <h4>Stay</h4>
-          <ul><li><a>Pondicherry</a></li><li><a>Near Auroville</a></li><li><a>Long stays</a></li><li><a>Group bookings</a></li><li><a>Sacred circuits</a></li></ul>
-        </div>
-        <div></div>
-        <div>
-          <h4>Help</h4>
-          <ul><li><a>Cancellation</a></li><li><a>Contact host</a></li><li><a>Privacy</a></li><li><a>Terms</a></li><li><a>Sitemap</a></li></ul>
+        <div className="tt-footer-bottom" style={{ marginTop: 64, paddingTop: 28, borderTop: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', fontSize: 13, color: 'var(--text-muted)' }}>
+          <span>© 2026 Temple And Towns Resorts LLP · Pondicherry &amp; Near Auroville</span>
+          <span>INR · English ·</span>
         </div>
       </div>
-      <div className="tt-footer-bottom" style={{ marginTop: 64, paddingTop: 28, borderTop: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', fontSize: 13, color: 'var(--text-muted)' }}>
-        <span>© 2026 Temple And Towns Resorts LLP · Pondicherry &amp; Near Auroville</span>
-        <span>INR · English ·</span>
-      </div>
-    </div>
-  </footer>
-);
+    </footer>
+  );
+};
 window.Footer = Footer;
 
 // ---------- Floating WhatsApp ----------
 const WhatsAppFab = () => (
-  <a className="tt-wa-fab" href={WA_URL} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+  <a className="tt-wa-fab" href={WA_URL} target="_blank" rel="noopener noreferrer" aria-label="Chat with Support">
     <Ico name="wa" size={26} />
   </a>
 );

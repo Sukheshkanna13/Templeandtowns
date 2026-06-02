@@ -12,7 +12,6 @@
 <script type="text/babel" src="components/shell.jsx"></script>
 <script type="text/babel" src="components/home.jsx"></script>
 <script type="text/babel" src="components/search.jsx"></script>
-<script type="text/babel" src="components/booking.jsx"></script>
 <script type="text/babel" src="components/account.jsx"></script>
 <script type="text/babel" src="components/retreat.jsx"></script>
 <script type="text/babel" src="components/events.jsx"></script>
@@ -33,9 +32,7 @@ function App() {
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [screen, setScreen] = useState('home');
   const [params, setParams] = useState({});
-  const [searchCtx, setSearchCtx] = useState({ city: 'Pondicherry', checkIn: '2026-05-12', checkOut: '2026-05-15', guests: '2 guests · 1 room' });
-  const [pendingBookCtx, setPendingBookCtx] = useState(null);
-  const [activeBooking, setActiveBooking] = useState(null);
+  const [searchCtx, setSearchCtx] = useState({ city: 'Pondicherry', checkIn: tt.todayISO(1), checkOut: tt.todayISO(4), guests: '2 guests · 1 room' });
 
   useEffect(() => {
     const root = document.documentElement;
@@ -53,16 +50,6 @@ function App() {
     setScreen(s); setParams(p);
   };
 
-  const startBooking = ({ property, room }) => {
-    setPendingBookCtx({ property, room, ...searchCtx });
-    go('book');
-  };
-
-  const submitBookingRequest = (ctx) => {
-    setActiveBooking(ctx);
-    go('wa-sent');
-  };
-
   return (
     <>
       <UtilityBar go={go}/>
@@ -70,9 +57,7 @@ function App() {
       <main>
         {screen === 'home'     && <HomeScreen go={go} setSearchCtx={setSearchCtx}/>}
         {screen === 'search'   && <SearchScreen go={go} searchCtx={searchCtx} setSearchCtx={setSearchCtx}/>}
-        {screen === 'property' && <PropertyScreen go={go} params={params} searchCtx={searchCtx} startBooking={startBooking}/>}
-        {screen === 'book'     && pendingBookCtx && <BookingWizard go={go} ctx={{...pendingBookCtx, ...searchCtx}} onSubmit={submitBookingRequest}/>}
-        {screen === 'wa-sent'  && <WhatsAppSentScreen go={go} booking={activeBooking}/>}
+        {screen === 'property' && <PropertyScreen go={go} params={params} searchCtx={searchCtx}/>}
         {screen === 'loyalty'  && <LoyaltyScreen go={go}/>}
         {screen === 'things'   && <ThingsScreen go={go}/>}
         {screen === 'retreat'  && <NatureRetreatScreen go={go}/>}

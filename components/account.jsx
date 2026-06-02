@@ -63,7 +63,7 @@ const LoyaltyScreen = ({ go }) => (
         { n: 'Silver', min: '500 – 1,999', perks: ['5% off every stay', 'Early check-in'] },
         { n: 'Gold', min: '2,000+', perks: ['10% off every stay', 'Room upgrades', 'Priority queue'] },
       ].map(t => (
-        <div key={t.n} style={{ padding: 28, border: '1px solid var(--line)', borderRadius: 6 }}>
+        <div key={t.n} className="tt-loyalty-tier-card" style={{ padding: 28, border: '1px solid var(--line)', borderRadius: 6 }}>
           <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', sans-serif", fontSize: 28, fontWeight: '700', color: 'var(--ink)' }}>{t.n}</div>
           <div className="tt-muted" style={{ fontSize: 13, marginTop: 4 }}>{t.min} pts</div>
           <ul style={{ margin: '16px 0 0', padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -77,15 +77,15 @@ const LoyaltyScreen = ({ go }) => (
       ))}
     </div>
 
-    <div style={{ marginTop: 56, padding: 40, background: '#0a1628', color: '#fff', borderRadius: 6, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 20, maxWidth: 560 }}>
+    <div className="tt-loyalty-card" style={{ marginTop: 56, padding: 40, background: '#0a1628', color: '#fff', borderRadius: 6, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 20, maxWidth: 560 }}>
       <div className="tt-eyebrow" style={{ color: 'rgba(255,255,255,0.55)' }}>Be the first to earn</div>
       <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: 'rgba(255,255,255,0.8)' }}>
-        Book your first stay via WhatsApp and we'll manually credit your founding-guest points when the programme launches.
+        Book your stay on Airbnb or Booking.com and share your reservation ID with our support team to credit your founding-guest points when the programme launches.
       </p>
-      <a href="https://api.whatsapp.com/send/?phone=918553441449&text=Hi%2C+I%27d+like+to+chat+about+Temple+And+Towns+Resorts.&type=phone_number&app_absent=0"
+      <a href="https://api.whatsapp.com/send/?phone=0000000000&text=Hi%2C+I%27d+like+to+share+my+booking+details+for+loyalty+credits.&type=phone_number&app_absent=0"
         target="_blank" rel="noopener noreferrer"
         style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 26px', background: '#fff', color: '#0a1628', borderRadius: 'var(--pill)', fontSize: 15, fontWeight: 600, textDecoration: 'none' }}>
-        <Ico name="wa" size={15} /> Chat &amp; book now
+        <Ico name="wa" size={15} /> Contact Support
       </a>
     </div>
 
@@ -110,23 +110,28 @@ const CauseScreen = ({ go }) => (
       <div className="tt-page">
         <div className="tt-grid-3">
           {[
-            { t: 'Sandalwood restoration', loc: 'Karnataka', d: 'Replanting native sandalwood with Forest Dept.', label: 'forest', raised: '₹4.2L', goal: '₹10L' },
-            { t: 'Pondicherry coastal cleanup', loc: 'Tamil Nadu', d: 'Weekly beach cleans and turtle hatchery support.', label: 'coast', raised: '₹2.8L', goal: '₹6L' },
-            { t: 'Artisan grants', loc: 'Pan-India', d: 'Direct grants to potters, weavers, brassworkers.', label: 'craft', raised: '₹5.1L', goal: '₹8L' },
+            { t: 'Sandalwood restoration', loc: 'Karnataka', d: 'Replanting native sandalwood with Forest Dept.', label: 'cause-sandalwood', raised: '₹4.2L', goal: '₹10L', pct: '42%' },
+            { t: 'Pondicherry coastal cleanup', loc: 'Tamil Nadu', d: 'Weekly beach cleans and turtle hatchery support.', label: 'cause-coastal', raised: '₹2.8L', goal: '₹6L', pct: '46.6%' },
+            { t: 'Artisan grants', loc: 'Pan-India', d: 'Direct grants to potters, weavers, brassworkers.', label: 'cause-artisan', raised: '₹5.1L', goal: '₹8L', pct: '63.75%' },
           ].map(c => (
-            <div key={c.t} className="tt-card">
+            <div key={c.t} className="tt-card" style={{ cursor: 'pointer' }}
+              onClick={() => {
+                const text = `Hi, I'd like to book a stay and support the ${c.t} cause.`;
+                const waUrl = `https://api.whatsapp.com/send/?phone=0000000000&text=${encodeURIComponent(text)}&type=phone_number&app_absent=0`;
+                window.open(waUrl, '_blank', 'noopener,noreferrer');
+              }}>
               <div className="tt-card-media"><StripeImg label={c.label} tone="oklch(0.85 0.05 145)" ratio="auto" /></div>
               <div className="tt-card-body">
-                <div className="tt-eyebrow" style={{ fontSize: 11 }}>{c.loc}</div>
-                <h3 className="tt-h3" style={{ marginTop: 6, marginBottom: 8 }}>{c.t}</h3>
-                <p className="tt-muted" style={{ fontSize: 14, margin: 0 }}>{c.d}</p>
-                <div style={{ marginTop: 16 }}>
-                  <div style={{ height: 4, background: 'var(--bg-soft)', borderRadius: 2, overflow: 'hidden' }}>
-                    <div style={{ width: '60%', height: '100%', background: 'var(--accent)' }} />
+                <div className="tt-eyebrow" style={{ fontSize: 11, letterSpacing: '0.12em', color: 'var(--text-muted)' }}>{c.loc}</div>
+                <h3 className="tt-h3" style={{ marginTop: 6, marginBottom: 8, fontSize: 20 }}>{c.t}</h3>
+                <p className="tt-muted" style={{ fontSize: 14, margin: 0, lineHeight: 1.5 }}>{c.d}</p>
+                <div style={{ marginTop: 20 }}>
+                  <div style={{ height: 6, background: 'var(--bg-soft)', borderRadius: 3, overflow: 'hidden' }}>
+                    <div style={{ width: c.pct, height: '100%', background: 'oklch(0.65 0.15 190)', borderRadius: 3 }} />
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8, fontSize: 12 }}>
-                    <span style={{ fontWeight: 600 }}>{c.raised} raised</span>
-                    <span className="tt-muted">of {c.goal}</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 10, fontSize: 13 }}>
+                    <span style={{ fontWeight: 500, color: 'var(--ink)' }}><b style={{ fontWeight: 700 }}>{c.raised}</b> raised</span>
+                    <span className="tt-muted" style={{ fontWeight: 400 }}>of {c.goal}</span>
                   </div>
                 </div>
               </div>

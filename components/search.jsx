@@ -4,13 +4,15 @@ const { useState, useMemo, useEffect } = React;
 // ---------- SEARCH ----------
 const SearchScreen = ({ go, searchCtx, setSearchCtx }) => {
   const [cityFilter, setCityFilter] = useState(searchCtx?.city || 'Pondicherry');
-  const [checkIn, setCheckIn] = useState(searchCtx?.checkIn || '2026-05-12');
-  const [checkOut, setCheckOut] = useState(searchCtx?.checkOut || '2026-05-15');
+  const [checkIn, setCheckIn] = useState(searchCtx?.checkIn || tt.todayISO(1));
+  const [checkOut, setCheckOut] = useState(searchCtx?.checkOut || tt.todayISO(4));
   const [guests, setGuests] = useState(searchCtx?.guests || '2 guests · 1 room');
 
   const matches = useMemo(() => TT_DATA.properties.filter(p => {
     if (cityFilter === 'Both cities') return true;
-    return p.city === cityFilter.toLowerCase();
+    const filterNorm = cityFilter.toLowerCase().includes('auroville') ? 'auroville' : cityFilter.toLowerCase();
+    const cityNorm = p.city.toLowerCase().includes('auroville') ? 'auroville' : p.city.toLowerCase();
+    return cityNorm === filterNorm;
   }).sort((a, b) => b.rating - a.rating),
     [cityFilter]);
 
@@ -78,9 +80,9 @@ const SearchScreen = ({ go, searchCtx, setSearchCtx }) => {
                 </div>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 24, paddingTop: 18, borderTop: '1px solid var(--line)' }}>
-                <span className="tt-muted" style={{ fontSize: 13 }}>{tt.nightsBetween(checkIn, checkOut) || 3} nights · pricing on request</span>
+                <span className="tt-muted" style={{ fontSize: 13 }}>{tt.nightsBetween(checkIn, checkOut) || 3} nights · view online</span>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 22, fontWeight: 600 }}>{p.from}</div>
+                  <div style={{ fontSize: 20, fontWeight: 600 }}>{p.from}</div>
                   <button className="tt-btn tt-btn-primary tt-btn-sm" style={{ marginTop: 8 }}>View stay <Ico name="arrow" size={14} /></button>
                 </div>
               </div>
@@ -101,7 +103,15 @@ const PropertyScreen = ({ go, params, searchCtx, startBooking }) => {
   const [selectedRoom, setSelectedRoom] = useState(rooms[0]?.id);
   const [showGallery, setShowGallery] = useState(false);
   const room = rooms.find(r => r.id === selectedRoom);
-  const onBook = () => startBooking({ property, room });
+  const onBook = () => {
+    if (property.bookingUrl) {
+      window.open(property.bookingUrl, '_blank', 'noopener,noreferrer');
+    } else {
+      alert("Booking link coming soon!");
+    }
+  };
+  const isAirbnb = property.bookingUrl && property.bookingUrl.includes('airbnb.com');
+  const platformName = isAirbnb ? 'Airbnb' : 'Booking.com';
   const nights = tt.nightsBetween(searchCtx?.checkIn, searchCtx?.checkOut) || 3;
   const imgs = property.images || [];
   const galleryImages = imgs.slice(5);
@@ -239,11 +249,11 @@ const PropertyScreen = ({ go, params, searchCtx, startBooking }) => {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
                 <div style={{ padding: 14, borderRight: '1px solid var(--line)' }}>
                   <div className="tt-muted" style={{ fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Check in</div>
-                  <div style={{ fontSize: 14, fontWeight: 500, marginTop: 4 }}>{tt.fmtDate(searchCtx?.checkIn || '2026-05-12')}</div>
+                  <div style={{ fontSize: 14, fontWeight: 500, marginTop: 4 }}>{tt.fmtDate(searchCtx?.checkIn || tt.todayISO(1))}</div>
                 </div>
                 <div style={{ padding: 14 }}>
                   <div className="tt-muted" style={{ fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Check out</div>
-                  <div style={{ fontSize: 14, fontWeight: 500, marginTop: 4 }}>{tt.fmtDate(searchCtx?.checkOut || '2026-05-15')}</div>
+                  <div style={{ fontSize: 14, fontWeight: 500, marginTop: 4 }}>{tt.fmtDate(searchCtx?.checkOut || tt.todayISO(4))}</div>
                 </div>
               </div>
               <div style={{ padding: 14, borderTop: '1px solid var(--line)' }}>
@@ -253,12 +263,12 @@ const PropertyScreen = ({ go, params, searchCtx, startBooking }) => {
             </div>
 
             <button className="tt-btn tt-btn-primary tt-btn-lg tt-w-full" style={{ marginTop: 20 }} onClick={onBook}>
-              Request to book <Ico name="arrow" size={14} />
+              Book on {platformName} <Ico name="arrow" size={14} />
             </button>
-            <p className="tt-muted" style={{ fontSize: 12, textAlign: 'center', marginTop: 12 }}>You won&rsquo;t be charged yet · Host approves first</p>
+            <p className="tt-muted" style={{ fontSize: 12, textAlign: 'center', marginTop: 12 }}>You will be redirected to {platformName} to complete your booking.</p>
             <hr className="tt-hr" />
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, fontSize: 16 }}><span>Pricing</span><span>Request on WhatsApp</span></div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, fontSize: 16 }}><span>Pricing</span><span>View on {platformName}</span></div>
             </div>
           </div>
         </div>
@@ -269,10 +279,10 @@ const PropertyScreen = ({ go, params, searchCtx, startBooking }) => {
         <div className="tt-mobile-cta-bar">
           <div>
             <div style={{ fontSize: 18, fontWeight: 700 }}>{property.from}</div>
-            <div className="tt-muted" style={{ fontSize: 12 }}>{nights} nights · on request</div>
+            <div className="tt-muted" style={{ fontSize: 12 }}>{nights} nights · online</div>
           </div>
           <button className="tt-btn tt-btn-primary" onClick={onBook}>
-            Request to book <Ico name="arrow" size={14} />
+            Book Now <Ico name="arrow" size={14} />
           </button>
         </div>
       )}

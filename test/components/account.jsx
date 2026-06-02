@@ -80,12 +80,12 @@ const LoyaltyScreen = ({ go }) => (
     <div className="tt-loyalty-card" style={{ marginTop: 56, padding: 40, background: '#0a1628', color: '#fff', borderRadius: 6, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 20, maxWidth: 560 }}>
       <div className="tt-eyebrow" style={{ color: 'rgba(255,255,255,0.55)' }}>Be the first to earn</div>
       <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: 'rgba(255,255,255,0.8)' }}>
-        Book your first stay via WhatsApp and we'll manually credit your founding-guest points when the programme launches.
+        Book your stay on Airbnb or Booking.com and share your reservation ID with our support team to credit your founding-guest points when the programme launches.
       </p>
-      <a href="https://api.whatsapp.com/send/?phone=0000000000&text=Hi%2C+I%27d+like+to+chat+about+Temple+And+Towns+Resorts.&type=phone_number&app_absent=0"
+      <a href="https://api.whatsapp.com/send/?phone=0000000000&text=Hi%2C+I%27d+like+to+share+my+booking+details+for+loyalty+credits.&type=phone_number&app_absent=0"
         target="_blank" rel="noopener noreferrer"
         style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 26px', background: '#fff', color: '#0a1628', borderRadius: 'var(--pill)', fontSize: 15, fontWeight: 600, textDecoration: 'none' }}>
-        <Ico name="wa" size={15} /> Chat &amp; book now
+        <Ico name="wa" size={15} /> Contact Support
       </a>
     </div>
 
