@@ -1832,3 +1832,76 @@ img {
   /* sticky CTA tighter */
   .tt-mobile-cta-bar { padding: 10px 14px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
 }
+
+/* ---------- moments carousel (infinite auto-scroll) ---------- */
+.tt-moments-carousel-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 10px 0;
+  display: flex;
+  /* Beautiful soft edge fade on left and right sides */
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+
+.tt-moments-carousel-track {
+  display: flex;
+  width: max-content;
+  animation: tt-marquee 40s linear infinite;
+}
+
+/* Pause scroll animation on hover to allow inspection of items */
+.tt-moments-carousel-track:hover {
+  animation-play-state: paused;
+}
+
+.tt-moments-carousel-group {
+  display: flex;
+  gap: 20px;
+  padding-right: 20px; /* matches gap to ensure seamless loop */
+}
+
+.tt-moments-carousel-item {
+  width: 280px;
+  height: 350px;
+  position: relative;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+  background: var(--bg-tint);
+}
+
+.tt-moments-carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .6s var(--ease-spring);
+}
+
+.tt-moments-carousel-item:hover img {
+  transform: scale(1.04);
+}
+
+/* Smooth keyframe definition for translating exactly one group width */
+@keyframes tt-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Mobile responsive scaling */
+@media (max-width: 768px) {
+  .tt-moments-carousel-item {
+    width: 200px;
+    height: 250px;
+  }
+  .tt-moments-carousel-track {
+    animation-duration: 25s; /* slightly faster speed adjustment for smaller width */
+  }
+}

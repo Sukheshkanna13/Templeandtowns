@@ -99,7 +99,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
       </section>
 
       {/* MOMENTS */}
-      <section className="tt-section">
+      <section className="tt-section" style={{ overflow: 'hidden' }}>
         <div className="tt-page">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40, gap: 24, flexWrap: 'wrap' }}>
             <div style={{ maxWidth: 620 }}>
@@ -108,21 +108,42 @@ const HomeScreen = ({ go, setSearchCtx }) => {
             </div>
             <button className="tt-btn-link" onClick={() => go('search')}>See all stays →</button>
           </div>
-          <div className="tt-moments-grid">
-            {[
-              { label: 'pottery', cap: 'Pottery, Near Auroville' },
-              { label: 'temple-courtyard', cap: 'Sandalwood courtyards' },
-              { label: 'sea-evening', cap: 'Promenade, dusk' },
-              { label: 'street-food', cap: 'White Town evenings' },
-              { label: 'morning-yoga', cap: 'Yoga Near Auroville' },
-              { label: 'banyan-tree', cap: 'Nature walks' },
-            ].map(m => (
-              <div key={m.label} className="tt-moment">
-                <img src={`images/${m.label}.png`} alt={m.cap} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.45) 100%)', zIndex: 1 }} />
-                <span className="tt-moment-cap">{m.cap}</span>
-              </div>
-            ))}
+        </div>
+
+        <div className="tt-moments-carousel-container">
+          <div className="tt-moments-carousel-track">
+            <div className="tt-moments-carousel-group">
+              {[
+                { label: 'pottery', cap: 'Pottery, Near Auroville' },
+                { label: 'temple-courtyard', cap: 'Sandalwood courtyards' },
+                { label: 'sea-evening', cap: 'Promenade, dusk' },
+                { label: 'street-food', cap: 'White Town evenings' },
+                { label: 'morning-yoga', cap: 'Yoga Near Auroville' },
+                { label: 'banyan-tree', cap: 'Nature walks' },
+              ].map(m => (
+                <div key={m.label} className="tt-moments-carousel-item">
+                  <img src={`images/${m.label}.png`} alt={m.cap} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.45) 100%)', zIndex: 1 }} />
+                  <span className="tt-moment-cap">{m.cap}</span>
+                </div>
+              ))}
+            </div>
+            <div className="tt-moments-carousel-group" aria-hidden="true">
+              {[
+                { label: 'pottery', cap: 'Pottery, Near Auroville' },
+                { label: 'temple-courtyard', cap: 'Sandalwood courtyards' },
+                { label: 'sea-evening', cap: 'Promenade, dusk' },
+                { label: 'street-food', cap: 'White Town evenings' },
+                { label: 'morning-yoga', cap: 'Yoga Near Auroville' },
+                { label: 'banyan-tree', cap: 'Nature walks' },
+              ].map(m => (
+                <div key={`${m.label}-dup`} className="tt-moments-carousel-item">
+                  <img src={`images/${m.label}.png`} alt={m.cap} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.45) 100%)', zIndex: 1 }} />
+                  <span className="tt-moment-cap">{m.cap}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
