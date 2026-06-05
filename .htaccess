@@ -1,0 +1,7 @@
+# Serve .jsx files with the correct JavaScript MIME type
+AddType application/javascript .jsx
+
+# Enable gzip compression for better performance
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript
+</IfModule>

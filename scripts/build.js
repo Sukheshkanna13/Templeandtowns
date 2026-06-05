@@ -5,7 +5,8 @@ const root = path.resolve(__dirname, "..");
 const dist = path.join(root, "dist");
 const entries = [
   "index.html",
-  "test"
+  "test",
+  ".htaccess"
 ];
 
 fs.rmSync(dist, { recursive: true, force: true });
