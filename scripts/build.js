@@ -1,23 +1,22 @@
 const fs = require("fs");
 const path = require("path");
+const { execSync } = require("child_process");
 
 const root = path.resolve(__dirname, "..");
 const dist = path.join(root, "dist");
-const entries = [
-  "index.html",
-  "test",
-  ".htaccess"
-];
 
+// Step 1: Clean dist/ entirely
 fs.rmSync(dist, { recursive: true, force: true });
 fs.mkdirSync(dist, { recursive: true });
 
-for (const entry of entries) {
-  const source = path.join(root, entry);
-  if (!fs.existsSync(source)) continue;
+// Step 2: Run Vite build (outputs to dist/test/)
+console.log("Building React app with Vite...");
+execSync("npx vite build", { cwd: root, stdio: "inherit" });
 
-  const destination = path.join(dist, entry);
-  fs.cpSync(source, destination, { recursive: true });
-}
+// Step 3: Copy root index.html (splash page) to dist/
+console.log("Copying splash page...");
+fs.cpSync(path.join(root, "index.html"), path.join(dist, "index.html"));
 
-console.log(`Built static site to ${path.relative(root, dist)}`);
+console.log("\n✅ Build complete! Upload the contents of dist/ to public_html/");
+console.log("   dist/index.html       → domain.com/");
+console.log("   dist/test/            → domain.com/test/");
