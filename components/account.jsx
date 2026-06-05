@@ -45,7 +45,7 @@ const BookingsScreen = ({ go, bookings }) => {
 };
 window.BookingsScreen = BookingsScreen;
 
-// ---------- LOYALTY — COMING SOON ----------
+// ---------- LOYALTY ----------
 const LoyaltyScreen = ({ go }) => (
   <div className="tt-page" style={{ paddingTop: 56, paddingBottom: 96 }}>
     <div className="tt-eyebrow">Wayfarer Rewards</div>
@@ -54,14 +54,14 @@ const LoyaltyScreen = ({ go }) => (
       <span className="tt-italic-soft" style={{ color: 'var(--accent)' }}>earn more.</span>
     </h1>
     <div style={{ maxWidth: 560, fontSize: 17, color: 'var(--text-soft)', lineHeight: 1.6 }}>
-      Our loyalty programme is coming soon. Earn points every night, unlock discounts, room upgrades, and priority booking — exclusively for our earliest guests.
+      Welcome to our loyalty programme. Earn points every night, unlock discounts, room upgrades, and priority booking — exclusively for our guests.
     </div>
 
     <div className="tt-loyalty-tiers" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20, marginTop: 48 }}>
       {[
-        { n: 'Bronze', min: '0 – 499', perks: ['Welcome amenity', 'Base rate access'] },
-        { n: 'Silver', min: '500 – 1,999', perks: ['5% off every stay', 'Early check-in'] },
-        { n: 'Gold', min: '2,000+', perks: ['10% off every stay', 'Room upgrades', 'Priority queue'] },
+        { n: 'Bronze', min: '0 – 499', perks: ['Coming soon'] },
+        { n: 'Silver', min: '500 – 1,999', perks: ['Coming soon'] },
+        { n: 'Gold', min: '2,000+', perks: ['Coming soon'] },
       ].map(t => (
         <div key={t.n} className="tt-loyalty-tier-card" style={{ padding: 28, border: '1px solid var(--line)', borderRadius: 6 }}>
           <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', sans-serif", fontSize: 28, fontWeight: '700', color: 'var(--ink)' }}>{t.n}</div>
@@ -78,9 +78,9 @@ const LoyaltyScreen = ({ go }) => (
     </div>
 
     <div className="tt-loyalty-card" style={{ marginTop: 56, padding: 40, background: '#0a1628', color: '#fff', borderRadius: 6, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 20, maxWidth: 560 }}>
-      <div className="tt-eyebrow" style={{ color: 'rgba(255,255,255,0.55)' }}>Be the first to earn</div>
+      <div className="tt-eyebrow" style={{ color: 'rgba(255,255,255,0.55)' }}>Earn points on your stays</div>
       <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: 'rgba(255,255,255,0.8)' }}>
-        Book your stay on Airbnb or Booking.com and share your reservation ID with our support team to credit your founding-guest points when the programme launches.
+        Book your stay on Airbnb or Booking.com and share your reservation ID with our support team to credit your loyalty points.
       </p>
       <a href="https://api.whatsapp.com/send/?phone=0000000000&text=Hi%2C+I%27d+like+to+share+my+booking+details+for+loyalty+credits.&type=phone_number&app_absent=0"
         target="_blank" rel="noopener noreferrer"

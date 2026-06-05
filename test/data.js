@@ -33,7 +33,7 @@ window.TT_DATA = {
       cover: 'images/1F-1BHK/1.jpeg',
       images: [
         'images/1F-1BHK/1.jpeg', 'images/1F-1BHK/2.jpeg', 'images/1F-1BHK/3.jpeg', 'images/1F-1BHK/4.jpeg', 'images/1F-1BHK/5.jpeg',
-        'images/1F-1BHK/8.jpeg', 'images/1F-1BHK/10.jpeg', 'images/1F-1BHK/12.jpeg', 'images/1F-1BHK/14.jpeg', 'images/1F-1BHK/15.jpeg', 'images/1F-1BHK/16.jpeg',
+        'images/1F-1BHK/6.jpeg', 'images/1F-1BHK/7.jpeg', 'images/1F-1BHK/8.jpeg', 'images/1F-1BHK/9.jpeg', 'images/1F-1BHK/10.jpeg', 'images/1F-1BHK/11.jpeg',
       ],
     },
     {
@@ -85,8 +85,7 @@ window.TT_DATA = {
         'images/Auroville/1.jpeg', 'images/Auroville/2.jpeg', 'images/Auroville/3.jpeg', 'images/Auroville/4.jpeg', 'images/Auroville/5.jpeg',
         'images/Auroville/6.jpeg', 'images/Auroville/7.jpeg', 'images/Auroville/8.jpeg', 'images/Auroville/9.jpeg', 'images/Auroville/10.jpeg',
         'images/Auroville/11.jpeg', 'images/Auroville/12.jpeg', 'images/Auroville/13.jpeg', 'images/Auroville/14.jpeg', 'images/Auroville/15.jpeg',
-        'images/Auroville/16.jpeg', 'images/Auroville/17.jpeg', 'images/Auroville/18.jpeg', 'images/Auroville/19.jpeg', 'images/Auroville/20.jpeg',
-        'images/Auroville/21.jpeg', 'images/Auroville/22.jpeg',
+        'images/Auroville/16.jpeg', 'images/Auroville/17.jpeg',
       ],
     },
   ],

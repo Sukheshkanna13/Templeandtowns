@@ -225,30 +225,29 @@ const HomeScreen = ({ go, setSearchCtx }) => {
         </div>
       </section>
 
-      {/* WAYFARER REWARDS — COMING SOON */}
+      {/* WAYFARER REWARDS */}
       <section className="tt-section-sm" style={{ paddingTop: 0 }}>
         <div className="tt-page">
           <div className="tt-loyalty-teaser" style={{ background: '#0a1628', color: '#fff', borderRadius: 6, padding: '64px 56px', display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 56, alignItems: 'center' }}>
             <div>
-              <div className="tt-eyebrow" style={{ color: 'rgba(255,255,255,0.6)' }}>Coming Soon</div>
+              <div className="tt-eyebrow" style={{ color: 'rgba(255,255,255,0.6)' }}>Wayfarer Rewards</div>
               <h2 className="tt-h1" style={{ color: '#fff', marginTop: 16, marginBottom: 16 }}>
                 Wayfarer Rewards.<br />
                 <span className="tt-italic-soft" style={{ color: '#a4a6f0' }}>Stay more, earn more.</span>
               </h2>
               <p style={{ fontSize: 17, color: 'rgba(255,255,255,0.78)', lineHeight: 1.55, maxWidth: 480, margin: 0 }}>
-                Earn points every night. Unlock early check-ins, room upgrades, and exclusive rates. Launching soon — our earliest guests earn first.
+                Earn points every night. Unlock early check-ins, room upgrades, and exclusive rates. Our guests earn points from their very first stay.
               </p>
-              <a href="https://api.whatsapp.com/send/?phone=0000000000&text=Hi%2C+I%27d+like+to+chat+about+Temple+And+Towns+Resorts.&type=phone_number&app_absent=0"
-                target="_blank" rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 32, padding: '18px 34px', background: '#fff', color: '#0a1628', borderRadius: 'var(--pill)', fontSize: 16, fontWeight: 600, textDecoration: 'none' }}>
-                <Ico name="wa" size={15} /> Join the waitlist
-              </a>
+              <button onClick={() => go('loyalty')}
+                style={{ border: 'none', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 32, padding: '18px 34px', background: '#fff', color: '#0a1628', borderRadius: 'var(--pill)', fontSize: 16, fontWeight: 600 }}>
+                Explore Rewards <Ico name="arrow" size={15} />
+              </button>
             </div>
             <div>
               {[
-                { tier: 'Bronze', range: '0 – 499 pts', perks: 'Base rate + welcome gift' },
-                { tier: 'Silver', range: '500 – 1999 pts', perks: '5% off + early check-in' },
-                { tier: 'Gold', range: '2000+ pts', perks: '10% off + room upgrades' },
+                { tier: 'Bronze', range: '0 – 499 pts', perks: 'Coming soon' },
+                { tier: 'Silver', range: '500 – 1999 pts', perks: 'Coming soon' },
+                { tier: 'Gold', range: '2000+ pts', perks: 'Coming soon' },
               ].map(t => (
                 <div key={t.tier} style={{ borderTop: '1px solid rgba(255,255,255,0.12)', padding: '20px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
