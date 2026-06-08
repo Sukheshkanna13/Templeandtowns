@@ -23,6 +23,7 @@ window.TT_DATA = {
     {
       id: 'p1',
       city: 'pondicherry',
+      theme: 'town',
       name: 'White Town 1BHK - 1st Floor',
       area: 'White Town · 100m from beach',
       blurb: 'Madhubani 1 on 1st Floor, is located centrally in Pondicherry White Town. You will be close to beach, Sri Aurobindo Ashram, and nightlife. A cozy 1BHK with a small balcony and fully functional kitchen.',
@@ -39,6 +40,7 @@ window.TT_DATA = {
     {
       id: 'p2',
       city: 'pondicherry',
+      theme: 'town',
       name: 'White Town 1BHK - 2nd Floor',
       area: 'White Town · 100m from beach',
       blurb: 'Madhubani 2 on 2nd Floor, located centrally in White Town. Steps from the marketplace, groceries, and all daily needs. A cozy 1BHK independent floor for long stays.',
@@ -56,6 +58,7 @@ window.TT_DATA = {
     {
       id: 'p3',
       city: 'pondicherry',
+      theme: 'town',
       name: 'White Town 2BHK - 1st Floor',
       area: 'White Town · 100m from beach',
       blurb: 'Decor Inspired by Rajasthani Art and Traditions. 2BHK apartment in the 1st floor of a independent building with a full kitchen and in close proximity to all attractions.',
@@ -73,6 +76,7 @@ window.TT_DATA = {
     {
       id: 'p4',
       city: 'auroville',
+      theme: 'nature',
       name: 'Temple And Towns Resorts Nature Retreat',
       area: 'Near Auroville',
       blurb: 'Nestled in the peaceful surroundings Near Auroville, designed for resting and simple living. 12 Rooms with attached baths, Swimming Pool, Parking, Garden on a one acre facility. 5-7 minutes from Matrimandir.',

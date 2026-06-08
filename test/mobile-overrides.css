@@ -1,0 +1,299 @@
+/* =============================================================
+   Temple And Towns Resorts — Mobile Overrides
+   Scope: max-width 768px hero / pill / sheet, all-screen tabs
+   ============================================================= */
+
+/* ================================================================
+   1. HERO OVERLAY DIV — hidden by default, shown on mobile
+   ================================================================ */
+.tt-hero-overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ================================================================
+   2. SEARCH PILL WRAPPER — hidden on desktop
+   ================================================================ */
+.tt-pill-mobile-wrap {
+  display: none;
+}
+
+/* ================================================================
+   3. HERO FULL-BLEED — mobile only
+   ================================================================ */
+@media (max-width: 768px) {
+  /* Full-bleed hero with background image via CSS custom property
+     set as inline style on the section element in JSX            */
+  .tt-hero-section {
+    background-image: var(--tt-hero-bg, none);
+    background-size: cover;
+    background-position: center top;
+    min-height: 70vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-top: 0 !important;
+    padding-bottom: 20px !important;
+  }
+
+  /* Show dark overlay */
+  .tt-hero-overlay {
+    display: block;
+  }
+
+  /* Stack hero content above overlay */
+  .tt-hero-section > .tt-page {
+    position: relative;
+    z-index: 1;
+    padding-top: 72px;
+  }
+
+  /* Headline and subtext go white */
+  .tt-hero-text-wrap .tt-display {
+    color: #fff;
+  }
+  .tt-hero-text-wrap .tt-display .tt-italic-soft {
+    color: rgba(255, 255, 255, 0.78) !important;
+  }
+  .tt-hero-text-wrap .tt-sub {
+    color: rgba(255, 255, 255, 0.86) !important;
+  }
+
+  /* Hide "Find a stay" + "Chat with us" buttons — pill replaces them */
+  .tt-hero-cta-btns {
+    display: none !important;
+  }
+
+  /* Show search pill, hide desktop search form */
+  .tt-pill-mobile-wrap {
+    display: block;
+    position: relative;
+    z-index: 2;
+    padding: 16px 16px 0;
+  }
+
+  .tt-search-desktop-wrap {
+    display: none !important;
+  }
+}
+
+/* ================================================================
+   4. SEARCH PILL BUTTON (style always defined, shown via wrapper)
+   ================================================================ */
+.tt-search-pill {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: none;
+  border-radius: 9999px;
+  padding: 12px 12px 12px 22px;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
+  transition: box-shadow 0.2s, transform 0.14s;
+  -webkit-tap-highlight-color: transparent;
+}
+.tt-search-pill:active {
+  transform: scale(0.975);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+}
+
+.tt-pill-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  text-align: left;
+}
+
+.tt-pill-icon {
+  width: 38px;
+  height: 38px;
+  background: var(--ink);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  margin-left: 12px;
+  transition: background 0.2s;
+}
+.tt-search-pill:hover .tt-pill-icon {
+  background: var(--accent);
+}
+
+/* ================================================================
+   5. BOTTOM SHEET (portal to document.body)
+   ================================================================ */
+.tt-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.32);
+  z-index: 200;
+  animation: tt-backdrop-in 0.22s ease forwards;
+}
+
+.tt-bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  padding: 0 20px calc(28px + env(safe-area-inset-bottom, 0px));
+  z-index: 201;
+  animation: tt-sheet-up 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+.tt-sheet-drag-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0 18px;
+}
+.tt-sheet-drag-bar {
+  width: 36px;
+  height: 4px;
+  background: var(--line-strong);
+  border-radius: 99px;
+}
+
+.tt-sheet-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  transition: border-color 0.18s;
+}
+.tt-sheet-field:focus-within {
+  border-color: var(--ink);
+}
+.tt-sheet-field .lbl {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.tt-sheet-field select,
+.tt-sheet-field input[type="date"] {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  padding: 0;
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: inherit;
+}
+
+@keyframes tt-backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes tt-sheet-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* ================================================================
+   6. CATEGORY SCROLL TABS  (mobile + desktop)
+   ================================================================ */
+.tt-category-tabs-section {
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+
+.tt-category-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 0;
+}
+.tt-category-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tt-tab-chip {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: 8px 20px;
+  border-radius: 9999px;
+  border: 1px solid var(--line-strong);
+  background: #fff;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.16s, color 0.16s, border-color 0.16s, transform 0.12s;
+  -webkit-tap-highlight-color: transparent;
+  letter-spacing: -0.005em;
+}
+.tt-tab-chip:hover {
+  border-color: var(--ink);
+}
+.tt-tab-chip:active {
+  transform: scale(0.96);
+}
+.tt-tab-chip-active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+/* ================================================================
+   7. PROPERTY CARDS — mobile image-led
+   ================================================================ */
+@media (max-width: 768px) {
+  /* 16/9 image aspect on mobile */
+  .tt-card-media {
+    aspect-ratio: 16 / 9 !important;
+  }
+
+  /* Tighter text padding */
+  .tt-card-body {
+    padding: 12px 4px 8px !important;
+  }
+
+  /* Hide blurb on mobile to keep cards compact */
+  .tt-card-blurb {
+    display: none;
+  }
+}
+
+/* Remove hover lift/scale on touch-only devices */
+@media (hover: none) {
+  .tt-card:hover {
+    transform: none !important;
+  }
+  .tt-featured-tile:hover {
+    transform: none !important;
+    background: rgba(255, 255, 255, 0.96) !important;
+  }
+  .tt-journey:hover .tt-journey-link svg {
+    transform: none !important;
+  }
+  .tt-journey:hover .tt-journey-link {
+    gap: 8px !important;
+  }
+}
