@@ -153,8 +153,16 @@ export const UtilityBar = ({ go }) => (
 );
 
 // ---------- Main Navbar ----------
-export const Navbar = ({ screen, go }) => {
+export const Navbar = ({ screen, go, searchCtx }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const links = [
     { id: 'search', label: 'Stays' },
     { id: 'things', label: 'Things to do' },
@@ -164,37 +172,77 @@ export const Navbar = ({ screen, go }) => {
   ];
   const isActive = (id) => screen === id || (id === 'search' && ['home', 'property', 'book', 'wa-sent'].includes(screen));
   const close = () => setMenuOpen(false);
+
+  const isHome = screen === 'home';
+
   return (
-    <nav className="tt-nav">
-      <div className="tt-nav-inner">
-        <div className="tt-logo" onClick={() => { go('home'); close(); }}>
-          <img src={screen === 'retreat' ? 'nature-retreat-Logo.png' : 'TTR-Logo.png'} alt="Temple And Towns Resorts" className="tt-logo-img" />
+    <>
+      <nav className={`tt-nav ${isHome ? 'tt-nav-home' : ''} ${scrolled ? 'scrolled' : ''}`}>
+        <div className="tt-nav-inner tt-nav-dual-layout">
+          {/* LEFT: HAMBURGER */}
+          <button className="tt-hamburger-static" onClick={() => setMenuOpen(v => !v)} aria-label="Toggle menu">
+            {menuOpen ? <Ico name="x" size={20} /> : <Ico name="menu" size={20} />}
+          </button>
+
+          {/* CENTER: LOGO */}
+          <div className="tt-logo tt-logo-static" onClick={() => { go('home'); close(); }}>
+            <img src={screen === 'retreat' ? 'nature-retreat-Logo.png' : 'TTR-Logo.png'} alt="Temple And Towns Resorts" className="tt-logo-img" />
+          </div>
+
+          {/* RIGHT: WHATSAPP (Desktop Links or Mobile Icon) */}
+          <div className="tt-nav-right-static">
+            <div className="tt-nav-links">
+              {links.map(l => (
+                <span key={l.id}
+                  className={`tt-nav-link${isActive(l.id) ? ' active' : ''}`}
+                  onClick={() => { go(l.id); close(); }}>{l.label}</span>
+              ))}
+            </div>
+            <a href={WA_URL} target="_blank" rel="noopener noreferrer" 
+               className={`tt-nav-support ${scrolled ? 'fade-out' : ''}`}>
+              <span className="tt-wa-dot"><Ico name="wa" size={16} /></span>
+              <span className="text-hide-mobile">Support</span>
+            </a>
+          </div>
         </div>
-        <div className="tt-nav-links">
-          {links.map(l => (
-            <span key={l.id}
-              className={`tt-nav-link${isActive(l.id) ? ' active' : ''}`}
-              onClick={() => { go(l.id); close(); }}>{l.label}</span>
-          ))}
-          <a onClick={() => go('search')} className="tt-nav-wa-btn" style={{ cursor: 'pointer' }}>
-            Book Now
-          </a>
-        </div>
-        <button className="tt-hamburger" onClick={() => setMenuOpen(v => !v)} aria-label="Toggle menu">
-          {menuOpen ? <Ico name="x" size={20} /> : <Ico name="menu" size={20} />}
-        </button>
-      </div>
-      {menuOpen && (
-        <div className="tt-mobile-menu">
-          {links.map(l => (
-            <span key={l.id} className="tt-mobile-link" onClick={() => { go(l.id); close(); }}>{l.label}</span>
-          ))}
-          <a onClick={() => { go('search'); close(); }} className="tt-mobile-wa" style={{ cursor: 'pointer' }}>
-            Book Now
-          </a>
+
+        {menuOpen && (
+          <div className="tt-mobile-menu">
+            {links.map(l => (
+              <span key={l.id} className="tt-mobile-link" onClick={() => { go(l.id); close(); }}>{l.label}</span>
+            ))}
+            <a onClick={() => { go('search'); close(); }} className="tt-mobile-wa" style={{ cursor: 'pointer' }}>
+              Book Now
+            </a>
+          </div>
+        )}
+      </nav>
+
+      {/* HOME MOBILE SEARCH PILL - Renders strictly below top nav */}
+      {isHome && (
+        <div className="tt-floating-search-container">
+          <div className="tt-nav-search-pill" onClick={() => go('search')}>
+            <button className="burger-btn" onClick={(e) => { e.stopPropagation(); setMenuOpen(v => !v); }}>
+              <Ico name="menu" size={18} />
+            </button>
+            <div className="pill-content">
+              <div className="cell">
+                <span className="lbl">Where to?</span>
+                <span className="val">{searchCtx?.city || 'Pondicherry'}</span>
+              </div>
+              <div className="sep" />
+              <div className="cell">
+                <span className="lbl">Dates</span>
+                <span className="val">{tt.fmtDate(searchCtx?.checkIn)} – {tt.fmtDate(searchCtx?.checkOut)}</span>
+              </div>
+            </div>
+            <div className="search-icon-circle">
+              <Ico name="search" size={16} />
+            </div>
+          </div>
         </div>
       )}
-    </nav>
+    </>
   );
 };
 
