@@ -40,7 +40,6 @@ function App() {
 
   return (
     <>
-      <UtilityBar go={go}/>
       <Navbar screen={screen} go={go} searchCtx={searchCtx}/>
       <main>
         {screen === 'home'     && <HomeScreen go={go} setSearchCtx={setSearchCtx}/>}
