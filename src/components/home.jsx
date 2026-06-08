@@ -63,18 +63,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
         <div className="tt-hero-overlay-white" />
         
         <div className="tt-page tt-hero-content-wrap">
-          {/* BOTTOM CENTER CONTENT GROUPED TOGETHER */}
-          <div className="tt-hero-bottom-group">
-            <h1 className="tt-display tt-text-c">
-              Explore stays that feel <span className="tt-italic-soft">modern,</span><br />
-              calm, and unmistakably Indian.
-            </h1>
-            <div className="tt-hero-bottom-btn-wrap">
-              <button className="tt-btn tt-btn-primary tt-btn-lg" onClick={submit}>
-                Find a stay <Ico name="arrow" size={14} />
-              </button>
-            </div>
-          </div>
+          {/* Text and button removed per user request */}
         </div>
       </section>
 

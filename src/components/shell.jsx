@@ -177,27 +177,16 @@ export const Navbar = ({ screen, go, searchCtx }) => {
 
   return (
     <>
+      {/* 1. TOP STATIC NAVBAR */}
       <nav className={`tt-nav ${isHome ? 'tt-nav-home' : ''} ${scrolled ? 'scrolled' : ''}`}>
         <div className="tt-nav-inner tt-nav-dual-layout">
-          {/* LEFT: HAMBURGER */}
-          <button className="tt-hamburger-static" onClick={() => setMenuOpen(v => !v)} aria-label="Toggle menu">
-            {menuOpen ? <Ico name="x" size={20} /> : <Ico name="menu" size={20} />}
-          </button>
-
-          {/* CENTER: LOGO */}
+          {/* CENTER/LEFT: LOGO */}
           <div className="tt-logo tt-logo-static" onClick={() => { go('home'); close(); }}>
             <img src={screen === 'retreat' ? 'nature-retreat-Logo.png' : 'TTR-Logo.png'} alt="Temple And Towns Resorts" className="tt-logo-img" />
           </div>
 
-          {/* RIGHT: WHATSAPP (Desktop Links or Mobile Icon) */}
+          {/* RIGHT: WHATSAPP */}
           <div className="tt-nav-right-static">
-            <div className="tt-nav-links">
-              {links.map(l => (
-                <span key={l.id}
-                  className={`tt-nav-link${isActive(l.id) ? ' active' : ''}`}
-                  onClick={() => { go(l.id); close(); }}>{l.label}</span>
-              ))}
-            </div>
             <a href={WA_URL} target="_blank" rel="noopener noreferrer" 
                className={`tt-nav-support ${scrolled ? 'fade-out' : ''}`}>
               <span className="tt-wa-dot"><Ico name="wa" size={16} /></span>
@@ -205,25 +194,15 @@ export const Navbar = ({ screen, go, searchCtx }) => {
             </a>
           </div>
         </div>
-
-        {menuOpen && (
-          <div className="tt-mobile-menu">
-            {links.map(l => (
-              <span key={l.id} className="tt-mobile-link" onClick={() => { go(l.id); close(); }}>{l.label}</span>
-            ))}
-            <a onClick={() => { go('search'); close(); }} className="tt-mobile-wa" style={{ cursor: 'pointer' }}>
-              Book Now
-            </a>
-          </div>
-        )}
       </nav>
 
-      {/* HOME MOBILE SEARCH PILL - Renders strictly below top nav */}
+      {/* 2. FLOATING BOOKING BURGER (Search Pill) */}
       {isHome && (
         <div className="tt-floating-search-container">
           <div className="tt-nav-search-pill" onClick={() => go('search')}>
-            <button className="burger-btn" onClick={(e) => { e.stopPropagation(); setMenuOpen(v => !v); }}>
-              <Ico name="menu" size={18} />
+            {/* HAMBURGER MENU IS INSIDE THE PILL NOW */}
+            <button className="burger-btn" onClick={(e) => { e.stopPropagation(); setMenuOpen(v => !v); }} aria-label="Toggle menu">
+              {menuOpen ? <Ico name="x" size={18} /> : <Ico name="menu" size={18} />}
             </button>
             <div className="pill-content">
               <div className="cell">
@@ -240,6 +219,18 @@ export const Navbar = ({ screen, go, searchCtx }) => {
               <Ico name="search" size={16} />
             </div>
           </div>
+        </div>
+      )}
+
+      {/* MOBILE / DROPDOWN MENU OVERLAY */}
+      {menuOpen && (
+        <div className="tt-mobile-menu" style={{ position: 'fixed', top: '140px', zIndex: 100, width: '100%' }}>
+          {links.map(l => (
+            <span key={l.id} className="tt-mobile-link" onClick={() => { go(l.id); close(); }}>{l.label}</span>
+          ))}
+          <a onClick={() => { go('search'); close(); }} className="tt-mobile-wa" style={{ cursor: 'pointer' }}>
+            Book Now
+          </a>
         </div>
       )}
     </>
