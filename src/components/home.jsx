@@ -61,9 +61,45 @@ const HomeScreen = ({ go, setSearchCtx }) => {
       <section className="tt-hero-full">
         <img src="images/hero_resort.png" alt="Hero" className="tt-hero-bg-full" />
         <div className="tt-hero-overlay-white" />
+
+        {/* Sticky floating search pill — sticks to top as you scroll */}
+        <div className="tt-hero-sticky-pill">
+          <div className="tt-nav-search-pill" onClick={() => go('search')}>
+            <div className="pill-content">
+              <div className="cell">
+                <span className="lbl">Where to?</span>
+                <span className="val">{city}</span>
+              </div>
+              <div className="sep" />
+              <div className="cell">
+                <span className="lbl">Check in</span>
+                <span className="val">{tt.fmtDate(checkIn)}</span>
+              </div>
+              <div className="sep" />
+              <div className="cell">
+                <span className="lbl">Check out</span>
+                <span className="val">{tt.fmtDate(checkOut)}</span>
+              </div>
+            </div>
+            <div className="search-icon-circle">
+              <Ico name="search" size={16} />
+            </div>
+          </div>
+        </div>
         
         <div className="tt-page tt-hero-content-wrap">
-          {/* Text and button removed per user request */}
+          {/* BOTTOM GROUP: headline + CTA */}
+          <div className="tt-hero-bottom-group">
+            <h1 className="tt-display tt-text-c">
+              Explore stays that feel <span className="tt-italic-soft">modern,</span><br />
+              calm, and unmistakably Indian.
+            </h1>
+            <div className="tt-hero-bottom-btn-wrap">
+              <button className="tt-btn tt-btn-primary tt-btn-lg" onClick={submit}>
+                Find a stay <Ico name="arrow" size={14} />
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 

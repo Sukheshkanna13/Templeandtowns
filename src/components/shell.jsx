@@ -176,35 +176,17 @@ export const Navbar = ({ screen, go, searchCtx }) => {
   const isHome = screen === 'home';
 
   return (
-    <>
-      {/* 1. TOP STATIC NAVBAR */}
-      <nav className={`tt-nav ${isHome ? 'tt-nav-home' : ''} ${scrolled ? 'scrolled' : ''}`}>
-        <div className="tt-nav-inner tt-nav-dual-layout">
-          {/* CENTER/LEFT: LOGO */}
+    <nav className={`tt-nav ${isHome ? 'tt-nav-home' : ''} ${scrolled ? 'scrolled' : ''}`}>
+      <div className="tt-nav-inner tt-nav-dual-layout">
+        {/* LEFT: LOGO + INLINE SEARCH PILL */}
+        <div className="tt-nav-left-group">
           <div className="tt-logo tt-logo-static" onClick={() => { go('home'); close(); }}>
             <img src={screen === 'retreat' ? 'nature-retreat-Logo.png' : 'TTR-Logo.png'} alt="Temple And Towns Resorts" className="tt-logo-img" />
           </div>
 
-          {/* RIGHT: WHATSAPP */}
-          <div className="tt-nav-right-static">
-            <a href={WA_URL} target="_blank" rel="noopener noreferrer" 
-               className={`tt-nav-support ${scrolled ? 'fade-out' : ''}`}>
-              <span className="tt-wa-dot"><Ico name="wa" size={16} /></span>
-              <span className="text-hide-mobile">Support</span>
-            </a>
-          </div>
-        </div>
-      </nav>
-
-      {/* 2. FLOATING BOOKING BURGER (Search Pill) */}
-      {isHome && (
-        <div className="tt-floating-search-container">
-          <div className="tt-nav-search-pill" onClick={() => go('search')}>
-            {/* HAMBURGER MENU IS INSIDE THE PILL NOW */}
-            <button className="burger-btn" onClick={(e) => { e.stopPropagation(); setMenuOpen(v => !v); }} aria-label="Toggle menu">
-              {menuOpen ? <Ico name="x" size={18} /> : <Ico name="menu" size={18} />}
-            </button>
-            <div className="pill-content">
+          {/* Compact search pill in navbar */}
+          {isHome && (
+            <div className="tt-nav-pill-inline" onClick={() => go('search')}>
               <div className="cell">
                 <span className="lbl">Where to?</span>
                 <span className="val">{searchCtx?.city || 'Pondicherry'}</span>
@@ -214,17 +196,38 @@ export const Navbar = ({ screen, go, searchCtx }) => {
                 <span className="lbl">Dates</span>
                 <span className="val">{tt.fmtDate(searchCtx?.checkIn)} – {tt.fmtDate(searchCtx?.checkOut)}</span>
               </div>
+              <div className="search-icon-circle">
+                <Ico name="search" size={14} />
+              </div>
             </div>
-            <div className="search-icon-circle">
-              <Ico name="search" size={16} />
-            </div>
-          </div>
+          )}
         </div>
-      )}
 
-      {/* MOBILE / DROPDOWN MENU OVERLAY */}
+        {/* CENTER: DESKTOP NAV LINKS */}
+        <div className="tt-nav-links">
+          {links.map(l => (
+            <span key={l.id}
+              className={`tt-nav-link${isActive(l.id) ? ' active' : ''}`}
+              onClick={() => { go(l.id); close(); }}>{l.label}</span>
+          ))}
+        </div>
+
+        {/* RIGHT: SUPPORT + HAMBURGER */}
+        <div className="tt-nav-right-static">
+          <a href={WA_URL} target="_blank" rel="noopener noreferrer"
+             className="tt-nav-support">
+            <span className="tt-wa-dot"><Ico name="wa" size={16} /></span>
+            <span className="text-hide-mobile">Support</span>
+          </a>
+          <button className="tt-hamburger" onClick={() => setMenuOpen(v => !v)} aria-label="Toggle menu">
+            {menuOpen ? <Ico name="x" size={20} /> : <Ico name="menu" size={20} />}
+          </button>
+        </div>
+      </div>
+
+      {/* DROPDOWN MENU */}
       {menuOpen && (
-        <div className="tt-mobile-menu" style={{ position: 'fixed', top: '140px', zIndex: 100, width: '100%' }}>
+        <div className="tt-mobile-menu">
           {links.map(l => (
             <span key={l.id} className="tt-mobile-link" onClick={() => { go(l.id); close(); }}>{l.label}</span>
           ))}
@@ -233,7 +236,7 @@ export const Navbar = ({ screen, go, searchCtx }) => {
           </a>
         </div>
       )}
-    </>
+    </nav>
   );
 };
 
