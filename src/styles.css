@@ -229,6 +229,27 @@ img {
   pointer-events: none;
 }
 
+.tt-btn-card-cta {
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: var(--pill);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.tt-btn-card-cta:hover {
+  background: var(--accent);
+}
+
+.tt-btn-card-cta:active {
+  transform: scale(0.97);
+}
+
 /* ---------- top utility strip ---------- */
 .tt-utility {
   border-bottom: 1px solid var(--line);
@@ -2865,6 +2886,20 @@ img {
 .tt-moments-carousel-track {
   display: flex;
   width: max-content;
+  animation: tt-marquee 40s linear infinite;
+}
+
+.tt-moments-carousel-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes tt-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .tt-moments-carousel-group {
@@ -2903,6 +2938,9 @@ img {
   .tt-moments-carousel-item {
     width: 200px;
     height: 250px;
+  }
+  .tt-moments-carousel-track {
+    animation-duration: 25s; /* slightly faster speed adjustment for smaller width */
   }
 }
 

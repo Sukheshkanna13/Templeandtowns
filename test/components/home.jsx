@@ -257,9 +257,9 @@ const HomeScreen = ({ go, setSearchCtx }) => {
                     </div>
                   </div>
                   <div className="tt-card-body">
-                    <div className="tt-card-row">
+                    <div className="tt-card-row" style={{ alignItems: 'center' }}>
                       <span className="tt-card-name">{p.name}</span>
-                      <span className="tt-card-price">{p.from}</span>
+                      <button className="tt-btn-card-cta" onClick={(e) => { e.stopPropagation(); go('property', { propertyId: p.id }); }}>Book now</button>
                     </div>
                     <div className="tt-card-area">{p.area}</div>
                     <div className="tt-card-blurb">{p.blurb}</div>

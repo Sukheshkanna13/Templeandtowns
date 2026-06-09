@@ -29,7 +29,7 @@ window.TT_DATA = {
       blurb: 'Madhubani 1 on 1st Floor, is located centrally in Pondicherry White Town. You will be close to beach, Sri Aurobindo Ashram, and nightlife. A cozy 1BHK with a small balcony and fully functional kitchen.',
       rating: 4.9,
       reviews: '10+',
-      from: 'Book on Airbnb',
+      from: 'Book now',
       bookingUrl: 'https://airbnb.com/h/templeandtownswhitetown1st',
       cover: 'images/1F-1BHK/1.jpeg',
       images: [
@@ -46,7 +46,7 @@ window.TT_DATA = {
       blurb: 'Madhubani 2 on 2nd Floor, located centrally in White Town. Steps from the marketplace, groceries, and all daily needs. A cozy 1BHK independent floor for long stays.',
       rating: 4.8,
       reviews: '10+',
-      from: 'Book on Airbnb',
+      from: 'Book now',
       bookingUrl: 'https://airbnb.com/h/templeandtownswhitetown2ndfloor',
       cover: 'images/2F-1BHK/1.jpeg',
       images: [
@@ -64,7 +64,7 @@ window.TT_DATA = {
       blurb: 'Decor Inspired by Rajasthani Art and Traditions. 2BHK apartment in the 1st floor of a independent building with a full kitchen and in close proximity to all attractions.',
       rating: 4.9,
       reviews: '10+',
-      from: 'Book on Airbnb',
+      from: 'Book now',
       bookingUrl: 'https://airbnb.com/h/templeandtowns2bhk1st',
       cover: 'images/1F-2BHK/1.jpeg',
       images: [
@@ -82,7 +82,7 @@ window.TT_DATA = {
       blurb: 'Nestled in the peaceful surroundings Near Auroville, designed for resting and simple living. 12 Rooms with attached baths, Swimming Pool, Parking, Garden on a one acre facility. 5-7 minutes from Matrimandir.',
       rating: 4.9,
       reviews: '10+',
-      from: 'Book on Booking.com',
+      from: 'Book now',
       bookingUrl: 'https://www.booking.com/hotel/in/ttr-nature-retreat-auroville.html',
       cover: 'images/Auroville/1.jpeg',
       images: [
@@ -95,16 +95,16 @@ window.TT_DATA = {
   ],
   rooms: {
     p1: [
-      { id: 'r1a', type: '1BHK 1st Floor', capacity: 3, price: 'Book on Airbnb', beds: '1 Queen + Living Room', size: 'Independent floor', amenities: ['Wi-Fi', 'Kitchen', 'Laundry', 'Balcony'] },
+      { id: 'r1a', type: '1BHK 1st Floor', capacity: 3, price: 'Book now', beds: '1 Queen + Living Room', size: 'Independent floor', amenities: ['Wi-Fi', 'Kitchen', 'Laundry', 'Balcony'] },
     ],
     p2: [
-      { id: 'r2a', type: '1BHK 2nd Floor', capacity: 3, price: 'Book on Airbnb', beds: '1 Queen + Living Room', size: 'Independent floor', amenities: ['Wi-Fi', 'Kitchen', 'Laundry', 'Balcony'] },
+      { id: 'r2a', type: '1BHK 2nd Floor', capacity: 3, price: 'Book now', beds: '1 Queen + Living Room', size: 'Independent floor', amenities: ['Wi-Fi', 'Kitchen', 'Laundry', 'Balcony'] },
     ],
     p3: [
-      { id: 'r3a', type: '2BHK 1st Floor', capacity: 5, price: 'Book on Airbnb', beds: '2 Queen + Living Room', size: 'Independent floor', amenities: ['Wi-Fi', 'Kitchen', 'Rajasthani Decor'] },
+      { id: 'r3a', type: '2BHK 1st Floor', capacity: 5, price: 'Book now', beds: '2 Queen + Living Room', size: 'Independent floor', amenities: ['Wi-Fi', 'Kitchen', 'Rajasthani Decor'] },
     ],
     p4: [
-      { id: 'r4a', type: 'Nature Retreat', capacity: 2, price: 'Book on Booking.com', beds: '1 Queen', size: 'Attached Pool', amenities: ['WiFi', 'Garden View', 'Pool Access'] },
+      { id: 'r4a', type: 'Nature Retreat', capacity: 2, price: 'Book now', beds: '1 Queen', size: 'Attached Pool', amenities: ['WiFi', 'Garden View', 'Pool Access'] },
     ],
   },
   reviews: [

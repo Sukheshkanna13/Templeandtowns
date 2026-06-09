@@ -88,8 +88,7 @@ export const SearchScreen = ({ go, goBack, searchCtx, setSearchCtx }) => {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 24, paddingTop: 18, borderTop: '1px solid var(--line)' }}>
                 <span className="tt-muted" style={{ fontSize: 13 }}>{tt.nightsBetween(checkIn, checkOut) || 3} nights · view online</span>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 20, fontWeight: 600 }}>{p.from}</div>
-                  <button className="tt-btn tt-btn-primary tt-btn-sm" style={{ marginTop: 8 }}>View stay <Ico name="arrow" size={14} /></button>
+                  <button className="tt-btn tt-btn-primary tt-btn-sm">Book now <Ico name="arrow" size={14} /></button>
                 </div>
               </div>
             </div>
@@ -269,12 +268,12 @@ export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
             </div>
 
             <button className="tt-btn tt-btn-primary tt-btn-lg tt-w-full" style={{ marginTop: 20 }} onClick={onBook}>
-              Book on {platformName} <Ico name="arrow" size={14} />
+              Book now <Ico name="arrow" size={14} />
             </button>
             <p className="tt-muted" style={{ fontSize: 12, textAlign: 'center', marginTop: 12 }}>You will be redirected to {platformName} to complete your booking.</p>
             <hr className="tt-hr" />
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, fontSize: 16 }}><span>Pricing</span><span>View on {platformName}</span></div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, fontSize: 16 }}><span>Pricing</span><span>Book now</span></div>
             </div>
           </div>
         </div>
