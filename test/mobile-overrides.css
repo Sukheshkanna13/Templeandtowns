@@ -14,8 +14,10 @@
   display: none;
 }
 
-/* Mobile hero wrap hidden on desktop */
-.tt-hero-mobile-wrap {
+/* Mobile hero elements hidden on desktop */
+.tt-hero-mobile-top,
+.tt-hero-mobile-bottom,
+.tt-hero-float {
   display: none;
 }
 
@@ -25,16 +27,23 @@
    ================================================================ */
 @media (max-width: 768px) {
 
-  /* Turn the hero section into a full-bleed bg-image container */
+  /* Full-bleed hero container — explicit height so absolute children anchor correctly */
   .tt-hero-section {
-    background-image: var(--tt-hero-bg, none);
-    background-size: cover;
-    background-position: center top;
-    min-height: 82vh;
     position: relative;
-    display: flex;
-    flex-direction: column;
+    height: 90vh;
+    overflow: hidden;
     padding: 0 !important;
+  }
+
+  /* Hero background image — absolute so it doesn't push flex children */
+  .tt-hero-bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    z-index: 0;
   }
 
   /* Dark overlay */
@@ -43,7 +52,7 @@
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.42);
-    z-index: 0;
+    z-index: 1;
     pointer-events: none;
   }
 
@@ -52,14 +61,25 @@
     display: none !important;
   }
 
-  /* Mobile hero flex column — fills full section height */
-  .tt-hero-mobile-wrap {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-height: 82vh;
-    padding: 20px 16px 28px;
-    position: relative;
+  /* Search bar — pinned to top of hero */
+  .tt-hero-mobile-top {
+    display: block;
+    position: absolute;
+    top: 20px;
+    left: 16px;
+    right: 16px;
+    z-index: 2;
+  }
+
+  /* Text + CTA — pinned to bottom center of hero */
+  .tt-hero-mobile-bottom {
+    display: block;
+    position: absolute;
+    bottom: 36px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 0 24px;
     z-index: 2;
   }
 
@@ -74,8 +94,44 @@
 
   .tt-hero-title-mobile {
     color: #fff !important;
-    font-size: 26px !important;
-    line-height: 1.12 !important;
+    font-size: 22px !important;
+    line-height: 1.15 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .tt-hero-cta-mobile {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 14px 28px;
+    background: #0a1628;
+    color: #fff;
+    border: none;
+    border-radius: var(--pill);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: -0.01em;
+    transition: background 0.18s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .tt-hero-cta-mobile:active {
+    background: #1a2e4a;
+  }
+
+  /* ── Floating hero text — fixed, bottom center, fades on scroll ── */
+  .tt-hero-float {
+    display: block;
+    position: fixed;
+    bottom: 48px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 0 28px;
+    z-index: 40;
+    transition: opacity 0.15s ease;
   }
 }
 

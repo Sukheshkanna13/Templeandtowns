@@ -2061,7 +2061,52 @@ img {
 
 /* ---------- mobile adjustments ---------- */
 @media (max-width: 768px) {
-  .tt-slider-btn { display: none; } /* rely on swipe if possible, but for now hide */
+  /* ---- Mobile slider arrows: smaller, always visible, themed ---- */
+  .tt-slider-btn {
+    display: flex !important;
+    opacity: 1 !important;
+    width: 28px;
+    height: 28px;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .tt-slider-btn.prev { left: 6px; }
+  .tt-slider-btn.next { right: 6px; }
+
+  .tt-slider-btn:active {
+    transform: translateY(-50%) scale(0.85);
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .tt-slider-btn svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  /* Condensed dots for many-image carousels on mobile */
+  .tt-slider-dots {
+    gap: 4px;
+    bottom: 10px;
+    max-width: 80%;
+    overflow: hidden;
+    justify-content: center;
+  }
+
+  .tt-dot {
+    width: 5px;
+    height: 5px;
+    flex-shrink: 0;
+  }
+
+  .tt-dot.active {
+    width: 12px;
+    background: #fff;
+  }
 
   .tt-nav-links { display: none; } /* Hide standard desktop links in static mobile nav */
 
@@ -2568,5 +2613,79 @@ img {
   }
   .tt-moments-carousel-track {
     animation-duration: 25s; /* slightly faster speed adjustment for smaller width */
+  }
+}
+
+/* =================================================================
+   FLOATING HERO OVERLAY
+   Fixed to the bottom center of the viewport.
+   Positioned purely by viewport dimensions — NOT dependent on any
+   element size (hero image, nav, etc.). Fades on scroll via JS.
+   ================================================================= */
+
+.tt-hero-float-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 32px 64px;
+  text-align: center;
+  /* Smooth bottom gradient so text is always readable over any bg */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.35) 40%,
+    rgba(0, 0, 0, 0.08) 75%,
+    transparent 100%
+  );
+  /* Transition for the JS-driven opacity */
+  transition: opacity 0.12s ease-out;
+  will-change: opacity;
+}
+
+/* Title inside the overlay — white with subtle text-shadow for legibility */
+.tt-hero-float-title {
+  color: #fff !important;
+  margin: 0 0 28px;
+  max-width: 680px;
+  font-size: 40px;
+  line-height: 1.12;
+  text-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.35),
+    0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.tt-hero-float-title .tt-italic-soft {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* CTA button inside the overlay */
+.tt-hero-float-btn {
+  font-size: 16px;
+  padding: 18px 36px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* ---- Mobile: smaller text, tighter spacing ---- */
+@media (max-width: 768px) {
+  .tt-hero-float-overlay {
+    padding: 0 20px 40px;
+  }
+
+  .tt-hero-float-title {
+    font-size: 24px !important;
+    line-height: 1.15 !important;
+    margin-bottom: 20px;
+  }
+
+  .tt-hero-float-btn {
+    font-size: 15px;
+    padding: 14px 28px;
+    width: auto;
   }
 }

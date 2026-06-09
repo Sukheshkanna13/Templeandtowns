@@ -1,5 +1,5 @@
 /* global React, ReactDOM, Ico, tt, TT_DATA, WA_URL */
-const { useState, useMemo } = React;
+const { useState, useMemo, useEffect } = React;
 
 // ---------- 2-field Marriott search bar ----------
 const MobileSearchBar = ({ city, checkIn, onOpen }) => (
@@ -86,6 +86,13 @@ const HomeScreen = ({ go, setSearchCtx }) => {
   const [guests, setGuests] = useState('2 guests · 1 room');
   const [sheetOpen, setSheetOpen] = useState(false);
   const [activeTheme, setActiveTheme] = useState('all');
+  const [heroAlpha, setHeroAlpha] = useState(1);
+
+  useEffect(() => {
+    const onScroll = () => setHeroAlpha(Math.max(0, 1 - window.scrollY / 160));
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const submit = () => {
     setSearchCtx({ city, checkIn, checkOut, guests });
@@ -191,21 +198,9 @@ const HomeScreen = ({ go, setSearchCtx }) => {
           </div>
         </div>
 
-        {/* ── MOBILE wrap ── */}
-        <div className="tt-hero-mobile-wrap">
-          {/* 2-field bar at top */}
+        {/* ── MOBILE: search bar only inside hero ── */}
+        <div className="tt-hero-mobile-top">
           <MobileSearchBar city={city} checkIn={checkIn} onOpen={() => setSheetOpen(true)} />
-          {/* Push headline to bottom */}
-          <div style={{ flex: 1 }} />
-          {/* Headline at bottom */}
-          <div>
-            <span className="tt-hero-eyebrow-mobile">Temple And Towns Resorts</span>
-            <h1 className="tt-display tt-hero-title-mobile">
-              Stays that feel<br />
-              <em className="tt-italic-soft">unmistakably</em><br />
-              Indian.
-            </h1>
-          </div>
         </div>
       </section>
 
@@ -374,6 +369,19 @@ const HomeScreen = ({ go, setSearchCtx }) => {
           </div>
         </div>
       </section>
+
+      {/* ── FLOATING HERO OVERLAY (mobile only, fades on scroll) ── */}
+      <div className="tt-hero-float" style={{ opacity: heroAlpha, pointerEvents: heroAlpha > 0.05 ? 'auto' : 'none' }}>
+        <span className="tt-hero-eyebrow-mobile">Temple And Towns Resorts</span>
+        <h1 className="tt-display tt-hero-title-mobile">
+          Explore stays that feel<br />
+          <em className="tt-italic-soft">modern, calm,</em><br />
+          and unmistakably Indian.
+        </h1>
+        <button className="tt-hero-cta-mobile" onClick={submit}>
+          Find a stay <Ico name="arrow" size={14} />
+        </button>
+      </div>
 
       {/* ── LOYALTY ────────────────────────────────────── */}
       <section className="tt-section-sm" style={{ paddingTop: 0 }}>

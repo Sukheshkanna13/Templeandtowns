@@ -1,29 +1,139 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Ico, StripeImg, tt } from './shell';
 import { TT_DATA } from '../data';
 
+// ---------- Floating Hero Overlay ----------
+// Fixed to bottom-center of viewport, fades out on scroll.
+// Positioned purely by viewport dimensions — not dependent on any element.
+const HeroFloatOverlay = ({ onCta }) => {
+  const [opacity, setOpacity] = useState(1);
+  const rafRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(() => {
+        // Fade out completely within 150px of scroll
+        const scrollY = window.scrollY || window.pageYOffset;
+        const fadeEnd = 150;
+        const newOpacity = Math.max(0, 1 - scrollY / fadeEnd);
+        setOpacity(newOpacity);
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // set initial state
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  // Don't render at all when fully invisible (performance)
+  if (opacity <= 0) return null;
+
+  return (
+    <div
+      className="tt-hero-float-overlay"
+      style={{ opacity, pointerEvents: opacity < 0.1 ? 'none' : 'auto' }}
+      aria-hidden={opacity < 0.1}
+    >
+      <h1 className="tt-display tt-text-c tt-hero-float-title">
+        Explore stays that feel <span className="tt-italic-soft">modern,</span><br />
+        calm, and unmistakably Indian.
+      </h1>
+      <button className="tt-btn tt-btn-primary tt-btn-lg tt-hero-float-btn" onClick={onCta}>
+        Find a stay <Ico name="arrow" size={14} />
+      </button>
+    </div>
+  );
+};
+
 // ---------- Property Carousel Component ----------
+// Supports: arrow buttons (desktop + mobile) + touch swipe (mobile)
 const PropertyCarousel = ({ p, go }) => {
   const [idx, setIdx] = useState(0);
   const imgs = p.images || [p.cover];
+  const touchRef = useRef({ startX: 0, startY: 0, isDragging: false });
+  const [dragOffset, setDragOffset] = useState(0);
 
   const next = (e) => { e.stopPropagation(); setIdx((idx + 1) % imgs.length); };
   const prev = (e) => { e.stopPropagation(); setIdx((idx - 1 + imgs.length) % imgs.length); };
 
+  // Touch swipe handlers
+  const onTouchStart = (e) => {
+    const touch = e.touches[0];
+    touchRef.current = { startX: touch.clientX, startY: touch.clientY, isDragging: true };
+    setDragOffset(0);
+  };
+
+  const onTouchMove = (e) => {
+    if (!touchRef.current.isDragging) return;
+    const touch = e.touches[0];
+    const dx = touch.clientX - touchRef.current.startX;
+    const dy = touch.clientY - touchRef.current.startY;
+
+    // If vertical scroll is dominant, bail out
+    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dx) < 10) {
+      return;
+    }
+
+    // Prevent page scroll while swiping horizontally
+    if (Math.abs(dx) > 10) {
+      e.preventDefault();
+    }
+
+    // Rubber-band effect at edges: dampen drag when at first/last image
+    let offset = dx;
+    if ((idx === 0 && dx > 0) || (idx === imgs.length - 1 && dx < 0)) {
+      offset = dx * 0.3; // rubber-band
+    }
+    setDragOffset(offset);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchRef.current.isDragging) return;
+    touchRef.current.isDragging = false;
+
+    const threshold = 50; // px needed to trigger slide change
+    if (dragOffset < -threshold && idx < imgs.length - 1) {
+      setIdx(idx + 1);
+    } else if (dragOffset > threshold && idx > 0) {
+      setIdx(idx - 1);
+    }
+    setDragOffset(0);
+  };
+
+  // Calculate transform — base slide position + real-time drag offset
+  const trackTransform = `translateX(calc(-${idx * 100}% + ${dragOffset}px))`;
+  const trackTransition = dragOffset !== 0 ? 'none' : undefined; // disable transition while dragging
+
   return (
     <div className="tt-card" onClick={() => go('property', { propertyId: p.id })}>
-      <div className="tt-card-media">
-        <div className="tt-slider-track" style={{ transform: `translateX(-${idx * 100}%)` }}>
+      <div
+        className="tt-card-media"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        <div
+          className="tt-slider-track"
+          style={{
+            transform: trackTransform,
+            ...(trackTransition ? { transition: trackTransition } : {}),
+          }}
+        >
           {imgs.map((src, i) => (
-            <img key={i} src={src} alt={p.name} className="tt-slider-img" />
+            <img key={i} src={src} alt={p.name} className="tt-slider-img" loading="lazy" />
           ))}
         </div>
         
-        {/* SLIDER CONTROLS */}
+        {/* SLIDER CONTROLS — visible on desktop (hover) and mobile (always) */}
         <button className="tt-slider-btn prev" onClick={prev}><Ico name="arrowL" size={14} /></button>
         <button className="tt-slider-btn next" onClick={next}><Ico name="arrow" size={14} /></button>
 
-        {/* DOTS */}
+        {/* DOTS — show a condensed set on mobile */}
         <div className="tt-slider-dots">
           {imgs.map((_, i) => (
             <div key={i} className={`tt-dot ${i === idx ? 'active' : ''}`} />
@@ -87,21 +197,11 @@ const HomeScreen = ({ go, setSearchCtx }) => {
           </div>
         </div>
         
-        <div className="tt-page tt-hero-content-wrap">
-          {/* BOTTOM GROUP: headline + CTA */}
-          <div className="tt-hero-bottom-group">
-            <h1 className="tt-display tt-text-c">
-              Explore stays that feel <span className="tt-italic-soft">modern,</span><br />
-              calm, and unmistakably Indian.
-            </h1>
-            <div className="tt-hero-bottom-btn-wrap">
-              <button className="tt-btn tt-btn-primary tt-btn-lg" onClick={submit}>
-                Find a stay <Ico name="arrow" size={14} />
-              </button>
-            </div>
-          </div>
-        </div>
+        {/* Hero content removed — now rendered as a floating viewport overlay below */}
       </section>
+
+      {/* Floating overlay — fixed to bottom-center of viewport, fades on scroll */}
+      <HeroFloatOverlay onCta={submit} />
 
       {/* FEATURED PROPERTIES — Carousel based */}
       <section className="tt-section">
