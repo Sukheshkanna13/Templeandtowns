@@ -303,7 +303,7 @@ img {
 }
 
 .tt-logo-img {
-  height: 56px;
+  height: 72px; /* Increased logo size slightly */
   width: auto;
   max-width: 100%;
   object-fit: contain;
@@ -868,6 +868,14 @@ img {
   color: var(--text-soft);
   line-height: 1.55;
   margin-top: 8px;
+}
+
+.tt-line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tt-card-meta {
@@ -1454,7 +1462,7 @@ img {
 .tt-field input:focus,
 .tt-field select:focus {
   border-color: var(--ink);
-  box-shadow: 0 0 0 3px rgba(10,22,40,.06);
+  box-shadow: 0 0 0 3px rgba(10, 22, 40, .06);
 }
 
 /* ---------- Navbar — WhatsApp CTA button ---------- */
@@ -1573,7 +1581,8 @@ img {
 .tt-floating-hero-card {
   width: 100%;
   aspect-ratio: 16/10;
-  border-radius: 40px; /* Elegant curves */
+  border-radius: 40px;
+  /* Elegant curves */
   overflow: hidden;
   box-shadow: 0 40px 80px -20px rgba(10, 22, 40, 0.12);
   background: var(--bg-soft);
@@ -1596,7 +1605,7 @@ img {
 }
 
 .tt-nav.scrolled {
-  box-shadow: 0 2px 16px rgba(10,22,40,0.07);
+  box-shadow: 0 2px 16px rgba(10, 22, 40, 0.07);
 }
 
 .tt-nav-home {
@@ -1608,7 +1617,7 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 24px;
+  padding: 16px 24px; /* Slightly expanded padding to fit the larger logo */
 }
 
 .tt-logo-static {
@@ -1641,7 +1650,7 @@ img {
 .tt-nav-pill-inline:hover {
   background: #fff;
   border-color: var(--line-strong);
-  box-shadow: 0 4px 16px rgba(10,22,40,0.08);
+  box-shadow: 0 4px 16px rgba(10, 22, 40, 0.08);
 }
 
 .tt-nav-pill-inline .cell {
@@ -1746,8 +1755,17 @@ img {
 }
 
 @keyframes tt-menu-slide-nav {
-  from { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; }
-  to   { max-height: 500px; opacity: 1; }
+  from {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  to {
+    max-height: 500px;
+    opacity: 1;
+  }
 }
 
 .tt-mobile-menu .tt-mobile-link {
@@ -1783,7 +1801,8 @@ img {
 /* Hero sticky pill — sticks to top inside hero as you scroll */
 .tt-hero-sticky-pill {
   position: sticky;
-  top: 72px; /* just below the sticky nav */
+  top: 104px;
+  /* just below the sticky nav */
   z-index: 50;
   display: flex;
   justify-content: center;
@@ -1792,14 +1811,15 @@ img {
 }
 
 .tt-nav-search-pill {
-  pointer-events: auto; /* Re-enable clicks for the pill itself */
+  pointer-events: auto;
+  /* Re-enable clicks for the pill itself */
   display: flex;
   align-items: center;
   background: #fff;
   border: 1px solid var(--line-strong);
   border-radius: 100px;
   padding: 6px 14px;
-  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
   width: 100%;
   max-width: 420px;
   gap: 8px;
@@ -1809,7 +1829,7 @@ img {
 
 .tt-nav-search-pill:hover {
   transform: translateY(-2px);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.16);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
 }
 
 .tt-nav-search-pill .burger-btn {
@@ -1825,7 +1845,9 @@ img {
   cursor: pointer;
 }
 
-.tt-nav-search-pill .burger-btn:hover { background: var(--bg-soft); }
+.tt-nav-search-pill .burger-btn:hover {
+  background: var(--bg-soft);
+}
 
 .tt-nav-search-pill .pill-content {
   flex: 1;
@@ -1879,7 +1901,8 @@ img {
 /* ---------- Full-Bleed Hero Centering ---------- */
 .tt-hero-full {
   position: relative;
-  min-height: calc(100vh - 88px); /* Full viewport minus sticky nav height */
+  min-height: calc(100vh - 104px);
+  /* Full viewport minus sticky nav height */
   display: flex;
   flex-direction: column;
   background: var(--bg-soft);
@@ -1904,7 +1927,7 @@ img {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, rgba(255,255,255,0.95) 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0) 70%, rgba(255, 255, 255, 0.95) 100%);
   z-index: 1;
 }
 
@@ -1914,19 +1937,24 @@ img {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* Group items at the bottom */
+  justify-content: flex-end;
+  /* Group items at the bottom */
   align-items: center;
-  padding-top: 150px; 
-  padding-bottom: 140px; /* Increased bottom padding significantly */
-  gap: 32px; /* Add spacing between text and button */
+  padding-top: 150px;
+  padding-bottom: 140px;
+  /* Increased bottom padding significantly */
+  gap: 32px;
+  /* Add spacing between text and button */
 }
 
 /* Ensure mobile also groups at the bottom with increased padding */
 @media (max-width: 768px) {
   .tt-hero-content-wrap {
-    justify-content: flex-end; /* Also group at bottom on mobile */
-    padding-top: 110px; 
-    padding-bottom: 120px; /* Increased bottom padding for mobile */
+    justify-content: flex-end;
+    /* Also group at bottom on mobile */
+    padding-top: 110px;
+    padding-bottom: 120px;
+    /* Increased bottom padding for mobile */
     gap: 24px;
   }
 }
@@ -1943,9 +1971,9 @@ img {
 .tt-hero-bottom-group .tt-display {
   color: #fff;
   text-shadow:
-    0 0 6px rgba(0,0,0,0.3),
-    0 0 12px rgba(0,0,0,0.2),
-    0 0 24px rgba(0,0,0,0.1);
+    0 0 6px rgba(0, 0, 0, 0.3),
+    0 0 12px rgba(0, 0, 0, 0.2),
+    0 0 24px rgba(0, 0, 0, 0.1);
 }
 
 .tt-hero-bottom-btn-wrap {
@@ -1956,15 +1984,15 @@ img {
 
 /* ---------- Moments Section Sizing ---------- */
 .tt-moments-carousel-item {
-  width: 340px; /* Even bigger as requested */
-  height: 440px;
+  width: 320px;
+  height: 420px;
   position: relative;
-  border-radius: 40px; /* Innovations curves */
+  border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
   flex-shrink: 0;
   background: var(--bg-tint);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.10);
 }
 
 /* ---------- Navbar Overlap & Logo Fixes ---------- */
@@ -1975,12 +2003,13 @@ img {
 
 @media (max-width: 768px) {
   .tt-hero-full {
-    min-height: calc(100vh - 68px); /* Full viewport minus mobile nav height */
+    min-height: calc(100vh - 68px);
+    /* Full viewport minus mobile nav height */
   }
-  
+
   .tt-moments-carousel-item {
-    width: 280px;
-    height: 360px;
+    width: 220px;
+    height: 300px;
   }
 }
 
@@ -2013,17 +2042,24 @@ img {
   z-index: 4;
   opacity: 0;
   transition: opacity 0.3s, transform 0.3s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .tt-card:hover .tt-slider-btn {
   opacity: 1;
 }
 
-.tt-slider-btn.prev { left: 12px; }
-.tt-slider-btn.next { right: 12px; }
+.tt-slider-btn.prev {
+  left: 12px;
+}
 
-.tt-slider-btn:active { transform: translateY(-50%) scale(0.9); }
+.tt-slider-btn.next {
+  right: 12px;
+}
+
+.tt-slider-btn:active {
+  transform: translateY(-50%) scale(0.9);
+}
 
 .tt-slider-dots {
   position: absolute;
@@ -2061,6 +2097,7 @@ img {
 
 /* ---------- mobile adjustments ---------- */
 @media (max-width: 768px) {
+
   /* ---- Mobile slider arrows: smaller, always visible, themed ---- */
   .tt-slider-btn {
     display: flex !important;
@@ -2075,8 +2112,13 @@ img {
     border: 1px solid rgba(255, 255, 255, 0.15);
   }
 
-  .tt-slider-btn.prev { left: 6px; }
-  .tt-slider-btn.next { right: 6px; }
+  .tt-slider-btn.prev {
+    left: 6px;
+  }
+
+  .tt-slider-btn.next {
+    right: 6px;
+  }
 
   .tt-slider-btn:active {
     transform: translateY(-50%) scale(0.85);
@@ -2108,36 +2150,51 @@ img {
     background: #fff;
   }
 
-  .tt-nav-links { display: none; } /* Hide standard desktop links in static mobile nav */
+  .tt-nav-links {
+    display: none;
+  }
 
-  .text-hide-mobile { display: none; } /* Hide the text 'Support' in whatsapp button on mobile */
+  /* Hide standard desktop links in static mobile nav */
+
+  .text-hide-mobile {
+    display: none;
+  }
+
+  /* Hide the text 'Support' in whatsapp button on mobile */
 
   .tt-nav-support {
-    padding: 8px; /* Circular pill on mobile for WA */
+    padding: 8px;
+    /* Circular pill on mobile for WA */
     border-radius: 50%;
   }
 
   .tt-hamburger {
-    display: inline-flex; /* Show hamburger on mobile */
+    display: inline-flex;
+    /* Show hamburger on mobile */
   }
 
   .tt-nav-pill-inline {
-    display: none; /* Hide the inline pill on mobile — the hero sticky pill is used instead */
+    display: none;
+    /* Hide the inline pill on mobile — the hero sticky pill is used instead */
   }
 
   .tt-hero-sticky-pill {
-    top: 64px; /* just below the shorter mobile nav */
+    top: 74px; /* Matches static mobile nav height (logo 54px + 10px*2 = 74px) */
+    /* just below the shorter mobile nav */
   }
 
   .tt-nav-dual-layout {
-    padding: 10px 16px;
+    padding: 10px 16px; /* Static mobile layout padding */
   }
 }
 
 /* ---------- existing mobile 768px ---------- */
 @media (max-width: 768px) {
+
   /* ---- utility bar ---- */
-  .tt-utility { display: none !important; }
+  .tt-utility {
+    display: none !important;
+  }
 
   /* ---- logo hiding on mobile home ---- */
   .tt-logo-home-mobile {
@@ -2145,11 +2202,32 @@ img {
   }
 
   /* ---- typography scaling ---- */
-  .tt-display { font-size: 28px; line-height: 1.1; text-align: center; }
-  .tt-h1 { font-size: 28px; line-height: 1.12; }
-  .tt-h2 { font-size: 22px; }
-  .tt-h3 { font-size: 18px; }
-  .tt-sub { font-size: 16px; text-align: center; margin-left: auto; margin-right: auto; padding: 0 10px; }
+  .tt-display {
+    font-size: 28px;
+    line-height: 1.1;
+    text-align: center;
+  }
+
+  .tt-h1 {
+    font-size: 28px;
+    line-height: 1.12;
+  }
+
+  .tt-h2 {
+    font-size: 22px;
+  }
+
+  .tt-h3 {
+    font-size: 18px;
+  }
+
+  .tt-sub {
+    font-size: 16px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 10px;
+  }
 
   /* ---- navigation search pill (Marriott style) ---- */
   .tt-nav-home-mobile {
@@ -2171,7 +2249,7 @@ img {
     border: 1px solid var(--line-strong);
     border-radius: 100px;
     padding: 6px 14px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     width: 100%;
     max-width: 360px;
     gap: 8px;
@@ -2188,7 +2266,9 @@ img {
     border-radius: 50%;
   }
 
-  .tt-nav-search-pill .burger-btn:active { background: var(--bg-soft); }
+  .tt-nav-search-pill .burger-btn:active {
+    background: var(--bg-soft);
+  }
 
   .tt-nav-search-pill .pill-content {
     flex: 1;
@@ -2265,7 +2345,7 @@ img {
     height: 280px;
     border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 30px 60px -12px rgba(0,0,0,0.2), 0 18px 36px -18px rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.2), 0 18px 36px -18px rgba(0, 0, 0, 0.3);
     transform: rotateY(-6deg) rotateX(6deg) scale(1.05);
     background: var(--bg-soft);
   }
@@ -2287,19 +2367,37 @@ img {
   }
 
   /* ---- page padding ---- */
-  .tt-page { padding: 0 16px; }
+  .tt-page {
+    padding: 0 16px;
+  }
 
   .tt-utility-inner,
-  .tt-nav-inner { padding-left: 16px; padding-right: 16px; }
+  .tt-nav-inner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 
   /* ---- utility bar ---- */
-  .tt-utility-support { display: none; }
-  .tt-utility-right { display: none; }
+  .tt-utility-support {
+    display: none;
+  }
+
+  .tt-utility-right {
+    display: none;
+  }
 
   /* ---- nav ---- */
-  .tt-nav-links { display: none; }
-  .tt-hamburger { display: inline-flex; }
-  .tt-logo-img { height: 44px; }
+  .tt-nav-links {
+    display: none;
+  }
+
+  .tt-hamburger {
+    display: inline-flex;
+  }
+
+  .tt-logo-img {
+    height: 54px; /* Slightly increased mobile logo height */
+  }
 
   /* ---- mobile menu — smooth animation ---- */
   .tt-mobile-menu {
@@ -2307,10 +2405,21 @@ img {
     animation: tt-menu-slide 0.3s var(--ease) forwards;
     padding: 12px 16px 24px;
   }
+
   @keyframes tt-menu-slide {
-    from { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; }
-    to   { max-height: 400px; opacity: 1; }
+    from {
+      max-height: 0;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    to {
+      max-height: 400px;
+      opacity: 1;
+    }
   }
+
   .tt-mobile-link {
     padding: 16px 4px;
     font-size: 17px;
@@ -2318,22 +2427,36 @@ img {
     display: flex;
     align-items: center;
   }
+
   .tt-mobile-wa {
     min-height: 48px;
     font-size: 16px;
   }
 
   /* ---- hero ---- */
-  .tt-hero-grid { grid-template-columns: 1fr; gap: 32px; }
-  .tt-featured-card { display: none; }
+  .tt-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .tt-featured-card {
+    display: none;
+  }
 
   /* ---- search bar ---- */
   .tt-search {
     grid-template-columns: 1fr !important;
     border-radius: var(--r-sm) !important;
   }
-  .tt-search-cell:first-child { padding-left: 16px; }
-  .tt-search-cell { min-height: 48px; }
+
+  .tt-search-cell:first-child {
+    padding-left: 16px;
+  }
+
+  .tt-search-cell {
+    min-height: 48px;
+  }
+
   .tt-search-go {
     grid-column: 1 !important;
     padding: 18px;
@@ -2342,16 +2465,28 @@ img {
   }
 
   /* ---- sections ---- */
-  .tt-section { padding: 48px 0; }
-  .tt-section-sm { padding: 32px 0; }
+  .tt-section {
+    padding: 48px 0;
+  }
+
+  .tt-section-sm {
+    padding: 32px 0;
+  }
 
   /* ---- grids → single column ---- */
   .tt-grid-3,
   .tt-grid-2,
-  .tt-grid-4 { grid-template-columns: 1fr; }
+  .tt-grid-4 {
+    grid-template-columns: 1fr;
+  }
 
-  .tt-moments-grid { grid-template-columns: repeat(2, 1fr); }
-  .tt-journey-grid { grid-template-columns: 1fr; }
+  .tt-moments-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tt-journey-grid {
+    grid-template-columns: 1fr;
+  }
 
   .tt-footer-grid {
     grid-template-columns: 1fr;
@@ -2359,15 +2494,30 @@ img {
   }
 
   /* ---- dark featured section ---- */
-  .tt-dark-section { padding: 36px 20px; }
+  .tt-dark-section {
+    padding: 36px 20px;
+  }
 
   /* ---- loyalty teaser ---- */
-  .tt-loyalty-teaser { grid-template-columns: 1fr !important; padding: 36px 20px !important; gap: 28px !important; }
+  .tt-loyalty-teaser {
+    grid-template-columns: 1fr !important;
+    padding: 36px 20px !important;
+    gap: 28px !important;
+  }
 
   /* ---- loyalty tiers ---- */
-  .tt-loyalty-tiers { grid-template-columns: 1fr !important; }
-  .tt-loyalty-tier-card { padding: 20px !important; }
-  .tt-loyalty-card { padding: 28px 20px !important; gap: 16px !important; }
+  .tt-loyalty-tiers {
+    grid-template-columns: 1fr !important;
+  }
+
+  .tt-loyalty-tier-card {
+    padding: 20px !important;
+  }
+
+  .tt-loyalty-card {
+    padding: 28px 20px !important;
+    gap: 16px !important;
+  }
 
   /* ---- property page gallery ---- */
   .tt-property-gallery {
@@ -2375,29 +2525,43 @@ img {
     height: 240px !important;
     border-radius: 8px !important;
   }
-  .tt-property-gallery > *:not(:first-child) { display: none; }
+
+  .tt-property-gallery>*:not(:first-child) {
+    display: none;
+  }
 
   /* ---- property page main layout ---- */
   .tt-property-layout {
     grid-template-columns: 1fr !important;
     gap: 32px !important;
   }
-  .tt-property-sidebar .tt-summary { position: static !important; }
+
+  .tt-property-sidebar .tt-summary {
+    position: static !important;
+  }
 
   /* ---- booking wizard layout ---- */
   .tt-booking-layout {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
   }
-  .tt-booking-aside { order: -1; }
-  .tt-booking-aside .tt-summary { position: static !important; top: auto !important; }
+
+  .tt-booking-aside {
+    order: -1;
+  }
+
+  .tt-booking-aside .tt-summary {
+    position: static !important;
+    top: auto !important;
+  }
 
   /* ---- search result cards ---- */
   .tt-card[style*="flex-direction: row"] {
     flex-direction: column !important;
     max-height: none !important;
   }
-  .tt-card[style*="flex-direction: row"] > div:first-child {
+
+  .tt-card[style*="flex-direction: row"]>div:first-child {
     flex: none !important;
     width: 100% !important;
     height: 200px !important;
@@ -2410,30 +2574,50 @@ img {
     text-align: center;
     padding: 20px 16px !important;
   }
-  .tt-room-card > div:first-child {
+
+  .tt-room-card>div:first-child {
     width: 100% !important;
     height: 140px !important;
     margin: 0 auto;
   }
-  .tt-room-card > div:last-child {
+
+  .tt-room-card>div:last-child {
     text-align: center !important;
   }
 
   /* ---- How it works grid on home ---- */
-  .tt-how-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-  .tt-how-steps { grid-template-columns: 1fr !important; gap: 28px !important; }
+  .tt-how-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+
+  .tt-how-steps {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
 
   /* ---- Retreat page ---- */
-  .tt-retreat-hero { height: 260px !important; }
-  .tt-highlights-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .tt-retreat-hero {
+    height: 260px !important;
+  }
+
+  .tt-highlights-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
   .tt-experience-row {
     flex-direction: column !important;
     gap: 20px !important;
   }
-  .tt-experience-row > div:first-child {
+
+  .tt-experience-row>div:first-child {
     height: 200px !important;
   }
-  .tt-retreat-gallery { grid-template-columns: repeat(2, 1fr) !important; }
+
+  .tt-retreat-gallery {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 
   /* ---- Events page ---- */
   .tt-event-card {
@@ -2441,22 +2625,43 @@ img {
     padding: 24px 20px !important;
     gap: 16px !important;
   }
+
   .tt-event-card .tt-event-icon {
     align-self: flex-start;
   }
+
   .tt-events-cta {
     padding: 32px 20px !important;
   }
 
   /* ---- Booking wizard ---- */
-  .tt-booking-stepper { gap: 0; }
-  .tt-booking-stepper > div { min-width: 100px; padding: 14px 6px !important; }
-  .tt-guest-fields { grid-template-columns: 1fr !important; }
-  .tt-date-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+  .tt-booking-stepper {
+    gap: 0;
+  }
+
+  .tt-booking-stepper>div {
+    min-width: 100px;
+    padding: 14px 6px !important;
+  }
+
+  .tt-guest-fields {
+    grid-template-columns: 1fr !important;
+  }
+
+  .tt-date-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
 
   /* ---- Account / Folio ---- */
-  .tt-folio-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-  .tt-addon-grid { grid-template-columns: 1fr !important; }
+  .tt-folio-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .tt-addon-grid {
+    grid-template-columns: 1fr !important;
+  }
 
   /* ---- Property page — sticky mobile CTA ---- */
   .tt-mobile-cta-bar {
@@ -2475,7 +2680,12 @@ img {
     z-index: 90;
     box-shadow: 0 -4px 20px rgba(10, 22, 40, 0.08);
   }
-  .tt-mobile-cta-bar .tt-btn { flex: 1; justify-content: center; min-height: 48px; }
+
+  .tt-mobile-cta-bar .tt-btn {
+    flex: 1;
+    justify-content: center;
+    min-height: 48px;
+  }
 
   /* ---- WhatsApp FAB — mobile reposition ---- */
   .tt-wa-fab {
@@ -2484,13 +2694,18 @@ img {
     width: 48px;
     height: 48px;
   }
+
   /* Push FAB up when sticky CTA is showing (property page) */
   .tt-has-mobile-cta .tt-wa-fab {
     bottom: calc(80px + env(safe-area-inset-bottom, 0px));
   }
 
   /* ---- footer bottom row ---- */
-  .tt-footer-bottom { flex-direction: column; gap: 8px; align-items: flex-start; }
+  .tt-footer-bottom {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
 
   /* ---- footer — safe area inset ---- */
   .tt-footer {
@@ -2498,78 +2713,164 @@ img {
   }
 
   /* ---- touch feedback ---- */
-  * { -webkit-tap-highlight-color: rgba(10, 22, 40, 0.06); }
-  .tt-btn:active { transform: scale(0.97); }
-  .tt-card:active { transform: scale(0.985); }
-  .tt-mobile-link:active { background: var(--bg-soft); }
+  * {
+    -webkit-tap-highlight-color: rgba(10, 22, 40, 0.06);
+  }
+
+  .tt-btn:active {
+    transform: scale(0.97);
+  }
+
+  .tt-card:active {
+    transform: scale(0.985);
+  }
+
+  .tt-mobile-link:active {
+    background: var(--bg-soft);
+  }
 
   /* ---- buttons — ensure tap targets ---- */
-  .tt-btn { min-height: 44px; }
-  .tt-btn-sm { min-height: 40px; }
-  .tt-btn-lg { min-height: 52px; padding: 16px 28px; }
+  .tt-btn {
+    min-height: 44px;
+  }
+
+  .tt-btn-sm {
+    min-height: 40px;
+  }
+
+  .tt-btn-lg {
+    min-height: 52px;
+    padding: 16px 28px;
+  }
 }
 
 /* ---------- mobile 480px ---------- */
 @media (max-width: 480px) {
-  .tt-display { font-size: 24px; }
-  .tt-h1 { font-size: 24px; }
-  .tt-h2 { font-size: 20px; }
+  .tt-display {
+    font-size: 24px;
+  }
 
-  .tt-page { padding: 0 14px; }
-  .tt-moments-grid { grid-template-columns: 1fr; }
-  .tt-nav-inner { padding: 14px; }
-  .tt-utility-inner { padding: 10px 14px; }
-  .tt-section { padding: 36px 0; }
-  .tt-section-sm { padding: 24px 0; }
-  .tt-dark-section { padding: 28px 16px; }
-  .tt-loyalty-teaser { padding: 28px 16px !important; }
-  .tt-loyalty-card { padding: 24px 16px !important; }
+  .tt-h1 {
+    font-size: 24px;
+  }
+
+  .tt-h2 {
+    font-size: 20px;
+  }
+
+  .tt-page {
+    padding: 0 14px;
+  }
+
+  .tt-moments-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tt-nav-inner {
+    padding: 14px;
+  }
+
+  .tt-utility-inner {
+    padding: 10px 14px;
+  }
+
+  .tt-section {
+    padding: 36px 0;
+  }
+
+  .tt-section-sm {
+    padding: 24px 0;
+  }
+
+  .tt-dark-section {
+    padding: 28px 16px;
+  }
+
+  .tt-loyalty-teaser {
+    padding: 28px 16px !important;
+  }
+
+  .tt-loyalty-card {
+    padding: 24px 16px !important;
+  }
 
   /* tighter property gallery */
-  .tt-property-gallery { height: 200px !important; }
-  .tt-retreat-hero { height: 220px !important; }
-  .tt-retreat-gallery { grid-template-columns: 1fr !important; }
+  .tt-property-gallery {
+    height: 200px !important;
+  }
+
+  .tt-retreat-hero {
+    height: 220px !important;
+  }
+
+  .tt-retreat-gallery {
+    grid-template-columns: 1fr !important;
+  }
 
   /* stack booking nav buttons */
   .tt-booking-nav {
     flex-direction: column !important;
   }
-  .tt-booking-nav .tt-btn { width: 100%; }
+
+  .tt-booking-nav .tt-btn {
+    width: 100%;
+  }
 
   /* even smaller WhatsApp FAB */
-  .tt-wa-fab { width: 44px; height: 44px; right: 14px; bottom: 14px; }
+  .tt-wa-fab {
+    width: 44px;
+    height: 44px;
+    right: 14px;
+    bottom: 14px;
+  }
 
   /* sticky CTA tighter */
-  .tt-mobile-cta-bar { padding: 10px 14px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
+  .tt-mobile-cta-bar {
+    padding: 10px 14px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  }
 }
 
-/* ---------- moments carousel (infinite auto-scroll) ---------- */
+/* ---------- moments carousel (JS-driven drag + auto-scroll) ---------- */
 .tt-moments-carousel-container {
   width: 100%;
-  overflow: hidden;
+  overflow-x: scroll;
+  overflow-y: hidden;
   position: relative;
   padding: 10px 0;
-  display: flex;
+  /* Hide scrollbar across browsers */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
   /* Beautiful soft edge fade on left and right sides */
-  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
 }
 
+.tt-moments-carousel-container::-webkit-scrollbar {
+  display: none;
+  /* Chrome/Safari */
+}
+
+/* JS-driven track — no CSS animation, just flex layout */
+.tt-moments-carousel-track-js {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  padding: 0 20px;
+}
+
+/* Keep old track class for backward compat but remove animation */
 .tt-moments-carousel-track {
   display: flex;
   width: max-content;
-  animation: tt-marquee 40s linear infinite;
-}
-
-/* Pause scroll animation on hover to allow inspection of items */
-.tt-moments-carousel-track:hover {
-  animation-play-state: paused;
 }
 
 .tt-moments-carousel-group {
   display: flex;
   gap: 20px;
-  padding-right: 20px; /* matches gap to ensure seamless loop */
+  padding-right: 20px;
 }
 
 .tt-moments-carousel-item {
@@ -2589,20 +2890,12 @@ img {
   object-fit: cover;
   display: block;
   transition: transform .6s var(--ease-spring);
+  pointer-events: none;
+  /* prevent image drag ghost */
 }
 
 .tt-moments-carousel-item:hover img {
   transform: scale(1.04);
-}
-
-/* Smooth keyframe definition for translating exactly one group width */
-@keyframes tt-marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
 }
 
 /* Mobile responsive scaling */
@@ -2610,9 +2903,6 @@ img {
   .tt-moments-carousel-item {
     width: 200px;
     height: 250px;
-  }
-  .tt-moments-carousel-track {
-    animation-duration: 25s; /* slightly faster speed adjustment for smaller width */
   }
 }
 
@@ -2636,13 +2926,11 @@ img {
   padding: 0 32px 64px;
   text-align: center;
   /* Smooth bottom gradient so text is always readable over any bg */
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.55) 0%,
-    rgba(0, 0, 0, 0.35) 40%,
-    rgba(0, 0, 0, 0.08) 75%,
-    transparent 100%
-  );
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0.35) 40%,
+      rgba(0, 0, 0, 0.08) 75%,
+      transparent 100%);
   /* Transition for the JS-driven opacity */
   transition: opacity 0.12s ease-out;
   will-change: opacity;
@@ -2688,4 +2976,66 @@ img {
     padding: 14px 28px;
     width: auto;
   }
+}
+
+/* ---------- Back button ---------- */
+.tt-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px 10px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--pill);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  margin-bottom: 20px;
+  letter-spacing: -0.005em;
+}
+
+.tt-back-btn:hover {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+  transform: translateX(-2px);
+}
+
+.tt-back-btn:active {
+  transform: translateX(-2px) scale(0.97);
+}
+
+.tt-back-btn svg {
+  transition: transform 0.25s var(--ease);
+}
+
+.tt-back-btn:hover svg {
+  transform: translateX(-3px);
+}
+
+/* Breadcrumb row with back button */
+.tt-page-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.tt-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.tt-breadcrumb span[style*="cursor"] {
+  transition: color 0.2s var(--ease);
+}
+
+.tt-breadcrumb span[style*="cursor"]:hover {
+  color: var(--accent);
 }

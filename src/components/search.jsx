@@ -1,9 +1,9 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Ico, StripeImg, tt } from './shell';
+import { Ico, StripeImg, tt, BackButton } from './shell';
 import { TT_DATA } from '../data';
 
 // ---------- SEARCH ----------
-export const SearchScreen = ({ go, searchCtx, setSearchCtx }) => {
+export const SearchScreen = ({ go, goBack, searchCtx, setSearchCtx }) => {
   const [cityFilter, setCityFilter] = useState(searchCtx?.city || 'Pondicherry');
   const [checkIn, setCheckIn] = useState(searchCtx?.checkIn || tt.todayISO(1));
   const [checkOut, setCheckOut] = useState(searchCtx?.checkOut || tt.todayISO(4));
@@ -23,6 +23,11 @@ export const SearchScreen = ({ go, searchCtx, setSearchCtx }) => {
 
   return (
     <div className="tt-page" style={{ paddingTop: 56, paddingBottom: 96 }}>
+      <BackButton onClick={() => go('home')} label="Home" />
+      <div className="tt-breadcrumb" style={{ marginBottom: 24 }}>
+        <span style={{ cursor: 'pointer' }} onClick={() => go('home')}>Home</span><span>/</span>
+        <span style={{ color: 'var(--ink)' }}>Stays</span>
+      </div>
       <div style={{ marginBottom: 32 }}>
         <div className="tt-eyebrow">Stays</div>
         <h1 className="tt-h1" style={{ marginTop: 12, marginBottom: 0 }}>Find your stay in <span className="tt-italic-soft" style={{ color: 'var(--accent)' }}>{cityFilter}</span></h1>
@@ -73,7 +78,7 @@ export const SearchScreen = ({ go, searchCtx, setSearchCtx }) => {
               <div>
                 <div className="tt-eyebrow" style={{ fontSize: 11 }}>{p.area}</div>
                 <h3 className="tt-h3" style={{ marginTop: 8, marginBottom: 8 }}>{p.name}</h3>
-                <p style={{ color: 'var(--text-soft)', margin: 0, fontSize: 15, lineHeight: 1.55 }}>{p.blurb}</p>
+                <p className="tt-line-clamp-2" style={{ color: 'var(--text-soft)', margin: 0, fontSize: 15, lineHeight: 1.55 }}>{p.blurb}</p>
                 <div style={{ display: 'flex', gap: 8, marginTop: 14, flexWrap: 'wrap' }}>
                   {(TT_DATA.rooms[p.id] || [{}])[0]?.amenities?.slice(0, 3).map(a => (
                     <span key={a} className="tt-chip tt-chip-tonal" style={{ cursor: 'default' }}>{a}</span>
@@ -97,7 +102,7 @@ export const SearchScreen = ({ go, searchCtx, setSearchCtx }) => {
 };
 
 // ---------- PROPERTY ----------
-export const PropertyScreen = ({ go, params, searchCtx }) => {
+export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
   const property = TT_DATA.properties.find(p => p.id === params.propertyId);
   const rooms = TT_DATA.rooms[property.id] || [];
   const [selectedRoom, setSelectedRoom] = useState(rooms[0]?.id);
@@ -128,8 +133,9 @@ export const PropertyScreen = ({ go, params, searchCtx }) => {
 
   return (
     <div className="tt-page" style={{ paddingTop: 32, paddingBottom: isMobile ? 120 : 96 }}>
-      <div style={{ display: 'flex', gap: 8, fontSize: 13, color: 'var(--text-muted)', marginBottom: 24 }}>
-        <span style={{ cursor: 'pointer' }} onClick={() => go('home')}>Stays</span><span>/</span>
+      <BackButton onClick={() => go('search')} label="Back to stays" />
+      <div className="tt-breadcrumb" style={{ marginBottom: 24 }}>
+        <span style={{ cursor: 'pointer' }} onClick={() => go('home')}>Home</span><span>/</span>
         <span style={{ cursor: 'pointer' }} onClick={() => go('search')}>{property.city === 'pondicherry' ? 'White Town' : 'Near Auroville'}</span><span>/</span>
         <span style={{ color: 'var(--ink)' }}>{property.name}</span>
       </div>

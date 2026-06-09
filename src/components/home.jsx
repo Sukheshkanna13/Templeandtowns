@@ -156,6 +156,184 @@ const PropertyCarousel = ({ p, go }) => {
   );
 };
 
+// ---------- Moments Carousel — touch-aware, draggable, auto-scroll ----------
+const MOMENTS = [
+  { label: 'pottery', cap: 'Pottery, Near Auroville' },
+  { label: 'temple-courtyard', cap: 'Sandalwood courtyards' },
+  { label: 'sea-evening', cap: 'Promenade, dusk' },
+  { label: 'street-food', cap: 'White Town evenings' },
+  { label: 'morning-yoga', cap: 'Yoga Near Auroville' },
+  { label: 'banyan-tree', cap: 'Nature walks' },
+];
+
+const MomentsCarousel = () => {
+  const containerRef = useRef(null);
+  const autoScrollRef = useRef(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollStart = useRef(0);
+  const velocity = useRef(0);
+  const lastX = useRef(0);
+  const lastTime = useRef(0);
+  const momentumRaf = useRef(null);
+  const isPaused = useRef(false);
+  const autoSpeed = 0.6; // px per frame (~36px/s at 60fps)
+
+  // Triplicate items for seamless infinite loop
+  const items = useMemo(() => [...MOMENTS, ...MOMENTS, ...MOMENTS], []);
+
+  // Auto-scroll loop
+  const startAutoScroll = () => {
+    if (autoScrollRef.current) return;
+    const step = () => {
+      const el = containerRef.current;
+      if (!el || isPaused.current) {
+        autoScrollRef.current = requestAnimationFrame(step);
+        return;
+      }
+      el.scrollLeft += autoSpeed;
+
+      // Reset to middle set when we scroll past the last set
+      const oneSetWidth = el.scrollWidth / 3;
+      if (el.scrollLeft >= oneSetWidth * 2) {
+        el.scrollLeft -= oneSetWidth;
+      }
+      // Reset if scrolled before first set (reverse drag)
+      if (el.scrollLeft <= 0) {
+        el.scrollLeft += oneSetWidth;
+      }
+
+      autoScrollRef.current = requestAnimationFrame(step);
+    };
+    autoScrollRef.current = requestAnimationFrame(step);
+  };
+
+  const pause = () => { isPaused.current = true; };
+  const resume = () => { isPaused.current = false; };
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    // Start in the middle set for seamless looping
+    const oneSetWidth = el.scrollWidth / 3;
+    el.scrollLeft = oneSetWidth;
+
+    startAutoScroll();
+    return () => {
+      if (autoScrollRef.current) cancelAnimationFrame(autoScrollRef.current);
+      if (momentumRaf.current) cancelAnimationFrame(momentumRaf.current);
+    };
+  }, []);
+
+  // --- Pointer (mouse + touch) handlers ---
+  const onPointerDown = (e) => {
+    isDragging.current = true;
+    pause();
+    if (momentumRaf.current) cancelAnimationFrame(momentumRaf.current);
+
+    const el = containerRef.current;
+    startX.current = e.clientX || e.touches?.[0]?.clientX || 0;
+    scrollStart.current = el.scrollLeft;
+    lastX.current = startX.current;
+    lastTime.current = Date.now();
+    velocity.current = 0;
+
+    el.style.cursor = 'grabbing';
+    el.style.userSelect = 'none';
+  };
+
+  const onPointerMove = (e) => {
+    if (!isDragging.current) return;
+    const clientX = e.clientX || e.touches?.[0]?.clientX || 0;
+    const dx = startX.current - clientX;
+    const el = containerRef.current;
+    el.scrollLeft = scrollStart.current + dx;
+
+    // Track velocity for momentum
+    const now = Date.now();
+    const dt = now - lastTime.current;
+    if (dt > 0) {
+      velocity.current = (lastX.current - clientX) / dt;
+    }
+    lastX.current = clientX;
+    lastTime.current = now;
+
+    // Boundary wrap while dragging
+    const oneSetWidth = el.scrollWidth / 3;
+    if (el.scrollLeft >= oneSetWidth * 2) {
+      el.scrollLeft -= oneSetWidth;
+      scrollStart.current -= oneSetWidth;
+    } else if (el.scrollLeft <= 0) {
+      el.scrollLeft += oneSetWidth;
+      scrollStart.current += oneSetWidth;
+    }
+  };
+
+  const onPointerUp = () => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    const el = containerRef.current;
+    el.style.cursor = 'grab';
+    el.style.userSelect = '';
+
+    // Apply momentum
+    let v = velocity.current * 15; // scale up
+    const decelerate = () => {
+      if (Math.abs(v) < 0.3) {
+        resume();
+        return;
+      }
+      el.scrollLeft += v;
+      v *= 0.95; // friction
+
+      // Boundary wrap
+      const oneSetWidth = el.scrollWidth / 3;
+      if (el.scrollLeft >= oneSetWidth * 2) el.scrollLeft -= oneSetWidth;
+      if (el.scrollLeft <= 0) el.scrollLeft += oneSetWidth;
+
+      momentumRaf.current = requestAnimationFrame(decelerate);
+    };
+
+    if (Math.abs(velocity.current) > 0.05) {
+      momentumRaf.current = requestAnimationFrame(decelerate);
+    } else {
+      resume();
+    }
+  };
+
+  return (
+    <div
+      className="tt-moments-carousel-container"
+      ref={containerRef}
+      onMouseDown={onPointerDown}
+      onMouseMove={onPointerMove}
+      onMouseUp={onPointerUp}
+      onMouseLeave={(e) => { if (isDragging.current) onPointerUp(e); else resume(); }}
+      onMouseEnter={pause}
+      onTouchStart={(e) => onPointerDown(e.touches[0])}
+      onTouchMove={(e) => { e.preventDefault(); onPointerMove(e.touches[0]); }}
+      onTouchEnd={onPointerUp}
+      style={{ cursor: 'grab' }}
+    >
+      <div className="tt-moments-carousel-track-js">
+        {items.map((m, i) => (
+          <div key={`${m.label}-${i}`} className="tt-moments-carousel-item">
+            <img
+              src={`images/${m.label}.png`}
+              alt={m.cap}
+              draggable={false}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.45) 100%)', zIndex: 1 }} />
+            <span className="tt-moment-cap">{m.cap}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 // ---------- HOME ----------
 const HomeScreen = ({ go, setSearchCtx }) => {
   const [city, setCity] = useState('Pondicherry');
@@ -221,7 +399,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
         </div>
       </section>
 
-      {/* MOMENTS — Infinite "Ring Around" Carousel */}
+      {/* MOMENTS — Interactive Carousel with touch pause + drag scroll */}
       <section className="tt-section" style={{ overflow: 'hidden', paddingTop: 40 }}>
         <div className="tt-page">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40, gap: 24, flexWrap: 'wrap' }}>
@@ -233,42 +411,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
           </div>
         </div>
 
-        <div className="tt-moments-carousel-container">
-          <div className="tt-moments-carousel-track">
-            <div className="tt-moments-carousel-group">
-              {[
-                { label: 'pottery', cap: 'Pottery, Near Auroville' },
-                { label: 'temple-courtyard', cap: 'Sandalwood courtyards' },
-                { label: 'sea-evening', cap: 'Promenade, dusk' },
-                { label: 'street-food', cap: 'White Town evenings' },
-                { label: 'morning-yoga', cap: 'Yoga Near Auroville' },
-                { label: 'banyan-tree', cap: 'Nature walks' },
-              ].map(m => (
-                <div key={m.label} className="tt-moments-carousel-item">
-                  <img src={`images/${m.label}.png`} alt={m.cap} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.45) 100%)', zIndex: 1 }} />
-                  <span className="tt-moment-cap">{m.cap}</span>
-                </div>
-              ))}
-            </div>
-            <div className="tt-moments-carousel-group" aria-hidden="true">
-              {[
-                { label: 'pottery', cap: 'Pottery, Near Auroville' },
-                { label: 'temple-courtyard', cap: 'Sandalwood courtyards' },
-                { label: 'sea-evening', cap: 'Promenade, dusk' },
-                { label: 'street-food', cap: 'White Town evenings' },
-                { label: 'morning-yoga', cap: 'Yoga Near Auroville' },
-                { label: 'banyan-tree', cap: 'Nature walks' },
-              ].map(m => (
-                <div key={`${m.label}-dup`} className="tt-moments-carousel-item">
-                  <img src={`images/${m.label}.png`} alt={m.cap} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.45) 100%)', zIndex: 1 }} />
-                  <span className="tt-moment-cap">{m.cap}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <MomentsCarousel />
       </section>
 
       {/* DARK FEATURED JOURNEYS */}

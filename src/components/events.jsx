@@ -1,7 +1,7 @@
 import React from 'react';
-import { Ico } from './shell';
+import { Ico, BackButton } from './shell';
 
-const EventsPage = ({ go }) => {
+const EventsPage = ({ go, goBack }) => {
   const events = [
     {
       title: 'Experience Local Artisans',
@@ -31,8 +31,9 @@ const EventsPage = ({ go }) => {
 
   return (
     <div className="tt-page" style={{ paddingTop: 32, paddingBottom: 96 }}>
-      {/* Breadcrumbs */}
-      <div style={{ display: 'flex', gap: 8, fontSize: 13, color: 'var(--text-muted)', marginBottom: 24 }}>
+      {/* Back + Breadcrumbs */}
+      <BackButton onClick={() => go('retreat')} label="Back to retreat" />
+      <div className="tt-breadcrumb" style={{ marginBottom: 24 }}>
         <span style={{ cursor: 'pointer' }} onClick={() => go('home')}>Home</span><span>/</span>
         <span style={{ cursor: 'pointer' }} onClick={() => go('retreat')}>Nature Retreat</span><span>/</span>
         <span style={{ color: 'var(--ink)' }}>Events</span>

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Ico, StripeImg, tt } from './shell';
+import { Ico, StripeImg, tt, BackButton } from './shell';
 import { TT_DATA } from '../data';
 
 // ---------- BOOKINGS ----------
@@ -46,8 +46,13 @@ export const BookingsScreen = ({ go, bookings }) => {
 };
 
 // ---------- LOYALTY ----------
-export const LoyaltyScreen = ({ go }) => (
+export const LoyaltyScreen = ({ go, goBack }) => (
   <div className="tt-page" style={{ paddingTop: 56, paddingBottom: 96 }}>
+    <BackButton onClick={() => go('home')} label="Home" />
+    <div className="tt-breadcrumb" style={{ marginBottom: 24 }}>
+      <span style={{ cursor: 'pointer' }} onClick={() => go('home')}>Home</span><span>/</span>
+      <span style={{ color: 'var(--ink)' }}>Wayfarer Rewards</span>
+    </div>
     <div className="tt-eyebrow">Wayfarer Rewards</div>
     <h1 className="tt-h1" style={{ margin: '12px 0 24px' }}>
       Stay more,{' '}
@@ -89,15 +94,20 @@ export const LoyaltyScreen = ({ go }) => (
       </a>
     </div>
 
-    <button className="tt-btn-link" style={{ marginTop: 40 }} onClick={() => go('home')}>← Back to home</button>
+    <BackButton onClick={() => go('home')} label="Back to home" />
   </div>
 );
 
 // ---------- TRAVEL FOR A CAUSE ----------
-export const CauseScreen = ({ go }) => (
+export const CauseScreen = ({ go, goBack }) => (
   <div>
     <section className="tt-section" style={{ paddingTop: 64 }}>
       <div className="tt-page">
+        <BackButton onClick={() => go('home')} label="Home" />
+        <div className="tt-breadcrumb" style={{ marginBottom: 24 }}>
+          <span style={{ cursor: 'pointer' }} onClick={() => go('home')}>Home</span><span>/</span>
+          <span style={{ color: 'var(--ink)' }}>Travel for Cause</span>
+        </div>
         <div className="tt-eyebrow">CSR &amp; community</div>
         <h1 className="tt-display" style={{ marginTop: 16 }}>Travel that <span className="tt-italic-soft" style={{ color: 'var(--accent)' }}>gives back.</span></h1>
         <p style={{ maxWidth: 640, marginTop: 24, fontSize: 17, lineHeight: 1.55, color: 'var(--text-soft)' }}>
@@ -226,11 +236,22 @@ export const ExperienceScreen = ({ go }) => <ListPage eyebrow="Experiences" titl
   { cat: 'Pondicherry', t: 'Indo-French dinner', d: 'Pop-up at a private home in White Town.', price: 'Request to book', label: 'dinner', tone: 'oklch(0.84 0.06 30)' },
 ]} />;
 
-export const ThingsScreen = ({ go }) => <ListPage eyebrow="Things to do" title={<>Beyond the room.</>} sub="A short list, hand-picked by hosts. Book on the spot or save for later." items={[
+export const ThingsScreen = ({ go, goBack }) => (
+  <div>
+    <div className="tt-page" style={{ paddingTop: 56 }}>
+      <BackButton onClick={() => go('home')} label="Home" />
+      <div className="tt-breadcrumb" style={{ marginBottom: 0 }}>
+        <span style={{ cursor: 'pointer' }} onClick={() => go('home')}>Home</span><span>/</span>
+        <span style={{ color: 'var(--ink)' }}>Things to do</span>
+      </div>
+    </div>
+    <ListPage eyebrow="Things to do" title={<>Beyond the room.</>} sub="A short list, hand-picked by hosts. Book on the spot or save for later." items={[
   { cat: 'Outdoor', t: 'Cycling the East Coast Road', d: 'Half-day ride, cycle and helmet time', price: 'Request to book', label: 'images/coastal_cycling.png', tone: 'oklch(0.85 0.06 220)' },
   { cat: 'Wellness', t: 'Abhyanga massage', d: 'Sixty minutes of warm-oil bliss.', price: 'Request to book', label: 'images/spa_abhyanga.png', tone: 'oklch(0.88 0.04 60)' },
   { cat: 'Crafts', t: 'Block-printing class', d: 'Take home what you print.', price: 'Request to book', label: 'images/block_printing.png', tone: 'oklch(0.86 0.06 30)' },
-]} />;
+]} />
+  </div>
+);
 
 export const EventsScreen = ({ go }) => <ListPage eyebrow="Nature Retreat Events" title={<>Meaningful memories.</>} sub="At Temple And Towns Resorts Nature Retreat - enjoy simple, thoughtfully curated experiences that connect you with nature, local culture and the peaceful spirit of Near Auroville. 🪷" items={[
   { cat: 'Near Auroville', t: 'Experience Local Artisans', d: 'Discover the charm of local craftsmanship through simple demonstrations and hands-on workshops. Meet local artisans, explore handmade jewellery, weaving and jute crafts. Take home a little piece of Near Auroville with you.', price: 'Request to book', label: 'craft', tone: 'oklch(0.85 0.06 30)' },

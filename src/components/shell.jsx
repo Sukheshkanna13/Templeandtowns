@@ -215,7 +215,7 @@ export const Navbar = ({ screen, go, searchCtx }) => {
         {/* RIGHT: SUPPORT + HAMBURGER */}
         <div className="tt-nav-right-static">
           <a href={WA_URL} target="_blank" rel="noopener noreferrer"
-             className="tt-nav-support">
+            className="tt-nav-support">
             <span className="tt-wa-dot"><Ico name="wa" size={16} /></span>
             <span className="text-hide-mobile">Support</span>
           </a>
@@ -287,4 +287,12 @@ export const WhatsAppFab = () => (
   <a className="tt-wa-fab" href={WA_URL} target="_blank" rel="noopener noreferrer" aria-label="Chat with Support">
     <Ico name="wa" size={26} />
   </a>
+);
+
+// ---------- Back Button ----------
+export const BackButton = ({ onClick, label }) => (
+  <button className="tt-back-btn" onClick={onClick} aria-label={label || 'Go back'}>
+    <Ico name="arrowL" size={16} />
+    <span>{label || 'Back'}</span>
+  </button>
 );

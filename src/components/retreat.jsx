@@ -1,8 +1,8 @@
 import React from 'react';
-import { Ico } from './shell';
+import { Ico, BackButton } from './shell';
 import { TT_DATA } from '../data';
 
-const NatureRetreatScreen = ({ go }) => {
+const NatureRetreatScreen = ({ go, goBack }) => {
   const property = TT_DATA.properties.find(p => p.id === 'p4');
   const galleryImgs = (property?.images || []).slice(0, 8);
 
@@ -26,7 +26,8 @@ const NatureRetreatScreen = ({ go }) => {
 
   return (
     <div className="tt-page" style={{ paddingTop: 32, paddingBottom: 96 }}>
-      <div style={{ display: 'flex', gap: 8, fontSize: 13, color: 'var(--text-muted)', marginBottom: 24 }}>
+      <BackButton onClick={() => go('home')} label="Home" />
+      <div className="tt-breadcrumb" style={{ marginBottom: 24 }}>
         <span style={{ cursor: 'pointer' }} onClick={() => go('home')}>Home</span><span>/</span>
         <span style={{ color: 'var(--ink)' }}>Nature Retreat</span>
       </div>
@@ -106,7 +107,7 @@ const NatureRetreatScreen = ({ go }) => {
         <img
           src="nature-retreat-Logo.png"
           alt="Nature Retreat Logo"
-          style={{ width: 80, height: 80, objectFit: 'contain', mixBlendMode: 'multiply', marginBottom: 16 }}
+          style={{ width: 120, height: 120, objectFit: 'contain', mixBlendMode: 'multiply', marginBottom: 16 }}
         />
         <h2 className="tt-h2" style={{ margin: '0 0 16px' }}>Ready to disconnect?</h2>
         <p className="tt-muted" style={{ fontSize: 16, marginBottom: 32, maxWidth: 500, margin: '0 auto 32px' }}>
