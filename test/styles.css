@@ -330,14 +330,14 @@ img {
 
 .tt-logo-split {
   display: inline-flex;
-  align-items: center;
-  gap: 10px;
+  align-items: flex-end;
+  gap: 4px;
   cursor: pointer;
   vertical-align: middle;
 }
 
 .tt-logo-left-img {
-  height: 48px;
+  height: 64px;
   width: auto;
   object-fit: contain;
   mix-blend-mode: multiply;
@@ -345,7 +345,7 @@ img {
 }
 
 .tt-logo-half-img {
-  height: 34px;
+  height: 44px;
   width: auto;
   object-fit: contain;
   mix-blend-mode: multiply;
@@ -1643,9 +1643,9 @@ img {
   .tt-nav-links { display: none; }
   .tt-hamburger { display: inline-flex; }
   .tt-logo-img { height: 44px; }
-  .tt-logo-left-img { height: 38px; }
-  .tt-logo-half-img { height: 26px; }
-  .tt-logo-split { gap: 6px; }
+  .tt-logo-left-img { height: 48px; }
+  .tt-logo-half-img { height: 32px; }
+  .tt-logo-split { gap: 3px; }
 
   /* ---- mobile menu — smooth animation ---- */
   .tt-mobile-menu {

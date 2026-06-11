@@ -264,8 +264,8 @@ export const Footer = ({ screen }) => {
                 <img src="nature-retreat-Logo.png" alt="Nature Retreat" className="tt-logo-img" style={{ height: 48, width: 48, objectFit: 'contain' }} />
               ) : (
                 <>
-                  <img src="logo-left.png" alt="Temple and Towns Resorts Logo Mark" className="tt-logo-left-img" style={{ height: 44 }} />
-                  <img src="logo-half.png" alt="Temple and Towns Resorts Wordmark" className="tt-logo-half-img" style={{ height: 30 }} />
+                  <img src="logo-left.png" alt="Temple and Towns Resorts Logo Mark" className="tt-logo-left-img" />
+                  <img src="logo-half.png" alt="Temple and Towns Resorts Wordmark" className="tt-logo-half-img" />
                 </>
               )}
             </div>

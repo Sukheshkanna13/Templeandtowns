@@ -86,31 +86,31 @@
 
     .brand-logo-split {
       display: flex;
-      align-items: center;
-      gap: 10px;
+      align-items: flex-end;
+      gap: 4px;
     }
 
     .brand-logo-split img.logo-left {
-      height: 52px;
+      height: 64px;
       width: auto;
       mix-blend-mode: multiply;
     }
 
     .brand-logo-split img.logo-half {
-      height: 36px;
+      height: 44px;
       width: auto;
       mix-blend-mode: multiply;
     }
 
     @media (max-width: 480px) {
       .brand-logo-split {
-        gap: 6px;
+        gap: 3px;
       }
       .brand-logo-split img.logo-left {
-        height: 40px;
+        height: 48px;
       }
       .brand-logo-split img.logo-half {
-        height: 28px;
+        height: 32px;
       }
     }
 
@@ -318,8 +318,8 @@
   <div class="ambient-glow-1"></div>
   <div class="ambient-glow-2"></div>
 
-  <!-- Header -->
-  <header style="display: flex; justify-content: center; align-items: center; margin-top: 1rem; z-index: 10;">
+  <!-- Header (Left aligned with the main content container) -->
+  <header style="display: flex; justify-content: flex-start; align-items: flex-end; width: 100%; max-width: 620px; margin: 1rem auto 0; padding: 0 1.5rem; z-index: 10;">
     <div class="brand-logo-split">
       <img src="test/logo-left.png" alt="Temple and Towns Resorts Logo Mark" class="logo-left" />
       <img src="test/logo-half.png" alt="Temple and Towns Resorts Wordmark" class="logo-half" />
