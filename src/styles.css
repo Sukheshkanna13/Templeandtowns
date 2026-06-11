@@ -323,6 +323,38 @@ img {
   cursor: pointer;
 }
 
+.tt-logo-split {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.tt-logo-left-img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  transition: transform 0.25s var(--ease);
+}
+
+.tt-logo-half-img {
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  transition: transform 0.25s var(--ease);
+}
+
+.tt-logo-split:hover .tt-logo-left-img {
+  transform: scale(1.03);
+}
+
+.tt-logo-split:hover .tt-logo-half-img {
+  transform: scale(1.01);
+}
+
 .tt-logo-img {
   height: 72px; /* Increased logo size slightly */
   width: auto;
@@ -2418,6 +2450,18 @@ img {
 
   .tt-logo-img {
     height: 54px; /* Slightly increased mobile logo height */
+  }
+
+  .tt-logo-left-img {
+    height: 38px;
+  }
+
+  .tt-logo-half-img {
+    height: 26px;
+  }
+
+  .tt-logo-split {
+    gap: 6px;
   }
 
   /* ---- mobile menu — smooth animation ---- */

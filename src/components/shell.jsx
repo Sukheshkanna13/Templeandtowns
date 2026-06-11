@@ -180,8 +180,15 @@ export const Navbar = ({ screen, go, searchCtx }) => {
       <div className="tt-nav-inner tt-nav-dual-layout">
         {/* LEFT: LOGO + INLINE SEARCH PILL */}
         <div className="tt-nav-left-group">
-          <div className="tt-logo tt-logo-static" onClick={() => { go('home'); close(); }}>
-            <img src={screen === 'retreat' ? 'nature-retreat-Logo.png' : 'TTR-Logo.png'} alt="Temple And Towns Resorts" className="tt-logo-img" />
+          <div className="tt-logo-split tt-logo-static" onClick={() => { go('home'); close(); }}>
+            {screen === 'retreat' ? (
+              <img src="nature-retreat-Logo.png" alt="Nature Retreat" className="tt-logo-img" style={{ height: 52 }} />
+            ) : (
+              <>
+                <img src="logo-left.png" alt="Temple and Towns Resorts Logo Mark" className="tt-logo-left-img" />
+                <img src="logo-half.png" alt="Temple and Towns Resorts Wordmark" className="tt-logo-half-img" />
+              </>
+            )}
           </div>
 
           {/* Compact search pill in navbar */}
@@ -252,8 +259,15 @@ export const Footer = ({ screen }) => {
       <div className="tt-page">
         <div className="tt-footer-grid">
           <div>
-            <div className="tt-logo" style={{ marginBottom: 18 }}>
-              <img src={screen === 'retreat' ? 'nature-retreat-Logo.png' : 'TTR-Logo.png'} alt="Temple And Towns Resorts" className="tt-logo-img" style={{ height: 48, width: 48 }} />
+            <div className="tt-logo-split" style={{ marginBottom: 18, cursor: 'pointer' }} onClick={() => { go('home'); }}>
+              {screen === 'retreat' ? (
+                <img src="nature-retreat-Logo.png" alt="Nature Retreat" className="tt-logo-img" style={{ height: 48, width: 48, objectFit: 'contain' }} />
+              ) : (
+                <>
+                  <img src="logo-left.png" alt="Temple and Towns Resorts Logo Mark" className="tt-logo-left-img" style={{ height: 44 }} />
+                  <img src="logo-half.png" alt="Temple and Towns Resorts Wordmark" className="tt-logo-half-img" style={{ height: 30 }} />
+                </>
+              )}
             </div>
             <p style={{ color: 'var(--text-soft)', fontSize: 14, maxWidth: 340, lineHeight: 1.6, margin: 0 }}>
               Modern, calm, unmistakably Indian. A small, hand-picked collection of stays across temple towns and quiet coastlines — designed to feel premium without feeling heavy.

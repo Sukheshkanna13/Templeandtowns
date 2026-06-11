@@ -84,18 +84,34 @@
       margin-top: 1rem;
     }
 
-    .brand-logo {
-      font-family: var(--font-apple-display);
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink);
+    .brand-logo-split {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .brand-logo span {
-      font-weight: 300;
-      opacity: 0.6;
+    .brand-logo-split img.logo-left {
+      height: 52px;
+      width: auto;
+      mix-blend-mode: multiply;
+    }
+
+    .brand-logo-split img.logo-half {
+      height: 36px;
+      width: auto;
+      mix-blend-mode: multiply;
+    }
+
+    @media (max-width: 480px) {
+      .brand-logo-split {
+        gap: 6px;
+      }
+      .brand-logo-split img.logo-left {
+        height: 40px;
+      }
+      .brand-logo-split img.logo-half {
+        height: 28px;
+      }
     }
 
     /* Content Area */
@@ -303,9 +319,10 @@
   <div class="ambient-glow-2"></div>
 
   <!-- Header -->
-  <header>
-    <div class="brand-logo">
-      TEMPLE <span>AND</span> TOWNS
+  <header style="display: flex; justify-content: center; align-items: center; margin-top: 1rem; z-index: 10;">
+    <div class="brand-logo-split">
+      <img src="test/logo-left.png" alt="Temple and Towns Resorts Logo Mark" class="logo-left" />
+      <img src="test/logo-half.png" alt="Temple and Towns Resorts Wordmark" class="logo-half" />
     </div>
   </header>
 

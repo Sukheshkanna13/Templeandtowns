@@ -328,6 +328,38 @@ img {
   cursor: pointer;
 }
 
+.tt-logo-split {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.tt-logo-left-img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  transition: transform 0.25s var(--ease);
+}
+
+.tt-logo-half-img {
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  transition: transform 0.25s var(--ease);
+}
+
+.tt-logo-split:hover .tt-logo-left-img {
+  transform: scale(1.03);
+}
+
+.tt-logo-split:hover .tt-logo-half-img {
+  transform: scale(1.01);
+}
+
 .tt-logo-img {
   height: 56px;
   width: auto;
@@ -1611,6 +1643,9 @@ img {
   .tt-nav-links { display: none; }
   .tt-hamburger { display: inline-flex; }
   .tt-logo-img { height: 44px; }
+  .tt-logo-left-img { height: 38px; }
+  .tt-logo-half-img { height: 26px; }
+  .tt-logo-split { gap: 6px; }
 
   /* ---- mobile menu — smooth animation ---- */
   .tt-mobile-menu {
