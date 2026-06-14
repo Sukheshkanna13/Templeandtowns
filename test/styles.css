@@ -330,14 +330,14 @@ img {
 
 .tt-logo-split {
   display: inline-flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 4px;
   cursor: pointer;
   vertical-align: middle;
 }
 
 .tt-logo-left-img {
-  height: 64px;
+  height: 52px;
   width: auto;
   object-fit: contain;
   mix-blend-mode: multiply;
@@ -345,7 +345,7 @@ img {
 }
 
 .tt-logo-half-img {
-  height: 44px;
+  height: 52px;
   width: auto;
   object-fit: contain;
   mix-blend-mode: multiply;
@@ -1643,8 +1643,8 @@ img {
   .tt-nav-links { display: none; }
   .tt-hamburger { display: inline-flex; }
   .tt-logo-img { height: 44px; }
-  .tt-logo-left-img { height: 48px; }
-  .tt-logo-half-img { height: 32px; }
+  .tt-logo-left-img { height: 38px; }
+  .tt-logo-half-img { height: 38px; }
   .tt-logo-split { gap: 3px; }
 
   /* ---- mobile menu — smooth animation ---- */
