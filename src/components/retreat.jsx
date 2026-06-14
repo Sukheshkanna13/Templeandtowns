@@ -71,17 +71,17 @@ const NatureRetreatScreen = ({ go, goBack }) => {
       </div>
 
       {/* Experiences with Natures-retreat images */}
-      <div style={{ maxWidth: 800, margin: '0 auto', marginBottom: 64 }}>
+      <div className="tt-page" style={{ maxWidth: 800, marginBottom: 64 }}>
         <h2 className="tt-h2" style={{ textAlign: 'center', marginBottom: 40 }}>Life at the retreat</h2>
-        <div style={{ display: 'grid', gap: 48 }}>
+        <div className="tt-experience-list">
           {experiences.map((exp, i) => (
-            <div key={exp.title} className="tt-experience-row" style={{ display: 'flex', gap: 32, alignItems: 'center', flexDirection: i % 2 === 0 ? 'row' : 'row-reverse' }}>
-              <div style={{ flex: 1, height: 280, overflow: 'hidden' }}>
-                <img src={exp.img} alt={exp.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <div key={exp.title} className={`tt-experience-row ${i % 2 === 0 ? 'tt-row' : 'tt-row-reverse'}`}>
+              <div className="tt-experience-img-wrap">
+                <img src={exp.img} alt={exp.title} />
               </div>
-              <div style={{ flex: 1, padding: 16 }}>
-                <h3 className="tt-h3" style={{ marginBottom: 12 }}>{exp.title}</h3>
-                <p className="tt-muted" style={{ fontSize: 16, lineHeight: 1.6 }}>{exp.desc}</p>
+              <div className="tt-experience-text">
+                <h3 className="tt-h3">{exp.title}</h3>
+                <p className="tt-muted">{exp.desc}</p>
               </div>
             </div>
           ))}
