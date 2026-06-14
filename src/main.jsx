@@ -12,8 +12,7 @@ import EventsPage from './components/events';
 import { useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakRadio } from './components/tweaks-panel';
 
 const TWEAK_DEFAULTS = {
-  "accentHue": 202,
-  "buttonShape": "pill"
+  "buttonShape": "rounded"
 };
 
 // ---------- Hash-based routing helpers ----------
@@ -56,10 +55,7 @@ function App() {
 
   useEffect(() => {
     const root = document.documentElement;
-    root.style.setProperty('--accent', `oklch(0.58 0.16 ${tweaks.accentHue})`);
-    root.style.setProperty('--accent-deep', `oklch(0.34 0.13 ${tweaks.accentHue})`);
-    root.style.setProperty('--accent-soft', `oklch(0.96 0.04 ${tweaks.accentHue})`);
-    root.style.setProperty('--pill', tweaks.buttonShape === 'pill' ? '980px' : '12px');
+    root.style.setProperty('--pill', '0px');
   }, [tweaks]);
 
   useEffect(() => {
@@ -117,9 +113,6 @@ function App() {
       <WhatsAppFab/>
 
       <TweaksPanel title="Tweaks">
-        <TweakSection title="Color">
-          <TweakSlider label="Accent hue" min={180} max={280} value={tweaks.accentHue} onChange={v => setTweak('accentHue', v)} />
-        </TweakSection>
         <TweakSection title="Shape">
           <TweakRadio label="Buttons" value={tweaks.buttonShape} onChange={v => setTweak('buttonShape', v)}
             options={[{value:'pill', label:'Pill'},{value:'rounded', label:'Rounded'}]}/>

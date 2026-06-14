@@ -92,7 +92,7 @@ export const BookingWizard = ({ go, ctx, onSubmit }) => {
           {step === 2 && (
             <div>
               <h3 className="tt-h3">Review your request</h3>
-              <div style={{ marginTop: 20, padding: 24, border: '1px solid var(--line)', borderRadius: 6 }}>
+              <div style={{ marginTop: 20, padding: 24, border: '1px solid var(--line)', overflow: 'hidden' }}>
                 <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
                   <div style={{ width: 80, height: 80, borderRadius: 4, overflow: 'hidden', flexShrink: 0 }}>
                     <img src={ctx.property.cover} alt={ctx.property.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -115,7 +115,7 @@ export const BookingWizard = ({ go, ctx, onSubmit }) => {
                 <input type="checkbox" checked={agree} onChange={e => setAgree(e.target.checked)} style={{ marginTop: 4, accentColor: 'var(--ink)', flexShrink: 0 }}/>
                 <span style={{ fontSize: 13, color: 'var(--text-soft)' }}>I understand this booking request will be confirmed via WhatsApp. Cancellations are free up to 48 hours before check-in.</span>
               </label>
-              <div style={{ marginTop: 20, padding: 16, background: 'oklch(0.97 0.05 145)', borderRadius: 6, display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+              <div style={{ marginTop: 20, padding: 16, background: 'oklch(0.97 0.05 145)', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
                 <Ico name="wa" size={18}/>
                 <span style={{ fontSize: 14, color: 'var(--text-soft)', lineHeight: 1.5 }}>Clicking Submit will open WhatsApp with your details pre-filled. Our team responds within a few hours.</span>
               </div>
@@ -163,15 +163,15 @@ export const WhatsAppSentScreen = ({ go, booking }) => (
         Our team will confirm availability and share a payment link within a few hours.
       </p>
 
-      <div style={{ marginTop: 48, padding: '28px 32px', background: 'var(--bg-soft)', borderRadius: 6, textAlign: 'left' }}>
+      <div style={{ marginTop: 48, padding: '28px 32px', background: 'var(--bg-soft)', textAlign: 'left' }}>
         <div className="tt-eyebrow" style={{ marginBottom: 20 }}>What happens next</div>
         {[
-          { n: '01', t: 'We review your request', d: 'Our team checks availability and responds on WhatsApp — usually within 2 hours.' },
-          { n: '02', t: 'You receive a payment link', d: 'A secure payment link will be shared on WhatsApp. Pay to lock in your room.' },
-          { n: '03', t: 'Pack your bags', d: 'Booking confirmed. All check-in details arrive before your stay.' },
+          { n: '1', t: 'We review your request', d: 'Our team checks availability and responds on WhatsApp — usually within 2 hours.' },
+          { n: '2', t: 'You receive a payment link', d: 'A secure payment link will be shared on WhatsApp. Pay to lock in your room.' },
+          { n: '3', t: 'Pack your bags', d: 'Booking confirmed. All check-in details arrive before your stay.' },
         ].map(s => (
           <div key={s.n} style={{ display: 'flex', gap: 16, marginTop: 20, alignItems: 'flex-start' }}>
-            <span style={{ fontFamily: "SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Monaco, monospace", fontSize: 18, fontWeight: '600', color: 'var(--accent)', flexShrink: 0 }}>{s.n}</span>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 24, fontWeight: '700', color: 'var(--accent)', flexShrink: 0 }}>{s.n}</span>
             <div>
               <div style={{ fontWeight: 600, fontSize: 15 }}>{s.t}</div>
               <div style={{ fontSize: 14, color: 'var(--text-soft)', marginTop: 4, lineHeight: 1.5 }}>{s.d}</div>

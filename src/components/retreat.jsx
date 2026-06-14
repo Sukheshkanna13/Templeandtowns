@@ -38,12 +38,12 @@ const NatureRetreatScreen = ({ go, goBack }) => {
         <h1 className="tt-h1" style={{ marginTop: 12, marginBottom: 16 }}>Temple And Towns Resorts Nature Retreat</h1>
         <p style={{ color: 'var(--text-soft)', fontSize: 18, lineHeight: 1.6 }}>
           Nestled in the peaceful surroundings Near Auroville, designed for resting and simple living.
-          12 Rooms with attached baths, Swimming Pool, Parking, Garden on a one acre facility. 5-7 minutes from Matrimandir. 🪷
+          12 Rooms with attached baths, Swimming Pool, Parking, Garden on a one acre facility. 5-7 minutes from Matrimandir.
         </p>
       </div>
 
       {/* Hero Image */}
-      <div className="tt-retreat-hero" style={{ height: 480, borderRadius: 12, overflow: 'hidden', position: 'relative', marginBottom: 64 }}>
+      <div className="tt-retreat-hero" style={{ height: 480, overflow: 'hidden', position: 'relative', marginBottom: 64 }}>
         <img src="images/Auroville/1.jpeg" alt="Nature Retreat" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
       </div>
 
@@ -59,7 +59,7 @@ const NatureRetreatScreen = ({ go, goBack }) => {
             { icon: 'lock', title: 'Free Parking', desc: 'Secure on-site parking available' },
             { icon: 'gift', title: 'Near Matrimandir', desc: '5-7 minutes from the iconic Matrimandir' },
           ].map(h => (
-            <div key={h.title} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: 20, border: '1px solid var(--line)', borderRadius: 8 }}>
+            <div key={h.title} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: 20, border: '1px solid var(--line)' }}>
               <Ico name={h.icon} size={20} />
               <div>
                 <div style={{ fontWeight: 600, fontSize: 15 }}>{h.title}</div>
@@ -76,7 +76,7 @@ const NatureRetreatScreen = ({ go, goBack }) => {
         <div style={{ display: 'grid', gap: 48 }}>
           {experiences.map((exp, i) => (
             <div key={exp.title} className="tt-experience-row" style={{ display: 'flex', gap: 32, alignItems: 'center', flexDirection: i % 2 === 0 ? 'row' : 'row-reverse' }}>
-              <div style={{ flex: 1, height: 280, borderRadius: 8, overflow: 'hidden' }}>
+              <div style={{ flex: 1, height: 280, overflow: 'hidden' }}>
                 <img src={exp.img} alt={exp.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               </div>
               <div style={{ flex: 1, padding: 16 }}>
@@ -91,7 +91,7 @@ const NatureRetreatScreen = ({ go, goBack }) => {
       {/* Gallery Preview */}
       <div style={{ marginTop: 48 }}>
         <h2 className="tt-h2" style={{ textAlign: 'center', marginBottom: 32 }}>A glimpse of the retreat</h2>
-        <div className="tt-retreat-gallery" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, borderRadius: 8, overflow: 'hidden' }}>
+        <div className="tt-retreat-gallery" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, overflow: 'hidden' }}>
           {galleryImgs.map((src, i) => (
             <div key={i} style={{ aspectRatio: '4/3', overflow: 'hidden' }}>
               <img src={src} alt={`Nature Retreat ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.3s ease' }}
@@ -103,7 +103,7 @@ const NatureRetreatScreen = ({ go, goBack }) => {
       </div>
 
       {/* CTA */}
-      <div style={{ marginTop: 80, textAlign: 'center', padding: 48, background: 'var(--bg-soft)', borderRadius: 12 }}>
+      <div style={{ marginTop: 80, textAlign: 'center', padding: 48, background: 'var(--bg-soft)' }}>
         <img
           src="nature-retreat-Logo.png"
           alt="Nature Retreat Logo"

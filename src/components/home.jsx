@@ -404,8 +404,8 @@ const HomeScreen = ({ go, setSearchCtx }) => {
         <div className="tt-page">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40, gap: 24, flexWrap: 'wrap' }}>
             <div style={{ maxWidth: 620 }}>
-              <h2 className="tt-h2" style={{ margin: 0 }}>Moments from our Vacation imagined by AI</h2>
-              <p style={{ marginTop: 12, color: 'var(--text-soft)', fontSize: 16 }}>Temple towns, coastlines, and community</p>
+              <div className="tt-eyebrow">AI IMAGINED</div>
+              <h2 className="tt-h2" style={{ marginTop: 14 }}>Moments from our vacation.</h2>
             </div>
             <button className="tt-btn-link" onClick={() => go('search')}>See all stays →</button>
           </div>
@@ -418,13 +418,13 @@ const HomeScreen = ({ go, setSearchCtx }) => {
       <section className="tt-section-sm">
         <div className="tt-page">
           <div className="tt-dark-section">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16 }}>
-              <div style={{ maxWidth: 720 }}>
-                <div className="tt-eyebrow">Uncover destinations</div>
-                <h2 className="tt-h2" style={{ marginTop: 14, marginBottom: 14 }}>Featured journeys</h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40, gap: 24, flexWrap: 'wrap' }}>
+              <div>
+                <div className="tt-eyebrow">FEATURED STAYS</div>
+                <h2 className="tt-h2" style={{ marginTop: 14, marginBottom: 14 }}>Hand-picked, this season.</h2>
                 <p style={{ margin: 0, fontSize: 16, lineHeight: 1.55 }}>Coming Soon..</p>
               </div>
-              <button className="tt-btn-link" style={{ color: '#fff' }} onClick={() => go('search')}>Explore stays →</button>
+              <button className="tt-btn-link" onClick={() => go('search')}>Explore stays →</button>
             </div>
             <div className="tt-journey-grid">
               {[
@@ -451,28 +451,13 @@ const HomeScreen = ({ go, setSearchCtx }) => {
       {/* HOW IT WORKS */}
       <section className="tt-section" style={{ paddingTop: 0 }}>
         <div className="tt-page">
-          <div style={{ borderTop: '1px solid var(--line)', paddingTop: 80 }}>
-            <div className="tt-how-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 80 }}>
-              <div>
-                <div className="tt-eyebrow">How booking works</div>
-                <h2 className="tt-h2" style={{ marginTop: 14 }}>Explore, Request, Stay.</h2>
-                <p style={{ color: 'var(--text-soft)', marginTop: 16, fontSize: 16, lineHeight: 1.6 }}>
-                  Our curated stays offer a personalized booking experience. Connect with us directly to ensure your stay is perfectly tailored to your needs.
-                </p>
-              </div>
-              <div className="tt-how-steps" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 32 }}>
-                {[
-                  { n: '01', t: 'Select property', d: 'Browse our collection of hand-picked stays in Pondicherry and Near Auroville to find your ideal retreat.' },
-                  { n: '02', t: 'Request to book', d: 'Click "Request to Book" to start a WhatsApp conversation with our team with your preferred dates.' },
-                  { n: '03', t: 'Direct confirmation', d: 'Receive a personalized confirmation and direct support for a seamless check-in experience.' },
-                ].map(s => (
-                  <div key={s.n} style={{ borderTop: '1px solid var(--ink)', paddingTop: 20 }}>
-                    <div style={{ fontFamily: "SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Monaco, monospace", fontSize: 26, fontWeight: '600', color: 'var(--accent)' }}>{s.n}</div>
-                    <h3 className="tt-h3" style={{ marginTop: 14, marginBottom: 8 }}>{s.t}</h3>
-                    <p style={{ color: 'var(--text-soft)', margin: 0, lineHeight: 1.55, fontSize: 15 }}>{s.d}</p>
-                  </div>
-                ))}
-              </div>
+          <div style={{ borderTop: '1px solid var(--line)', paddingTop: 80, textAlign: 'center' }}>
+            <div style={{ maxWidth: 640, margin: '0 auto' }}>
+              <div className="tt-eyebrow">HOW BOOKING WORKS</div>
+              <h2 className="tt-h2" style={{ marginTop: 14 }}>Explore, Request, Stay.</h2>
+              <p style={{ color: 'var(--text-soft)', marginTop: 16, fontSize: 17, lineHeight: 1.6 }}>
+                Our curated stays offer a personalized booking experience. Connect with us directly to ensure your stay is perfectly tailored to your needs.
+              </p>
             </div>
           </div>
         </div>
@@ -481,18 +466,17 @@ const HomeScreen = ({ go, setSearchCtx }) => {
       {/* WAYFARER REWARDS */}
       <section className="tt-section-sm" style={{ paddingTop: 0 }}>
         <div className="tt-page">
-          <div className="tt-loyalty-teaser" style={{ background: '#0a1628', color: '#fff', borderRadius: 24, padding: '64px 56px', display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 56, alignItems: 'center' }}>
+          <div className="tt-loyalty-teaser" style={{ background: 'var(--bg-soft)', color: 'var(--ink)', padding: '64px 56px', display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 56, alignItems: 'center', border: '1px solid var(--line)' }}>
             <div>
-              <div className="tt-eyebrow" style={{ color: 'rgba(255,255,255,0.6)' }}>Wayfarer Rewards</div>
-              <h2 className="tt-h1" style={{ color: '#fff', marginTop: 16, marginBottom: 16 }}>
-                Wayfarer Rewards.<br />
-                <span className="tt-italic-soft" style={{ color: '#a4a6f0' }}>Stay more, earn more.</span>
+              <div className="tt-eyebrow">WAYFARER REWARDS</div>
+              <h2 className="tt-h2" style={{ marginTop: 14, marginBottom: 16 }}>
+                Stay more, earn more.
               </h2>
-              <p style={{ fontSize: 17, color: 'rgba(255,255,255,0.78)', lineHeight: 1.55, maxWidth: 480, margin: 0 }}>
+              <p style={{ fontSize: 17, color: 'var(--text-soft)', lineHeight: 1.55, maxWidth: 480, margin: 0 }}>
                 Earn points every night. Unlock early check-ins, room upgrades, and exclusive rates. Our guests earn points from their very first stay.
               </p>
               <button onClick={() => go('loyalty')}
-                style={{ border: 'none', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 32, padding: '18px 34px', background: '#fff', color: '#0a1628', borderRadius: 'var(--pill)', fontSize: 16, fontWeight: 600 }}>
+                style={{ border: 'none', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 32, padding: '18px 34px', background: 'var(--ink)', color: '#fff', fontSize: 16, fontWeight: 600 }}>
                 Explore Rewards <Ico name="arrow" size={15} />
               </button>
             </div>
@@ -502,18 +486,19 @@ const HomeScreen = ({ go, setSearchCtx }) => {
                 { tier: 'Silver', range: '500 – 1999 pts', perks: 'Coming soon' },
                 { tier: 'Gold', range: '2000+ pts', perks: 'Coming soon' },
               ].map(t => (
-                <div key={t.tier} style={{ borderTop: '1px solid rgba(255,255,255,0.12)', padding: '20px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div key={t.tier} style={{ borderTop: '1px solid var(--line-strong)', padding: '20px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <div style={{ fontWeight: 600, fontSize: 17 }}>{t.tier}</div>
-                    <div style={{ fontSize: 13, opacity: 0.65, marginTop: 2 }}>{t.range}</div>
+                    <div className="tt-muted" style={{ fontSize: 13, marginTop: 2 }}>{t.range}</div>
                   </div>
-                  <div style={{ fontSize: 13, opacity: 0.85 }}>{t.perks}</div>
+                  <div className="tt-muted" style={{ fontSize: 13 }}>{t.perks}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
       </section>
+
     </>
   );
 };

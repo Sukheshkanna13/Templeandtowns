@@ -26,6 +26,7 @@ export const Ico = ({ name, size = 16, className = '' }) => {
     case 'menu': return <svg {...props}><path d="M4 7h16M4 12h16M4 17h16" /></svg>;
     case 'wa': return <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.3-.1-.4-.1-.6.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5 0-.2 0-.3 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4 0 1.4 1 2.7 1.1 2.9.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.6-.7 1.9-1.4.2-.6.2-1.2.1-1.4-.1-.1-.3-.2-.5-.3M12 2C6.5 2 2 6.5 2 12c0 1.7.4 3.4 1.3 4.9L2 22l5.3-1.3c1.4.8 3 1.3 4.7 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2" /></svg>;
     case 'phone': return <svg {...props}><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 2.06 4.18 2 2 0 0 1 4.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z" /></svg>;
+    case 'instagram': return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5.5" /><circle cx="18" cy="6" r="1" fill="currentColor" stroke="none" /></svg>;
     default: return null;
   }
 };
@@ -272,8 +273,10 @@ export const Footer = ({ screen }) => {
             <p style={{ color: 'var(--text-soft)', fontSize: 14, maxWidth: 340, lineHeight: 1.6, margin: 0 }}>
               Modern, calm, unmistakably Indian. A small, hand-picked collection of stays across temple towns and quiet coastlines — designed to feel premium without feeling heavy.
             </p>
-            <div style={{ display: 'flex', gap: 12, marginTop: 24, fontSize: 13, color: 'var(--text-muted)' }}>
-              <a>Instagram</a><span>·</span><a>Journal</a>
+            <div style={{ display: 'flex', gap: 16, marginTop: 24, alignItems: 'center' }}>
+              <a href="https://www.instagram.com/templeandtownsresorts?igsh=MXBlcjB0NTRiNjBlMA==" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', color: 'var(--text-muted)', transition: 'color 0.2s' }}>
+                <Ico name="instagram" size={20} />
+              </a>
             </div>
           </div>
           <div>

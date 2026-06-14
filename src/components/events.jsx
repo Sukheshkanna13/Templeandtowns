@@ -43,11 +43,11 @@ const EventsPage = ({ go, goBack }) => {
       <div style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto 64px' }}>
         <div className="tt-eyebrow">Nature Retreat · Near Auroville</div>
         <h1 className="tt-h1" style={{ marginTop: 12, marginBottom: 16 }}>
-          Meaningful <span className="tt-italic-soft" style={{ color: 'var(--accent)' }}>memories.</span>
+          Meaningful <span className="tt-italic-soft" style={{ color: 'var(--accent)', fontWeight: 600 }}>memories.</span>
         </h1>
         <p style={{ color: 'var(--text-soft)', fontSize: 17, lineHeight: 1.65 }}>
-          Simple, thoughtfully curated experiences that connect you with nature, local culture 
-          and the peaceful spirit of Near Auroville. 🪷
+          Simple, thoughtfully curated experiences that connect you with nature, local culture
+          and the peaceful spirit of Near Auroville.
         </p>
       </div>
 
@@ -55,10 +55,10 @@ const EventsPage = ({ go, goBack }) => {
       <div style={{ maxWidth: 720, margin: '0 auto' }}>
         <div style={{ display: 'grid', gap: 20 }}>
           {events.map((ev, i) => (
-            <div key={ev.title} className="tt-event-card" style={{ 
-              display: 'flex', alignItems: 'flex-start', gap: 24, 
-              padding: 32, borderRadius: 10, 
-              border: '1px solid var(--line)', 
+            <div key={ev.title} className="tt-event-card" style={{
+              display: 'flex', alignItems: 'flex-start', gap: 24,
+              padding: 32,
+              border: '1px solid var(--line)',
               background: '#fff',
               transition: 'box-shadow 0.25s ease, transform 0.25s ease',
               cursor: 'default'
@@ -67,9 +67,9 @@ const EventsPage = ({ go, goBack }) => {
               onMouseOut={e => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'translateY(0)'; }}
             >
               {/* Icon circle */}
-              <div className="tt-event-icon" style={{ 
-                flex: '0 0 52px', height: 52, borderRadius: '50%', 
-                background: `color-mix(in oklch, ${ev.accent} 12%, transparent)`, 
+              <div className="tt-event-icon" style={{
+                flex: '0 0 52px', height: 52, borderRadius: '50%',
+                background: `color-mix(in oklch, ${ev.accent} 12%, transparent)`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 color: ev.accent
               }}>
@@ -85,8 +85,8 @@ const EventsPage = ({ go, goBack }) => {
                   </div>
                 </div>
                 <div style={{ marginTop: 20, display: 'flex', gap: 12, alignItems: 'center' }}>
-                  <button 
-                    className="tt-btn tt-btn-primary tt-btn-sm" 
+                  <button
+                    className="tt-btn tt-btn-primary tt-btn-sm"
                     onClick={() => {
                       const msg = `Hi, I am interested in booking the "${ev.title}" experience at the Nature Retreat Near Auroville.`;
                       window.open(`https://wa.me/0000000000?text=${encodeURIComponent(msg)}`, '_blank');
@@ -103,7 +103,7 @@ const EventsPage = ({ go, goBack }) => {
       </div>
 
       {/* CTA */}
-      <div className="tt-events-cta" style={{ marginTop: 72, textAlign: 'center', padding: 48, background: 'var(--bg-soft)', borderRadius: 12, maxWidth: 720, margin: '72px auto 0' }}>
+      <div className="tt-events-cta" style={{ marginTop: 72, textAlign: 'center', padding: 48, background: 'var(--bg-soft)', maxWidth: 720, margin: '72px auto 0' }}>
         <h2 className="tt-h2" style={{ margin: '0 0 12px' }}>Want to see the property?</h2>
         <p className="tt-muted" style={{ fontSize: 15, maxWidth: 440, margin: '0 auto 28px' }}>
           Explore the Nature Retreat — 12 rooms, swimming pool, garden, and more.

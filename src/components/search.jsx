@@ -2,6 +2,21 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Ico, StripeImg, tt, BackButton } from './shell';
 import { TT_DATA } from '../data';
 
+export const StarRating = ({ rating, size = 13 }) => {
+  const percent = (rating / 5) * 100;
+  return (
+    <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', color: 'var(--line-strong)', gap: 2 }}>
+      <div style={{ display: 'flex', gap: 2 }}>
+        {[...Array(5)].map((_, i) => <Ico key={i} name="star" size={size} />)}
+      </div>
+      <div style={{ position: 'absolute', top: 0, left: 0, display: 'flex', gap: 2, overflow: 'hidden', width: `${percent}%`, color: 'var(--ink)' }}>
+        {[...Array(5)].map((_, i) => <Ico key={i} name="star" size={size} />)}
+      </div>
+      <span style={{ color: 'var(--ink)', fontWeight: 600, marginLeft: 6 }}>{rating}</span>
+    </div>
+  );
+};
+
 // ---------- SEARCH ----------
 export const SearchScreen = ({ go, goBack, searchCtx, setSearchCtx }) => {
   const [cityFilter, setCityFilter] = useState(searchCtx?.city || 'Pondicherry');
@@ -67,17 +82,17 @@ export const SearchScreen = ({ go, goBack, searchCtx, setSearchCtx }) => {
       <div style={{ display: 'grid', gap: 20 }}>
         {matches.map(p => (
           <div key={p.id} className="tt-card" style={{ flexDirection: 'row', display: 'flex', alignItems: 'stretch', maxHeight: 310 }} onClick={() => go('property', { propertyId: p.id })}>
-            <div style={{ flex: '0 0 380px', position: 'relative', borderRadius: 4, overflow: 'hidden' }}>
+            <div style={{ flex: '0 0 380px', position: 'relative', overflow: 'hidden' }}>
               <img src={p.cover} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               <div className="tt-card-tags">
                 <span className="tt-tag">{p.city === 'pondicherry' ? 'White Town' : 'Near Auroville'}</span>
-                <span className="tt-tag tt-tag-dark">★ {p.rating}</span>
               </div>
             </div>
             <div style={{ flex: 1, padding: '24px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
                 <div className="tt-eyebrow" style={{ fontSize: 11 }}>{p.area}</div>
                 <h3 className="tt-h3" style={{ marginTop: 8, marginBottom: 8 }}>{p.name}</h3>
+                <div style={{ marginBottom: 12 }}><StarRating rating={p.rating} size={14} /></div>
                 <p className="tt-line-clamp-2" style={{ color: 'var(--text-soft)', margin: 0, fontSize: 15, lineHeight: 1.55 }}>{p.blurb}</p>
                 <div style={{ display: 'flex', gap: 8, marginTop: 14, flexWrap: 'wrap' }}>
                   {(TT_DATA.rooms[p.id] || [{}])[0]?.amenities?.slice(0, 3).map(a => (
@@ -105,6 +120,21 @@ export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
   const property = TT_DATA.properties.find(p => p.id === params.propertyId);
   const rooms = TT_DATA.rooms[property.id] || [];
   const [selectedRoom, setSelectedRoom] = useState(rooms[0]?.id);
+  const imgs = property.images || [];
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)');
+    const handler = (e) => setIsMobile(e.matches);
+    setIsMobile(mq.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  // On mobile, gallery hides images 2-5 via CSS, so "show all" should show from index 1
+  // On desktop, gallery shows images 1-5, so "show all" shows from index 5
+  const galleryImages = isMobile ? imgs.slice(1) : imgs.slice(5);
+
   const [showGallery, setShowGallery] = useState(false);
   const room = rooms.find(r => r.id === selectedRoom);
   const onBook = () => {
@@ -117,18 +147,6 @@ export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
   const isAirbnb = property.bookingUrl && property.bookingUrl.includes('airbnb.com');
   const platformName = isAirbnb ? 'Airbnb' : 'Booking.com';
   const nights = tt.nightsBetween(searchCtx?.checkIn, searchCtx?.checkOut) || 3;
-  const imgs = property.images || [];
-  const galleryImages = imgs.slice(5);
-
-  /* detect mobile viewport for sticky CTA */
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 768px)');
-    const handler = (e) => setIsMobile(e.matches);
-    setIsMobile(mq.matches);
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
-  }, []);
 
   return (
     <div className="tt-page" style={{ paddingTop: 32, paddingBottom: isMobile ? 120 : 96 }}>
@@ -144,13 +162,13 @@ export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
           <div className="tt-eyebrow">{property.area}</div>
           <h1 className="tt-h1" style={{ margin: '12px 0 0' }}>{property.name}</h1>
           <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginTop: 12, color: 'var(--text-soft)', fontSize: 15 }}>
-            <span style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}><Ico name="star" size={13} /> {property.rating} · {property.reviews} reviews</span>
+            <StarRating rating={property.rating} />
             <span>·</span><span style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}><Ico name="pin" size={14} /> {property.area}</span>
           </div>
         </div>
       </div>
 
-      <div className="tt-property-gallery" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 8, height: 520, borderRadius: 6, overflow: 'hidden' }}>
+      <div className="tt-property-gallery" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 8, height: 520, overflow: 'hidden' }}>
         <div style={{ gridRow: '1 / 3', overflow: 'hidden' }}>
           <img src={imgs[0] || property.cover} alt={property.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
         </div>
@@ -163,14 +181,14 @@ export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
       {galleryImages.length > 0 && (
         <div style={{ marginTop: 12, textAlign: 'right' }}>
           <button className="tt-btn tt-btn-ghost tt-btn-sm" onClick={() => setShowGallery(v => !v)}>
-            {showGallery ? 'Hide photos' : `Show all ${imgs.length} photos`}
+            {showGallery ? 'Hide photos' : 'Show all photos'}
           </button>
         </div>
       )}
       {showGallery && (
-        <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, borderRadius: 6, overflow: 'hidden' }} className="tt-retreat-gallery">
+        <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, overflow: 'hidden' }} className="tt-retreat-gallery">
           {galleryImages.map((src, i) => (
-            <div key={i} style={{ aspectRatio: '4/3', overflow: 'hidden', borderRadius: 4 }}>
+            <div key={i} style={{ aspectRatio: '4/3', overflow: 'hidden' }}>
               <img src={src} alt={`${property.name} gallery ${i + 6}`} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
           ))}
@@ -228,7 +246,7 @@ export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
           <h3 className="tt-h2" style={{ marginTop: 0 }}>What guests are saying</h3>
           <div style={{ display: 'grid', gap: 16, marginTop: 24 }}>
             {TT_DATA.reviews.map(rv => (
-              <div key={rv.name} style={{ padding: 24, background: 'var(--bg-soft)', borderRadius: 6 }}>
+              <div key={rv.name} style={{ padding: 24, background: 'var(--bg-soft)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
                     <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: 13 }}>{rv.name.split(' ').map(n => n[0]).join('')}</div>

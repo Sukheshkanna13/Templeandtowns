@@ -68,7 +68,7 @@ export const LoyaltyScreen = ({ go, goBack }) => (
         { n: 'Silver', min: '500 – 1,999', perks: ['Coming soon'] },
         { n: 'Gold', min: '2,000+', perks: ['Coming soon'] },
       ].map(t => (
-        <div key={t.n} className="tt-loyalty-tier-card" style={{ padding: 28, border: '1px solid var(--line)', borderRadius: 6 }}>
+        <div key={t.n} className="tt-loyalty-tier-card" style={{ padding: 28, border: '1px solid var(--line)' }}>
           <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', sans-serif", fontSize: 28, fontWeight: '700', color: 'var(--ink)' }}>{t.n}</div>
           <div className="tt-muted" style={{ fontSize: 13, marginTop: 4 }}>{t.min} pts</div>
           <ul style={{ margin: '16px 0 0', padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -82,14 +82,14 @@ export const LoyaltyScreen = ({ go, goBack }) => (
       ))}
     </div>
 
-    <div className="tt-loyalty-card" style={{ marginTop: 56, padding: 40, background: '#0a1628', color: '#fff', borderRadius: 6, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 20, maxWidth: 560 }}>
-      <div className="tt-eyebrow" style={{ color: 'rgba(255,255,255,0.55)' }}>Earn points on your stays</div>
-      <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: 'rgba(255,255,255,0.8)' }}>
+    <div className="tt-loyalty-card" style={{ marginTop: 56, padding: 40, background: 'var(--bg-soft)', color: 'var(--ink)', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 20, maxWidth: 560, border: '1px solid var(--line)' }}>
+      <div className="tt-eyebrow" style={{ color: 'var(--text-muted)' }}>Earn points on your stays</div>
+      <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: 'var(--text-soft)' }}>
         Book your stay on Airbnb or Booking.com and share your reservation ID with our support team to credit your loyalty points.
       </p>
       <a href="https://api.whatsapp.com/send/?phone=0000000000&text=Hi%2C+I%27d+like+to+share+my+booking+details+for+loyalty+credits.&type=phone_number&app_absent=0"
         target="_blank" rel="noopener noreferrer"
-        style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 26px', background: '#fff', color: '#0a1628', borderRadius: 'var(--pill)', fontSize: 15, fontWeight: 600, textDecoration: 'none' }}>
+        style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 26px', background: 'var(--ink)', color: '#fff', fontSize: 15, fontWeight: 600, textDecoration: 'none' }}>
         <Ico name="wa" size={15} /> Contact Support
       </a>
     </div>
@@ -109,7 +109,7 @@ export const CauseScreen = ({ go, goBack }) => (
           <span style={{ color: 'var(--ink)' }}>Travel for Cause</span>
         </div>
         <div className="tt-eyebrow">CSR &amp; community</div>
-        <h1 className="tt-display" style={{ marginTop: 16 }}>Travel that <span className="tt-italic-soft" style={{ color: 'var(--accent)' }}>gives back.</span></h1>
+        <h1 className="tt-h1" style={{ margin: '12px 0 0' }}>Travel that <span className="tt-italic-soft" style={{ color: 'var(--accent)', fontWeight: 600 }}>gives back.</span></h1>
         <p style={{ maxWidth: 640, marginTop: 24, fontSize: 17, lineHeight: 1.55, color: 'var(--text-soft)' }}>
           A portion of every booking funds restoration of temple craft, artisan livelihoods, and coastal cleanup near our properties. Choose a cause when you book.
         </p>
@@ -117,11 +117,11 @@ export const CauseScreen = ({ go, goBack }) => (
     </section>
     <section className="tt-section" style={{ paddingTop: 0 }}>
       <div className="tt-page">
-        <div className="tt-grid-3">
+        <div className="tt-grid-3 tt-cause-grid">
           {[
-            { t: 'Sandalwood restoration', loc: 'Karnataka', d: 'Replanting native sandalwood with Forest Dept.', label: 'cause-sandalwood', raised: '₹4.2L', goal: '₹10L', pct: '42%' },
-            { t: 'Pondicherry coastal cleanup', loc: 'Tamil Nadu', d: 'Weekly beach cleans and turtle hatchery support.', label: 'cause-coastal', raised: '₹2.8L', goal: '₹6L', pct: '46.6%' },
-            { t: 'Artisan grants', loc: 'Pan-India', d: 'Direct grants to potters, weavers, brassworkers.', label: 'cause-artisan', raised: '₹5.1L', goal: '₹8L', pct: '63.75%' },
+            { t: 'Sandalwood restoration', loc: 'Karnataka', d: 'Replanting native sandalwood with Forest Dept.', label: 'images/travelforcause/sandalwoods.jpg' },
+            { t: 'Pondicherry coastal cleanup', loc: 'Tamil Nadu', d: 'Weekly beach cleans and turtle hatchery support.', label: 'images/travelforcause/coastalcleanup.jpg' },
+            { t: 'Artisan grants', loc: 'Pan-India', d: 'Direct grants to potters, weavers, brassworkers.', label: 'images/travelforcause/artisangrants.jpg.webp' },
           ].map(c => (
             <div key={c.t} className="tt-card" style={{ cursor: 'pointer' }}
               onClick={() => {
@@ -134,15 +134,6 @@ export const CauseScreen = ({ go, goBack }) => (
                 <div className="tt-eyebrow" style={{ fontSize: 11, letterSpacing: '0.12em', color: 'var(--text-muted)' }}>{c.loc}</div>
                 <h3 className="tt-h3" style={{ marginTop: 6, marginBottom: 8, fontSize: 20 }}>{c.t}</h3>
                 <p className="tt-muted" style={{ fontSize: 14, margin: 0, lineHeight: 1.5 }}>{c.d}</p>
-                <div style={{ marginTop: 20 }}>
-                  <div style={{ height: 6, background: 'var(--bg-soft)', borderRadius: 3, overflow: 'hidden' }}>
-                    <div style={{ width: c.pct, height: '100%', background: 'oklch(0.65 0.15 190)', borderRadius: 3 }} />
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 10, fontSize: 13 }}>
-                    <span style={{ fontWeight: 500, color: 'var(--ink)' }}><b style={{ fontWeight: 700 }}>{c.raised}</b> raised</span>
-                    <span className="tt-muted" style={{ fontWeight: 400 }}>of {c.goal}</span>
-                  </div>
-                </div>
               </div>
             </div>
           ))}
@@ -245,7 +236,7 @@ export const ThingsScreen = ({ go, goBack }) => (
         <span style={{ color: 'var(--ink)' }}>Things to do</span>
       </div>
     </div>
-    <ListPage eyebrow="Things to do" title={<>Beyond the room.</>} sub="A short list, hand-picked by hosts. Book on the spot or save for later." items={[
+    <ListPage eyebrow="Things to do" title={<>Beyond the <span style={{ color: 'var(--accent)', fontWeight: 600 }}>room.</span></>} sub="A short list, hand-picked by hosts. Book on the spot or save for later." items={[
   { cat: 'Outdoor', t: 'Cycling the East Coast Road', d: 'Half-day ride, cycle and helmet time', price: 'Request to book', label: 'images/coastal_cycling.png', tone: 'oklch(0.85 0.06 220)' },
   { cat: 'Wellness', t: 'Abhyanga massage', d: 'Sixty minutes of warm-oil bliss.', price: 'Request to book', label: 'images/spa_abhyanga.png', tone: 'oklch(0.88 0.04 60)' },
   { cat: 'Crafts', t: 'Block-printing class', d: 'Take home what you print.', price: 'Request to book', label: 'images/block_printing.png', tone: 'oklch(0.86 0.06 30)' },

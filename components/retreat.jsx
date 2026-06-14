@@ -35,7 +35,7 @@ const NatureRetreatScreen = ({ go }) => {
         <h1 className="tt-h1" style={{ marginTop: 12, marginBottom: 16 }}>Temple And Towns Resorts Nature Retreat</h1>
         <p style={{ color: 'var(--text-soft)', fontSize: 18, lineHeight: 1.6 }}>
           Nestled in the peaceful surroundings Near Auroville, designed for resting and simple living.
-          12 Rooms with attached baths, Swimming Pool, Parking, Garden on a one acre facility. 5-7 minutes from Matrimandir. 🪷
+          12 Rooms with attached baths, Swimming Pool, Parking, Garden on a one acre facility. 5-7 minutes from Matrimandir.
         </p>
       </div>
 
