@@ -11,3 +11,4 @@ desktop.ini
 # Node
 node_modules/
 dist/
+.gstack/

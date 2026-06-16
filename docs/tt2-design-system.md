@@ -1,8 +1,14 @@
 # Temple And Towns Resorts — UI/UX Design System Blueprint
 
 > **Purpose:** Complete reference for rebuilding this exact UI over Django.  
-> **Source:** Extracted from `test/styles.css`, `test/mobile-overrides.css`, and all components in `test/components/`.  
+> **Source (v2 — `ui-revisions`):** Extracted from the production Vite build — `src/styles.css` (3,300+ lines) and all components in `src/components/`. This supersedes the older `test/` build, which lags behind.  
 > **Stack to rebuild on:** Django + plain CSS (no Tailwind) — replicate every class 1:1.
+
+> **⚠️ v2 design changes vs the original doc — read these first:**
+> - **Accent is now `#5161CB` (brand blue from logo)** — was `#4a4ce0` electric indigo. Deep `#3f4da3`, soft `#eef0fa`.
+> - **Everything is fully squared — `--pill`, `--r-sm`, `--r-md`, `--r-lg` are all `0px`.** There are no rounded corners anywhere except intentionally circular elements (`border-radius: 50%` on avatars, slider arrows, status dots, WhatsApp dots/FAB).
+> - **Property cards use a swipeable image carousel** (`.tt-slider-*`), not a single static image.
+> - **New components:** `StarRating` (split-fill stars), JS-driven Moments carousel, fixed hero float overlay, Nature Retreat page, Events page.
 
 ---
 
@@ -27,8 +33,10 @@
    - [Bottom Sheet](#98-bottom-sheet)
    - [Category Scroll Tabs](#99-category-scroll-tabs)
    - [Property Card](#910-property-card)
+   - [Star Rating (split-fill)](#910a-star-rating-split-fill)
+   - [Property Image Carousel](#910b-property-image-carousel)
    - [Desktop Search Bar](#911-desktop-search-bar)
-   - [Moments / Image Grid](#912-moments--image-grid)
+   - [Moments Carousel (JS-driven)](#912-moments-carousel-v2--js-driven-draggable)
    - [Dark Editorial Section](#913-dark-editorial-section)
    - [How It Works Grid](#914-how-it-works-grid)
    - [Forms & Inputs](#915-forms--inputs)
@@ -41,6 +49,8 @@
    - [Success / Confirmation Screen](#922-success--confirmation-screen)
    - [Footer](#923-footer)
    - [WhatsApp FAB](#924-whatsapp-fab)
+   - [Nature Retreat — Experience Rows](#925-nature-retreat--experience-rows)
+   - [Events Page](#926-events-page)
 10. [Responsive Breakpoints](#10-responsive-breakpoints)
 11. [Page Layouts](#11-page-layouts)
 12. [Data Model](#12-data-model)
@@ -53,10 +63,10 @@
 - **Editorial/minimalist** — 75% Marriott Bonvoy reference (white, navy, generous whitespace, image-led) + 25% legacy brand
 - **No Tailwind** — pure CSS custom properties as design tokens
 - **Font:** Inter from Google Fonts — weights 400 / 500 / 600 / 700
-- **Colors:** White background, dark navy ink (`#0a1628`), electric indigo accent (`#4a4ce0`)
-- **Corners:** Squared-off everywhere — `border-radius: 4px` is the default pill/sm
+- **Colors:** White background, dark navy ink (`#0a1628`), brand-blue accent (`#5161CB`)
+- **Corners:** **Fully squared — `border-radius: 0` everywhere.** Every radius token (`--pill`, `--r-sm`, `--r-md`, `--r-lg`) resolves to `0px`. The only curves left are deliberate circles (`50%`): slider arrows, status dots, success mark, WhatsApp dot/FAB.
 - **Motion:** Two easing curves only: `--ease` (standard) and `--ease-spring` (spring/overshoot)
-- **Mobile:** Marriott Bonvoy-style — 90vh full-bleed hero, bottom sheet search, floating scroll-fade CTA
+- **Mobile:** Marriott Bonvoy-style — 90vh full-bleed hero, bottom sheet search, fixed scroll-fade hero overlay, swipeable property carousels
 - **Primary CTA channel:** WhatsApp (`#25d366`) for all booking and support
 
 ---
@@ -87,19 +97,19 @@ Paste this `:root` block at the top of every CSS file.
   --line:        #e6e7e3;   /* default hairline */
   --line-strong: #c9cbc4;   /* stronger border */
 
-  /* Accent — electric indigo from logo */
-  --accent:      #4a4ce0;
-  --accent-deep: #2d2fa6;
-  --accent-soft: #eeeefb;   /* tinted bg for chips/badges */
+  /* Accent — brand blue from logo */
+  --accent:      #5161CB;
+  --accent-deep: #3f4da3;
+  --accent-soft: #eef0fa;   /* tinted bg for chips/badges */
 
   /* Brand */
   --whatsapp:    #25d366;
 
-  /* Border Radius — SQUARED OFF */
-  --pill:        4px;       /* used everywhere as "pill" — actually square */
-  --r-sm:        4px;
-  --r-md:        6px;
-  --r-lg:        10px;
+  /* Border Radius — FULLY SQUARED OFF (all 0) */
+  --pill:        0px;       /* used everywhere as "pill" — resolves to a square corner */
+  --r-sm:        0px;
+  --r-md:        0px;
+  --r-lg:        0px;
 
   /* Easing */
   --ease:        cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -308,9 +318,9 @@ img { display: block; max-width: 100%; }
 | `--shadow-sm` | `0 1px 2px rgba(10,22,40,0.04)` | cards at rest |
 | `--shadow-md` | `0 6px 24px -8px rgba(10,22,40,0.10)` | elevated cards |
 | `--shadow-lg` | `0 24px 60px -20px rgba(10,22,40,0.18)` | modals, bottom sheet |
-| `--r-sm` / `--pill` | `4px` | **default for all UI** |
-| `--r-md` | `6px` | room cards |
-| `--r-lg` | `10px` | mobile search bar |
+| `--pill` / `--r-sm` / `--r-md` / `--r-lg` | `0px` | **all radius tokens = 0** — fully squared UI |
+| `border-radius: 50%` | circle | slider arrows, status dots, success mark, WhatsApp dot/FAB — the only curves left |
+| `.tt-msb` (mobile search bar) | `10px` literal | one deliberate exception — the mobile hero search bar keeps a soft radius |
 | `--ease` | `cubic-bezier(0.25, 0.1, 0.25, 1)` | standard transitions |
 | `--ease-spring` | `cubic-bezier(0.22, 1, 0.36, 1)` | hover lifts, sheet slide-up |
 
@@ -559,11 +569,11 @@ Sticky nav with frosted glass background, split logo (logomark + wordmark), desk
   gap: 24px;
 }
 
-/* Split logo — logomark + wordmark side by side */
+/* Split logo — logomark + wordmark side by side, tightly kerned */
 .tt-logo-split {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 4px;          /* tight kerning so the two halves read as one mark */
   cursor: pointer;
   vertical-align: middle;
 }
@@ -692,10 +702,11 @@ Sticky nav with frosted glass background, split logo (logomark + wordmark), desk
 @media (max-width: 768px) {
   .tt-nav-links  { display: none; }
   .tt-hamburger  { display: inline-flex; }
-  .tt-logo-img   { height: 44px; }
+  .tt-logo-img   { height: 54px; }
   .tt-logo-left-img { height: 38px; }
   .tt-logo-half-img { height: 38px; }
-  .tt-logo-split { gap: 6px; }
+  .tt-logo-split { gap: 3px; }
+  .tt-logo-home-mobile { display: none !important; }  /* hide wordmark on mobile home hero */
 }
 ```
 
@@ -948,13 +959,13 @@ Full-bleed 90vh hero, dark scrim, search bar pinned to top, headline pinned to b
 Desktop elements are hidden via `.tt-hero-desktop-wrap { display: none !important }` on ≤768px.
 
 ```css
-/* mobile-overrides.css */
+/* src/styles.css — mobile @media blocks (v2 has no separate mobile-overrides.css) */
 
 /* Hide mobile elements on desktop */
 .tt-hero-overlay,
 .tt-hero-mobile-top,
 .tt-hero-mobile-bottom,
-.tt-hero-float { display: none; }
+.tt-hero-float-overlay { display: none; }
 
 @media (max-width: 768px) {
 
@@ -1039,16 +1050,36 @@ Desktop elements are hidden via `.tt-hero-desktop-wrap { display: none !importan
   }
   .tt-hero-cta-mobile:active { background: #1a2e4a; }
 
-  /* Floating hero overlay — fixed position, fades on scroll */
-  .tt-hero-float {
-    display: block;
-    position: fixed;
-    bottom: 48px; left: 0; right: 0;
-    text-align: center;
-    padding: 0 28px;
-    z-index: 40;
-    transition: opacity 0.15s ease;
-  }
+}
+```
+
+**v2 Floating hero overlay (`.tt-hero-float-overlay`):** The mobile hero headline + CTA now live in a **fixed, viewport-anchored overlay** pinned to the bottom of the screen (not the hero element). It has its own bottom-up dark gradient so the white text stays legible over any background, and fades out on scroll via JS. Positioned purely by viewport dimensions — independent of hero/nav heights.
+
+```css
+.tt-hero-float-overlay {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 50;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end;
+  padding: 0 32px 64px;
+  text-align: center;
+  background: linear-gradient(to top,
+      rgba(0,0,0,0.55) 0%,
+      rgba(0,0,0,0.35) 40%,
+      rgba(0,0,0,0.08) 75%,
+      transparent 100%);
+  transition: opacity 0.12s ease-out;
+  will-change: opacity;
+}
+
+.tt-hero-float-title {
+  color: #fff !important;
+  margin: 0 0 28px;
+  max-width: 680px;
+  font-size: 40px;
+  line-height: 1.12;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.35), 0 0 20px rgba(0,0,0,0.15);
 }
 ```
 
@@ -1056,10 +1087,10 @@ Desktop elements are hidden via `.tt-hero-desktop-wrap { display: none !importan
 
 ```html
 <script>
-  // Fade out the floating hero CTA as user scrolls
+  // Fade out the fixed hero overlay as the user scrolls past the hero
   window.addEventListener('scroll', function() {
     const alpha = Math.max(0, 1 - window.scrollY / 160);
-    const floatEl = document.querySelector('.tt-hero-float');
+    const floatEl = document.querySelector('.tt-hero-float-overlay');
     if (floatEl) floatEl.style.opacity = alpha;
   }, { passive: true });
 </script>
@@ -1325,6 +1356,8 @@ THEMES = [
 
 Image-led card. Hover lifts with `translateY(-3px)` + image scale.
 
+> **v2:** On the homepage "Featured stays" the card media is now a **swipeable image carousel** (`PropertyCarousel`), not a single image — see [9.10b Property Image Carousel](#910b-property-image-carousel). The card itself, body, and meta are unchanged. The card body row now puts the **Book now** CTA inline on the same row as the name (`align-items: center`), with `.tt-card-area` below.
+
 ```css
 .tt-card {
   background: var(--surface);
@@ -1424,6 +1457,131 @@ Image-led card. Hover lifts with `translateY(-3px)` + image scale.
 
 ---
 
+### 9.10a Star Rating (split-fill)
+
+Renders 5 stars with a partial fill clipped to `rating/5` width, plus the numeric rating. Used in search results and property detail. In React it's `StarRating`; in Django render two stacked star rows and clip the top one.
+
+```css
+/* No dedicated CSS class — built with inline styles + the `star` icon.
+   Structure: a muted base row of 5 stars, an ink-colored fill row
+   absolutely positioned on top, clipped to a percentage width. */
+```
+
+```html
+<!-- rating = 4.6 → fill width = 92% -->
+<span class="tt-stars" style="position:relative;display:inline-flex;align-items:center;
+      color:var(--line-strong);gap:2px">
+  <span style="display:flex;gap:2px">
+    {% for _ in "12345" %}{% tt_icon "star" size=13 %}{% endfor %}
+  </span>
+  <span style="position:absolute;top:0;left:0;display:flex;gap:2px;overflow:hidden;
+        width:{{ rating_pct }}%;color:var(--ink)">
+    {% for _ in "12345" %}{% tt_icon "star" size=13 %}{% endfor %}
+  </span>
+  <span style="color:var(--ink);font-weight:600;margin-left:6px">{{ rating }}</span>
+</span>
+```
+
+```python
+# in the view / template tag:  rating_pct = rating / 5 * 100
+```
+
+---
+
+### 9.10b Property Image Carousel
+
+The homepage "Featured stays" card media is a horizontal slider: a flex track of full-width images translated by `idx * 100%`, with prev/next arrow buttons, pagination dots, and (on mobile) touch-swipe with a rubber-band edge effect. Desktop reveals the arrows on card hover; mobile shows them always.
+
+```css
+/* Track — slides horizontally, spring easing */
+.tt-slider-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.6s var(--ease-spring);
+}
+.tt-slider-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Arrow buttons — circular, hidden until card hover on desktop */
+.tt-slider-btn {
+  position: absolute; top: 50%;
+  transform: translateY(-50%);
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.9);
+  color: var(--ink);
+  border-radius: 50%;          /* deliberate circle */
+  display: flex; align-items: center; justify-content: center;
+  z-index: 4; opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.tt-card:hover .tt-slider-btn { opacity: 1; }
+.tt-slider-btn.prev { left: 12px; }
+.tt-slider-btn.next { right: 12px; }
+.tt-slider-btn:active { transform: translateY(-50%) scale(0.9); }
+
+/* Pagination dots — active dot stretches into a bar */
+.tt-slider-dots {
+  position: absolute; bottom: 16px; left: 0; right: 0;
+  display: flex; justify-content: center; gap: 6px; z-index: 4;
+}
+.tt-dot {
+  width: 6px; height: 6px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+.tt-dot.active { background: #fff; width: 14px; border-radius: 0; }  /* stretches to a bar */
+
+/* Mobile — arrows always visible, smaller, dark glass */
+@media (max-width: 768px) {
+  .tt-slider-btn {
+    display: flex !important; opacity: 1 !important;
+    width: 28px; height: 28px;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .tt-slider-btn.prev { left: 6px; }
+  .tt-slider-btn.next { right: 6px; }
+  .tt-slider-btn svg  { width: 10px; height: 10px; }
+  .tt-slider-dots { gap: 4px; bottom: 10px; max-width: 80%; overflow: hidden; }
+  .tt-dot { width: 5px; height: 5px; flex-shrink: 0; }
+  .tt-dot.active { width: 12px; background: #fff; }
+}
+```
+
+```html
+<!-- Inside .tt-card-media — replaces the single <img> -->
+<div class="tt-card-media">
+  <div class="tt-slider-track" data-idx="0">
+    {% for img in property.images %}
+      <img src="{{ img }}" alt="{{ property.name }}" class="tt-slider-img" loading="lazy">
+    {% endfor %}
+  </div>
+  <button class="tt-slider-btn prev">{% tt_icon "arrowL" size=14 %}</button>
+  <button class="tt-slider-btn next">{% tt_icon "arrow" size=14 %}</button>
+  <div class="tt-slider-dots">
+    {% for img in property.images %}
+      <div class="tt-dot {% if forloop.first %}active{% endif %}"></div>
+    {% endfor %}
+  </div>
+  <div class="tt-card-tags">
+    <span class="tt-tag">{{ property.city_display }}</span>
+    <span class="tt-tag tt-tag-dark">★ {{ property.rating }}</span>
+  </div>
+</div>
+```
+
+**Slider JS (vanilla):** track each card's index; `translateX(-idx*100%)`; bind arrow clicks (`stopPropagation` so they don't trigger the card's navigate-to-detail); on mobile bind `touchstart/move/end` with a 50px swipe threshold and dampen drag to `0.3×` at the first/last image for a rubber-band feel.
+
+---
+
 ### 9.11 Desktop Search Bar
 
 5-column grid: Location | Check-in | Check-out | Guests | Search button.
@@ -1479,35 +1637,67 @@ Image-led card. Hover lifts with `translateY(-3px)` + image scale.
 
 ---
 
-### 9.12 Moments / Image Grid
+### 9.12 Moments Carousel (v2 — JS-driven, draggable)
 
-3-column 4:5 aspect ratio grid with caption overlay and subtle zoom on hover.
+The static 3-column grid was replaced by a horizontal, infinitely-scrolling carousel of 280×350 tiles. It auto-scrolls, pauses on hover, supports drag/touch scrubbing, and has soft mask-faded edges. The legacy `.tt-moment*` grid classes still exist but are no longer used on the homepage.
 
 ```css
-.tt-moments-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-}
-
-.tt-moment {
+/* Scroll container — hidden scrollbar + soft edge fade */
+.tt-moments-carousel-container {
+  width: 100%;
+  overflow-x: scroll; overflow-y: hidden;
   position: relative;
-  aspect-ratio: 4 / 5;
-  border-radius: var(--r-sm);
-  overflow: hidden;
-  background: var(--bg-tint);
-  cursor: pointer;
+  padding: 10px 0;
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;       /* IE/Edge */
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+.tt-moments-carousel-container::-webkit-scrollbar { display: none; }  /* Chrome/Safari */
+
+/* JS-driven track — plain flex, scrubbed via scrollLeft (no CSS animation) */
+.tt-moments-carousel-track-js {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  padding: 0 20px;
 }
 
-.tt-moment .tt-img > img  { transition: transform .8s var(--ease-spring); }
-.tt-moment:hover .tt-img > img { transform: scale(1.04); }
+/* Legacy CSS-marquee track (kept for backward compat, unused on home) */
+.tt-moments-carousel-track {
+  display: flex; width: max-content;
+  animation: tt-marquee 40s linear infinite;
+}
+.tt-moments-carousel-track:hover { animation-play-state: paused; }
+@keyframes tt-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
-.tt-moment-cap {
-  position: absolute; left: 16px; bottom: 16px;
-  color: #fff; font-size: 14px; font-weight: 500;
-  text-shadow: 0 1px 12px rgba(0,0,0,0.35); z-index: 2;
+.tt-moments-carousel-item {
+  width: 280px; height: 350px;
+  position: relative;
+  border-radius: 0;
+  overflow: hidden; cursor: pointer;
+  flex-shrink: 0;
+  background: var(--bg-tint);
+}
+.tt-moments-carousel-item img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform .6s var(--ease-spring);
+  pointer-events: none;            /* prevent image drag ghost */
+}
+.tt-moments-carousel-item:hover img { transform: scale(1.04); }
+
+/* Mobile — smaller tiles, faster legacy marquee */
+@media (max-width: 768px) {
+  .tt-moments-carousel-item  { width: 200px; height: 250px; }
+  .tt-moments-carousel-track { animation-duration: 25s; }
 }
 ```
+
+**Carousel JS:** render the moment tiles twice (a duplicated group) so the loop is seamless; on each animation frame nudge `container.scrollLeft += speed` and wrap when past the first group's width; pause the auto-advance on `pointerenter`; on `pointerdown` switch to manual scrub (track `scrollLeft` vs pointer X), resume auto-scroll on release.
 
 ---
 
@@ -1989,6 +2179,86 @@ Fixed bottom-right floating action button.
 
 ---
 
+### 9.25 Nature Retreat — Experience Rows
+
+The Nature Retreat page (`retreat.jsx`) uses alternating image/text rows. A full-bleed hero (`.tt-retreat-hero`), a highlights grid (`.tt-highlights-grid`), the experience list below, and a closing 2-col `.tt-retreat-gallery`.
+
+```css
+.tt-experience-list {
+  display: flex; flex-direction: column;
+  gap: 48px;
+}
+
+.tt-experience-row {
+  display: flex; gap: 32px;
+  align-items: center;
+}
+.tt-experience-row.tt-row         { flex-direction: row; }
+.tt-experience-row.tt-row-reverse { flex-direction: row-reverse; }   /* zig-zag */
+
+.tt-experience-img-wrap {
+  flex: 1;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--bg-soft);
+}
+.tt-experience-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.tt-experience-text { flex: 1; padding: 16px; }
+.tt-experience-text .tt-h3    { margin-bottom: 12px; }
+.tt-experience-text .tt-muted { font-size: 16px; line-height: 1.6; }
+```
+
+**Mobile (≤768px):** `.tt-retreat-hero` height `260px`; `.tt-highlights-grid` → 1 col; `.tt-experience-row` stacks to a column (`align-items: stretch`); `.tt-experience-img-wrap` goes full-width `16/9`; `.tt-retreat-gallery` → 2 cols.
+
+---
+
+### 9.26 Events Page
+
+Centered editorial list of event cards (`events.jsx`). Each card is a horizontal flex row: circular icon | body (name + description + actions). Closes with a soft-bg CTA block.
+
+```css
+.tt-events-page   { padding-top: 32px; padding-bottom: 96px; }
+.tt-events-crumb  { margin-bottom: 24px; }
+
+.tt-events-header { text-align: center; max-width: 640px; margin: 0 auto 64px; }
+.tt-events-title  { margin-top: 12px; margin-bottom: 16px; }
+.tt-events-intro  { color: var(--text-soft); font-size: 17px; line-height: 1.65; margin: 0; }
+
+.tt-events-list   { max-width: 720px; margin: 0 auto; display: grid; gap: 20px; }
+
+.tt-event-card {
+  display: flex; align-items: flex-start; gap: 24px;
+  padding: 32px;
+  border: 1px solid var(--line);
+  background: #fff;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.tt-event-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
+
+/* Explicit width keeps the icon circular even when the card stacks on mobile */
+.tt-event-icon {
+  flex: 0 0 52px; width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.tt-event-body { flex: 1; min-width: 0; }
+.tt-event-name { font-size: 19px; font-weight: 600; margin: 0 0 8px; color: var(--ink); }
+.tt-event-desc { font-size: 15px; line-height: 1.6; margin: 0; }
+
+.tt-event-actions { margin-top: 20px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.tt-event-via     { font-size: 13px; }
+
+.tt-events-cta         { margin: 72px auto 0; text-align: center; padding: 48px; background: var(--bg-soft); max-width: 720px; }
+.tt-events-cta-text    { font-size: 15px; max-width: 440px; margin: 0 auto 28px; }
+.tt-events-cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+```
+
+**Mobile (≤768px):** page padding tightens (`padding-top: 18px`), card padding `18px 16px`, icon shrinks to `40px`, name `17px`.
+
+---
+
 ## 10. Responsive Breakpoints
 
 | Breakpoint | Width | Key changes |
@@ -2034,10 +2304,10 @@ Navbar (sticky)
   └── Hero Section
        ├── [Desktop] tt-hero-grid (headline | featured card)
        └── [Mobile]  90vh full-bleed image + .tt-hero-mobile-top (search bar)
-                     + .tt-hero-float (scroll-fade CTA)
+                     + .tt-hero-float-overlay (fixed scroll-fade headline + CTA)
 CategoryTabs (scroll)
-PropertyGrid (3-col → 2-col → 1-col)
-MomentsCarousel (revolving 3-col grid)
+FeaturedStays (3-col → 2-col → 1-col cards, each with swipeable image carousel)
+MomentsCarousel (JS-driven horizontal auto-scroll, draggable, mask-faded edges)
 DarkSection (Featured Journeys, 3-col)
 HowItWorksGrid (3-col)
 LoyaltyTeaser
@@ -2166,8 +2436,9 @@ class Booking(models.Model):
 project/
 ├── static/
 │   ├── css/
-│   │   ├── styles.css          ← copy test/styles.css verbatim
-│   │   └── mobile-overrides.css ← copy test/mobile-overrides.css verbatim
+│   │   └── styles.css          ← copy src/styles.css verbatim (mobile @media blocks
+│   │                              are inline; the src/ build has NO separate
+│   │                              mobile-overrides.css — that was the old test/ build)
 │   ├── js/
 │   │   └── main.js             ← scroll fade, hamburger toggle, bottom sheet
 │   └── images/
@@ -2206,7 +2477,6 @@ project/
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  <link rel="stylesheet" href="{% static 'css/mobile-overrides.css' %}">
 </head>
 <body>
   {% include "partials/utility_bar.html" %}
@@ -2236,10 +2506,10 @@ document.querySelector('.tt-hamburger')?.addEventListener('click', () => {
   document.querySelector('.tt-mobile-menu')?.classList.toggle('open');
 });
 
-// Scroll-fade on hero float CTA (mobile)
+// Scroll-fade on the fixed hero float overlay (mobile)
 window.addEventListener('scroll', () => {
   const alpha = Math.max(0, 1 - window.scrollY / 160);
-  const floatEl = document.querySelector('.tt-hero-float');
+  const floatEl = document.querySelector('.tt-hero-float-overlay');
   if (floatEl) floatEl.style.opacity = alpha;
 }, { passive: true });
 
@@ -2378,4 +2648,4 @@ def tt_icon(name, size=16, class_name='tt-ico'):
 
 ---
 
-*Generated from: `test/styles.css`, `test/mobile-overrides.css`, `test/components/shell.jsx`, `test/components/home.jsx`, `test/data.js` · tt2 project · June 2026*
+*Generated from the production Vite build: `src/styles.css` (v2, 3,300+ lines), `src/components/{shell,home,search,retreat,events}.jsx`, `src/data.js` · tt2 project · `ui-revisions` branch · revised June 15, 2026.*
