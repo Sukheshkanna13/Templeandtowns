@@ -1,4 +1,4 @@
-# Temple And Towns Resorts — UI/UX Design System Blueprint
+# Temple And Thorpe Resorts — UI/UX Design System Blueprint
 
 > **Purpose:** Complete reference for rebuilding this exact UI over Django.  
 > **Source (v2 — `ui-revisions`):** Extracted from the production Vite build — `src/styles.css` (3,300+ lines) and all components in `src/components/`. This supersedes the older `test/` build, which lags behind.  
@@ -921,7 +921,7 @@ Two-column grid: left = headline + CTAs, right = featured image card.
     <div class="tt-page">
       <div class="tt-hero-grid" style="align-items:center">
         <div>
-          <span class="tt-eyebrow">Temple And Towns Resorts</span>
+          <span class="tt-eyebrow">Temple And Thorpe Resorts</span>
           <h1 class="tt-display" style="margin-top:16px">
             Explore stays that feel <span class="tt-italic-soft" style="color:var(--accent)">modern,</span><br>
             calm, and unmistakably Indian.
@@ -2116,7 +2116,7 @@ Two-column grid: brand blurb left, help links right.
       <div>
         <div class="tt-logo-split" style="margin-bottom:18px">
           <img src="{% static 'logo-left.png' %}" alt="Logo" class="tt-logo-left-img" style="height:44px">
-          <img src="{% static 'logo-half.png' %}" alt="Temple and Towns" class="tt-logo-half-img" style="height:30px">
+          <img src="{% static 'logo-half.png' %}" alt="Temple and Thorpe" class="tt-logo-half-img" style="height:30px">
         </div>
         <p style="color:var(--text-soft);font-size:14px;max-width:340px;line-height:1.6;margin:0">
           Modern, calm, unmistakably Indian. A small, hand-picked collection of stays
@@ -2138,7 +2138,7 @@ Two-column grid: brand blurb left, help links right.
     </div>
     <div class="tt-footer-bottom" style="margin-top:64px;padding-top:28px;border-top:1px solid var(--line);
          display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted)">
-      <span>© 2026 Temple And Towns Resorts LLP · Pondicherry &amp; Near Auroville</span>
+      <span>© 2026 Temple And Thorpe Resorts LLP · Pondicherry &amp; Near Auroville</span>
       <span>INR · English</span>
     </div>
   </div>
@@ -2473,7 +2473,7 @@ project/
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Temple And Towns Resorts{% endblock %}</title>
+  <title>{% block title %}Temple And Thorpe Resorts{% endblock %}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">

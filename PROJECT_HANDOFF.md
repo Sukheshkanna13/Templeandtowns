@@ -9,7 +9,7 @@ The application began as a static, client-side React application (using Babel st
 - **UI:** Featured advanced search filters (price sliders, sorting algorithms, amenity chips) and generic placeholder pages for events and experiences.
 
 ## 2. Goal of Refactoring
-The objective was to transform the template into a "Real-Time V1" prototype focused entirely on the **TempleAndTowns** properties. The primary functional shift was moving away from an automated e-commerce checkout flow to a highly personalized, manual **WhatsApp-driven booking request model** without publicly listed prices.
+The objective was to transform the template into a "Real-Time V1" prototype focused entirely on the **TempleAndThorpe** properties. The primary functional shift was moving away from an automated e-commerce checkout flow to a highly personalized, manual **WhatsApp-driven booking request model** without publicly listed prices.
 
 ## 3. Key Changes Implemented
 
@@ -18,7 +18,7 @@ The objective was to transform the template into a "Real-Time V1" prototype focu
   1. White Town 1BHK - 1st Floor
   2. White Town 1BHK - 2nd Floor
   3. White Town 2BHK - 1st Floor
-  4. TempleAndTowns Nature Retreat (Near Auroville)
+  4. TempleAndThorpe Nature Retreat (Near Auroville)
 - Removed all numerical `price` and `from` values, replacing them with the string `"Request to book"`.
 - Removed Bengaluru references completely.
 
@@ -45,7 +45,7 @@ The objective was to transform the template into a "Real-Time V1" prototype focu
   - `images/1F-1BHK/` (For White Town 1BHK 1st Floor)
   - `images/2F-1BHK/` (For White Town 1BHK 2nd Floor)
   - `images/1F-2BHK/` (For White Town 2BHK 1st Floor)
-  - `images/Auroville/` (For TempleAndTowns Nature Retreat)
+  - `images/Auroville/` (For TempleAndThorpe Nature Retreat)
 
 ### Detailed Room Configurations (`data.js`)
 The application currently renders these specific rooms mapped to each property. Each room allows a direct "Request to book" pipeline.
@@ -65,7 +65,7 @@ The application currently renders these specific rooms mapped to each property. 
 - **Capacity:** 5 Guests | 2 Queen + Living Room
 - **Amenities:** Wi-Fi, Kitchen, Rajasthani Decor
 
-**4. TempleAndTowns Nature Retreat (`p4`)**
+**4. TempleAndThorpe Nature Retreat (`p4`)**
 - **Room A:** Nature Retreat Standard (Attached Bath)
   - Capacity: 2 Guests | 1 Queen
   - Amenities: Garden View, Pool Access

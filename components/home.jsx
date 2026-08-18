@@ -134,7 +134,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
                   calm, and unmistakably Indian.
                 </h1>
                 <p className="tt-sub" style={{ marginTop: 28, maxWidth: 560 }}>
-                  Inspired by the spirit of Temple And Towns Resorts. Clean design, smooth booking,
+                  Inspired by the spirit of Temple And Thorpe Resorts. Clean design, smooth booking,
                   and a platform built to scale.
                 </p>
                 <div style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>

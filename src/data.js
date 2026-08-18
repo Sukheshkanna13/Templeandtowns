@@ -1,8 +1,8 @@
-// Temple And Towns Resorts — client-editable data
+// Temple And Thorpe Resorts — client-editable data
 // Update properties[], rooms{}, and reviews[] below when the client provides real content.
 // Images: place files in /images/ and update the placeholder/label keys.
 
-export const WA_URL = 'https://api.whatsapp.com/send/?phone=0000000000&text=Hi%2C+I%27d+like+to+chat+about+Temple+And+Towns+Resorts.&type=phone_number&app_absent=0';
+export const WA_URL = 'https://api.whatsapp.com/send/?phone=0000000000&text=Hi%2C+I%27d+like+to+chat+about+Temple+And+Thorpe+Resorts.&type=phone_number&app_absent=0';
 
 export const TT_DATA = {
   cities: [
@@ -74,7 +74,7 @@ export const TT_DATA = {
       id: 'p4',
       city: 'auroville',
       theme: 'nature',
-      name: 'Temple And Towns Resorts Nature Retreat',
+      name: 'Temple And Thorpe Resorts Nature Retreat',
       area: 'Near Auroville',
       blurb: 'Nestled in the peaceful surroundings Near Auroville, designed for resting and simple living. 12 Rooms with attached baths, Swimming Pool, Parking, Garden on a one acre facility. 5-7 minutes from Matrimandir.',
       rating: 4.9,

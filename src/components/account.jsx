@@ -244,7 +244,7 @@ export const ThingsScreen = ({ go, goBack }) => (
   </div>
 );
 
-export const EventsScreen = ({ go }) => <ListPage eyebrow="Nature Retreat Events" title={<>Meaningful memories.</>} sub="At Temple And Towns Resorts Nature Retreat - enjoy simple, thoughtfully curated experiences that connect you with nature, local culture and the peaceful spirit of Near Auroville. 🪷" items={[
+export const EventsScreen = ({ go }) => <ListPage eyebrow="Nature Retreat Events" title={<>Meaningful memories.</>} sub="At Temple And Thorpe Resorts Nature Retreat - enjoy simple, thoughtfully curated experiences that connect you with nature, local culture and the peaceful spirit of Near Auroville. 🪷" items={[
   { cat: 'Near Auroville', t: 'Experience Local Artisans', d: 'Discover the charm of local craftsmanship through simple demonstrations and hands-on workshops. Meet local artisans, explore handmade jewellery, weaving and jute crafts. Take home a little piece of Near Auroville with you.', price: 'Request to book', label: 'craft', tone: 'oklch(0.85 0.06 30)' },
   { cat: 'Near Auroville', t: 'Garden Fun for Kids', d: 'Let the little hands explore nature through simple gardening and outdoor activities. A fun and joyful way for children to play, learn and enjoy the beauty of nature.', price: 'Request to book', label: 'garden', tone: 'oklch(0.84 0.07 145)' },
   { cat: 'Near Auroville', t: 'Poolside Evenings & Summer Fun', d: 'Relax, unwind and enjoy refreshing moments by the pool. During special weekends and group stays - guests can enjoy cheerful poolside gatherings, family fun and summer vibes.', price: 'Request to book', label: 'coastal', tone: 'oklch(0.87 0.05 200)' },

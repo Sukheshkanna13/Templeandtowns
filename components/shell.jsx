@@ -177,8 +177,8 @@ const Navbar = ({ screen, go }) => {
             <img src="nature-retreat-Logo.png" alt="Nature Retreat" className="tt-logo-img" style={{ height: 52 }} />
           ) : (
             <>
-              <img src="logo-left.png" alt="Temple and Towns Resorts Logo Mark" className="tt-logo-left-img" />
-              <img src="logo-half.png" alt="Temple and Towns Resorts Wordmark" className="tt-logo-half-img" />
+              <img src="logo-left.png" alt="Temple and Thorpe Resorts Logo Mark" className="tt-logo-left-img" />
+              <img src="logo-half.png" alt="Temple and Thorpe Resorts Wordmark" className="tt-logo-half-img" />
             </>
           )}
         </div>
@@ -228,8 +228,8 @@ const Footer = ({ screen }) => {
                 <img src="nature-retreat-Logo.png" alt="Nature Retreat" className="tt-logo-img" style={{ height: 48, width: 48, objectFit: 'contain' }} />
               ) : (
                 <>
-                  <img src="logo-left.png" alt="Temple and Towns Resorts Logo Mark" className="tt-logo-left-img" />
-                  <img src="logo-half.png" alt="Temple and Towns Resorts Wordmark" className="tt-logo-half-img" />
+                  <img src="logo-left.png" alt="Temple and Thorpe Resorts Logo Mark" className="tt-logo-left-img" />
+                  <img src="logo-half.png" alt="Temple and Thorpe Resorts Wordmark" className="tt-logo-half-img" />
                 </>
               )}
             </div>
@@ -252,7 +252,7 @@ const Footer = ({ screen }) => {
           </div>
         </div>
         <div className="tt-footer-bottom" style={{ marginTop: 64, paddingTop: 28, borderTop: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', fontSize: 13, color: 'var(--text-muted)' }}>
-          <span>© 2026 Temple And Towns Resorts LLP · Pondicherry &amp; Near Auroville</span>
+          <span>© 2026 Temple And Thorpe Resorts LLP · Pondicherry &amp; Near Auroville</span>
           <span>INR · English ·</span>
         </div>
       </div>

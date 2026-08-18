@@ -186,8 +186,8 @@ export const Navbar = ({ screen, go, searchCtx }) => {
               <img src="nature-retreat-Logo.png" alt="Nature Retreat" className="tt-logo-img" style={{ height: 52 }} />
             ) : (
               <>
-                <img src="logo-left.png" alt="Temple and Towns Resorts Logo Mark" className="tt-logo-left-img" />
-                <img src="logo-half.png" alt="Temple and Towns Resorts Wordmark" className="tt-logo-half-img" />
+                <img src="logo-left.png" alt="Temple and Thorpe Resorts Logo Mark" className="tt-logo-left-img" />
+                <img src="logo-half.png" alt="Temple and Thorpe Resorts Wordmark" className="tt-logo-half-img" />
               </>
             )}
           </div>
@@ -265,8 +265,8 @@ export const Footer = ({ screen }) => {
                 <img src="nature-retreat-Logo.png" alt="Nature Retreat" className="tt-logo-img" style={{ height: 48, width: 48, objectFit: 'contain' }} />
               ) : (
                 <>
-                  <img src="logo-left.png" alt="Temple and Towns Resorts Logo Mark" className="tt-logo-left-img" />
-                  <img src="logo-half.png" alt="Temple and Towns Resorts Wordmark" className="tt-logo-half-img" />
+                  <img src="logo-left.png" alt="Temple and Thorpe Resorts Logo Mark" className="tt-logo-left-img" />
+                  <img src="logo-half.png" alt="Temple and Thorpe Resorts Wordmark" className="tt-logo-half-img" />
                 </>
               )}
             </div>
@@ -274,7 +274,7 @@ export const Footer = ({ screen }) => {
               Modern, calm, unmistakably Indian. A small, hand-picked collection of stays across temple towns and quiet coastlines — designed to feel premium without feeling heavy.
             </p>
             <div style={{ display: 'flex', gap: 16, marginTop: 24, alignItems: 'center' }}>
-              <a href="https://www.instagram.com/templeandtownsresorts?igsh=MXBlcjB0NTRiNjBlMA==" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', color: 'var(--text-muted)', transition: 'color 0.2s' }}>
+              <a href="https://www.instagram.com/templeandthorperesorts?igsh=MXBlcjB0NTRiNjBlMA==" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', color: 'var(--text-muted)', transition: 'color 0.2s' }}>
                 <Ico name="instagram" size={20} />
               </a>
             </div>
@@ -291,7 +291,7 @@ export const Footer = ({ screen }) => {
           </div>
         </div>
         <div className="tt-footer-bottom" style={{ marginTop: 64, paddingTop: 28, borderTop: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', fontSize: 13, color: 'var(--text-muted)' }}>
-          <span>© 2026 Temple And Towns Resorts LLP · Pondicherry &amp; Near Auroville</span>
+          <span>© 2026 Temple And Thorpe Resorts LLP · Pondicherry &amp; Near Auroville</span>
           <span>INR · English ·</span>
         </div>
       </div>

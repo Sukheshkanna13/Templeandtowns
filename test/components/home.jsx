@@ -128,7 +128,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
                   calm, and unmistakably Indian.
                 </h1>
                 <p className="tt-sub tt-hero-sub-desk" style={{ marginTop: 28, maxWidth: 560 }}>
-                  Inspired by the spirit of Temple And Towns Resorts. Clean design, smooth booking, and a platform built to scale.
+                  Inspired by the spirit of Temple And Thorpe Resorts. Clean design, smooth booking, and a platform built to scale.
                 </p>
                 <div style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
                   <button className="tt-btn tt-btn-primary" onClick={submit}>Find a stay <Ico name="arrow" size={14} /></button>
@@ -372,7 +372,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
 
       {/* ── FLOATING HERO OVERLAY (mobile only, fades on scroll) ── */}
       <div className="tt-hero-float" style={{ opacity: heroAlpha, pointerEvents: heroAlpha > 0.05 ? 'auto' : 'none' }}>
-        <span className="tt-hero-eyebrow-mobile">Temple And Towns Resorts</span>
+        <span className="tt-hero-eyebrow-mobile">Temple And Thorpe Resorts</span>
         <h1 className="tt-display tt-hero-title-mobile">
           Explore stays that feel<br />
           <em className="tt-italic-soft">modern, calm,</em><br />
