@@ -19,7 +19,7 @@ export const StarRating = ({ rating, size = 13 }) => {
 
 // ---------- SEARCH ----------
 export const SearchScreen = ({ go, goBack, params, searchCtx, setSearchCtx }) => {
-  const [cityFilter, setCityFilter] = useState(params?.city || searchCtx?.city || 'Pondicherry');
+  const [cityFilter, setCityFilter] = useState(params?.city || searchCtx?.city || 'Both cities');
 
   // Links like Nature Retreat pass ?city=… — re-apply when navigating while already on this screen
   useEffect(() => {
@@ -34,7 +34,8 @@ export const SearchScreen = ({ go, goBack, params, searchCtx, setSearchCtx }) =>
     const filterNorm = cityFilter.toLowerCase().includes('auroville') ? 'auroville' : cityFilter.toLowerCase();
     const cityNorm = p.city.toLowerCase().includes('auroville') ? 'auroville' : p.city.toLowerCase();
     return cityNorm === filterNorm;
-  }).sort((a, b) => b.rating - a.rating),
+  // Nature Retreat (Auroville) stays always lead the list, then by rating
+  }).sort((a, b) => (b.theme === 'nature') - (a.theme === 'nature') || b.rating - a.rating),
     [cityFilter]);
 
   const updateSearch = () => {
@@ -50,7 +51,7 @@ export const SearchScreen = ({ go, goBack, params, searchCtx, setSearchCtx }) =>
       </div>
       <div style={{ marginBottom: 32 }}>
         <div className="tt-eyebrow">Stays</div>
-        <h1 className="tt-h1" style={{ marginTop: 12, marginBottom: 0 }}>Find your stay in <span className="tt-italic-soft" style={{ color: 'var(--accent)' }}>{cityFilter}</span></h1>
+        <h1 className="tt-h1" style={{ marginTop: 12, marginBottom: 0 }}>Find your stay in <span className="tt-italic-soft" style={{ color: 'var(--accent)' }}>{cityFilter === 'Both cities' ? 'Near Auroville & Pondicherry' : cityFilter}</span></h1>
       </div>
 
       <div className="tt-search">

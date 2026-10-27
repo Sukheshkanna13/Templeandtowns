@@ -206,7 +206,7 @@ export const Navbar = ({ screen, params, go, searchCtx }) => {
             <div className="tt-nav-pill-inline" onClick={() => go('search')}>
               <div className="cell">
                 <span className="lbl">Where to?</span>
-                <span className="val">{searchCtx?.city || 'Pondicherry'}</span>
+                <span className="val">{searchCtx?.city || 'Both cities'}</span>
               </div>
               <div className="sep" />
               <div className="cell">

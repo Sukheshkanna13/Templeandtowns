@@ -336,7 +336,7 @@ const MomentsCarousel = () => {
 
 // ---------- HOME ----------
 const HomeScreen = ({ go, setSearchCtx }) => {
-  const [city, setCity] = useState('Pondicherry');
+  const [city, setCity] = useState('Both cities');
   const [checkIn, setCheckIn] = useState(tt.todayISO(1));
   const [checkOut, setCheckOut] = useState(tt.todayISO(4));
   const [guests, setGuests] = useState('2 guests · 1 room');

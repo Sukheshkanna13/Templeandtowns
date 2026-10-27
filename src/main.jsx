@@ -48,7 +48,7 @@ function App() {
   const initial = parseHash();
   const [screen, setScreen] = useState(initial.screen);
   const [params, setParams] = useState(initial.params);
-  const [searchCtx, setSearchCtx] = useState({ city: 'Pondicherry', checkIn: tt.todayISO(1), checkOut: tt.todayISO(4), guests: '2 guests · 1 room' });
+  const [searchCtx, setSearchCtx] = useState({ city: 'Both cities', checkIn: tt.todayISO(1), checkOut: tt.todayISO(4), guests: '2 guests · 1 room' });
 
   // Flag to distinguish programmatic go() calls from browser back/forward
   const isProgrammatic = useRef(false);
