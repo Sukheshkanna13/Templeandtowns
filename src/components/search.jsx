@@ -18,8 +18,13 @@ export const StarRating = ({ rating, size = 13 }) => {
 };
 
 // ---------- SEARCH ----------
-export const SearchScreen = ({ go, goBack, searchCtx, setSearchCtx }) => {
-  const [cityFilter, setCityFilter] = useState(searchCtx?.city || 'Pondicherry');
+export const SearchScreen = ({ go, goBack, params, searchCtx, setSearchCtx }) => {
+  const [cityFilter, setCityFilter] = useState(params?.city || searchCtx?.city || 'Pondicherry');
+
+  // Links like Nature Retreat pass ?city=… — re-apply when navigating while already on this screen
+  useEffect(() => {
+    if (params?.city) setCityFilter(params.city);
+  }, [params?.city]);
   const [checkIn, setCheckIn] = useState(searchCtx?.checkIn || tt.todayISO(1));
   const [checkOut, setCheckOut] = useState(searchCtx?.checkOut || tt.todayISO(4));
   const [guests, setGuests] = useState(searchCtx?.guests || '2 guests · 1 room');
@@ -144,7 +149,7 @@ export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
       alert("Booking link coming soon!");
     }
   };
-  const isAirbnb = property.bookingUrl && property.bookingUrl.includes('airbnb.com');
+  const isAirbnb = property.bookingUrl && /airbnb\.(com|co\.in)/.test(property.bookingUrl);
   const platformName = isAirbnb ? 'Airbnb' : 'Booking.com';
   const nights = tt.nightsBetween(searchCtx?.checkIn, searchCtx?.checkOut) || 3;
 

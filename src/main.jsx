@@ -98,10 +98,10 @@ function App() {
 
   return (
     <>
-      <Navbar screen={screen} go={go} searchCtx={searchCtx}/>
+      <Navbar screen={screen} params={params} go={go} searchCtx={searchCtx}/>
       <main>
         {screen === 'home'     && <HomeScreen go={go} setSearchCtx={setSearchCtx}/>}
-        {screen === 'search'   && <SearchScreen go={go} goBack={goBack} searchCtx={searchCtx} setSearchCtx={setSearchCtx}/>}
+        {screen === 'search'   && <SearchScreen go={go} goBack={goBack} params={params} searchCtx={searchCtx} setSearchCtx={setSearchCtx}/>}
         {screen === 'property' && <PropertyScreen go={go} goBack={goBack} params={params} searchCtx={searchCtx}/>}
         {screen === 'loyalty'  && <LoyaltyScreen go={go} goBack={goBack}/>}
         {screen === 'things'   && <ThingsScreen go={go} goBack={goBack}/>}

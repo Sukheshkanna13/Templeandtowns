@@ -2028,6 +2028,8 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Keep the pavilion + pond in frame; sun sits under the top fade */
+  object-position: 50% 80%;
   z-index: 0;
 }
 
@@ -2116,6 +2118,11 @@ img {
   .tt-hero-full {
     min-height: calc(100vh - 68px);
     /* Full viewport minus mobile nav height */
+  }
+
+  /* Portrait crop: favour the pavilion (left of centre) and the pond below it */
+  .tt-hero-bg-full {
+    object-position: 42% 60%;
   }
 
   .tt-moments-carousel-item {

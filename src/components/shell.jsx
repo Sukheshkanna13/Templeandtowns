@@ -133,6 +133,9 @@ export const tt = { inr, fmtDate, fmtDateLong, nightsBetween, todayISO };
 
 // ---------- Logo system revised to use single files (TTR-Logo.png / nature-retreat-Logo.png) ----------
 
+// Nature Retreat links open the stays search filtered to the Auroville rooms
+export const RETREAT_SEARCH = { city: 'Near Auroville' };
+
 // ---------- Top utility bar ----------
 export const UtilityBar = ({ go }) => (
   <div className="tt-utility">
@@ -147,14 +150,14 @@ export const UtilityBar = ({ go }) => (
       </div>
       <div className="tt-utility-right">
         <a onClick={() => go('search')}>Trip Planner</a>
-        <a onClick={() => go('retreat')}>Nature Retreat</a>
+        <a onClick={() => go('search', RETREAT_SEARCH)}>Nature Retreat</a>
       </div>
     </div>
   </div>
 );
 
 // ---------- Main Navbar ----------
-export const Navbar = ({ screen, go, searchCtx }) => {
+export const Navbar = ({ screen, params, go, searchCtx }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -167,11 +170,17 @@ export const Navbar = ({ screen, go, searchCtx }) => {
   const links = [
     { id: 'search', label: 'Stays' },
     { id: 'things', label: 'Things to do' },
-    { id: 'retreat', label: 'Nature Retreat' },
+    { id: 'retreat', label: 'Nature Retreat', screen: 'search', params: RETREAT_SEARCH },
     { id: 'cause', label: 'Travel for Cause' },
     { id: 'events', label: 'Events' },
   ];
-  const isActive = (id) => screen === id || (id === 'search' && ['home', 'property', 'book', 'wa-sent'].includes(screen));
+  const onRetreatSearch = screen === 'search' && params?.city === RETREAT_SEARCH.city;
+  const isActive = (id) => {
+    if (id === 'retreat') return screen === 'retreat' || onRetreatSearch;
+    if (id === 'search') return !onRetreatSearch && ['search', 'home', 'property', 'book', 'wa-sent'].includes(screen);
+    return screen === id;
+  };
+  const goLink = (l) => go(l.screen || l.id, l.params);
   const close = () => setMenuOpen(false);
 
   const isHome = screen === 'home';
@@ -216,7 +225,7 @@ export const Navbar = ({ screen, go, searchCtx }) => {
           {links.map(l => (
             <span key={l.id}
               className={`tt-nav-link${isActive(l.id) ? ' active' : ''}`}
-              onClick={() => { go(l.id); close(); }}>{l.label}</span>
+              onClick={() => { goLink(l); close(); }}>{l.label}</span>
           ))}
         </div>
 
@@ -237,7 +246,7 @@ export const Navbar = ({ screen, go, searchCtx }) => {
       {menuOpen && (
         <div className="tt-mobile-menu">
           {links.map(l => (
-            <span key={l.id} className="tt-mobile-link" onClick={() => { go(l.id); close(); }}>{l.label}</span>
+            <span key={l.id} className="tt-mobile-link" onClick={() => { goLink(l); close(); }}>{l.label}</span>
           ))}
           <a onClick={() => { go('search'); close(); }} className="tt-mobile-wa" style={{ cursor: 'pointer' }}>
             Book Now

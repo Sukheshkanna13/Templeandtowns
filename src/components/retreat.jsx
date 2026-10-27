@@ -1,5 +1,5 @@
 import React from 'react';
-import { Ico, BackButton } from './shell';
+import { Ico, BackButton, RETREAT_SEARCH } from './shell';
 import { TT_DATA } from '../data';
 
 const NatureRetreatScreen = ({ go, goBack }) => {
@@ -114,8 +114,8 @@ const NatureRetreatScreen = ({ go, goBack }) => {
           Reserve your stay at the Nature Retreat and embrace the simple living.
         </p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button className="tt-btn tt-btn-primary" onClick={() => go('property', { propertyId: 'p4' })}>
-            View Property Details
+          <button className="tt-btn tt-btn-primary" onClick={() => go('search', RETREAT_SEARCH)}>
+            View Rooms
           </button>
           <button className="tt-btn tt-btn-ghost" onClick={() => go('events')}>
             View Events <Ico name="arrow" size={14} />

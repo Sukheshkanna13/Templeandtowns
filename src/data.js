@@ -4,6 +4,32 @@
 
 export const WA_URL = 'https://api.whatsapp.com/send/?phone=0000000000&text=Hi%2C+I%27d+like+to+chat+about+Temple+And+Thorpe+Resorts.&type=phone_number&app_absent=0';
 
+// Shared gallery for the Nature Retreat rooms (swap per room once room-specific photos arrive)
+const AUROVILLE_IMAGES = [
+  'images/Auroville/1.jpeg', 'images/Auroville/2.jpeg', 'images/Auroville/3.jpeg', 'images/Auroville/4.jpeg', 'images/Auroville/5.jpeg',
+  'images/Auroville/6.jpeg', 'images/Auroville/7.jpeg', 'images/Auroville/8.jpeg', 'images/Auroville/9.jpeg', 'images/Auroville/10.jpeg',
+  'images/Auroville/11.jpeg', 'images/Auroville/12.jpeg', 'images/Auroville/13.jpeg', 'images/Auroville/14.jpeg', 'images/Auroville/15.jpeg',
+  'images/Auroville/16.jpeg', 'images/Auroville/17.jpeg',
+];
+
+const retreatRoom = (id, name, floor, bookingUrl) => ({
+  id,
+  city: 'auroville',
+  theme: 'nature',
+  name,
+  area: `Near Auroville · ${floor}`,
+  blurb: `A private ${floor.toLowerCase()} room at the Temple And Thorpe Resorts Nature Retreat, Near Auroville — designed for resting and simple living. Attached bath, Swimming Pool, Parking and a one acre Garden. 5-7 minutes from Matrimandir.`,
+  rating: 4.9,
+  from: 'Book now',
+  bookingUrl,
+  cover: AUROVILLE_IMAGES[0],
+  images: AUROVILLE_IMAGES,
+});
+
+const retreatRoomType = (id, type, floor) => (
+  { id, type, capacity: 2, price: 'Book now', beds: '1 Queen', size: `${floor} · Attached Bath`, amenities: ['WiFi', 'Garden View', 'Pool Access'] }
+);
+
 export const TT_DATA = {
   cities: [
     {
@@ -80,14 +106,13 @@ export const TT_DATA = {
       rating: 4.9,
       from: 'Book now',
       bookingUrl: 'https://www.booking.com/hotel/in/ttr-nature-retreat-auroville.html',
-      cover: 'images/Auroville/1.jpeg',
-      images: [
-        'images/Auroville/1.jpeg', 'images/Auroville/2.jpeg', 'images/Auroville/3.jpeg', 'images/Auroville/4.jpeg', 'images/Auroville/5.jpeg',
-        'images/Auroville/6.jpeg', 'images/Auroville/7.jpeg', 'images/Auroville/8.jpeg', 'images/Auroville/9.jpeg', 'images/Auroville/10.jpeg',
-        'images/Auroville/11.jpeg', 'images/Auroville/12.jpeg', 'images/Auroville/13.jpeg', 'images/Auroville/14.jpeg', 'images/Auroville/15.jpeg',
-        'images/Auroville/16.jpeg', 'images/Auroville/17.jpeg',
-      ],
+      cover: AUROVILLE_IMAGES[0],
+      images: AUROVILLE_IMAGES,
     },
+    retreatRoom('p5', 'TempleAndThorpe Room 206, 1st Floor Near Auroville', '1st Floor', 'https://www.airbnb.co.in/rooms/1771964630881690059'),
+    retreatRoom('p6', 'TempleAndThorpe Room 205, 1st Floor Near Auroville', '1st Floor', 'https://www.airbnb.co.in/rooms/1787003545321046982'),
+    retreatRoom('p7', 'TempleAndThorpe Room 106, Ground Floor Near Auroville', 'Ground Floor', 'https://www.airbnb.co.in/rooms/1784975376331049190'),
+    retreatRoom('p8', 'TempleAndThorpe Room 105, Ground Floor Near Auroville', 'Ground Floor', 'https://www.airbnb.co.in/rooms/1792518932484614919'),
   ],
   rooms: {
     p1: [
@@ -102,6 +127,10 @@ export const TT_DATA = {
     p4: [
       { id: 'r4a', type: 'Nature Retreat', capacity: 2, price: 'Book now', beds: '1 Queen', size: 'Attached Pool', amenities: ['WiFi', 'Garden View', 'Pool Access'] },
     ],
+    p5: [retreatRoomType('r5a', 'Room 206', '1st Floor')],
+    p6: [retreatRoomType('r6a', 'Room 205', '1st Floor')],
+    p7: [retreatRoomType('r7a', 'Room 106', 'Ground Floor')],
+    p8: [retreatRoomType('r8a', 'Room 105', 'Ground Floor')],
   },
   reviews: [
     { name: 'Abhijith', rating: 5, text: 'It was a great stay, and I am really happy with my experience.', when: '2026' },

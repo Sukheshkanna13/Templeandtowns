@@ -1,5 +1,5 @@
 import React from 'react';
-import { Ico, BackButton } from './shell';
+import { Ico, BackButton, RETREAT_SEARCH } from './shell';
 
 const EventsPage = ({ go, goBack }) => {
   const events = [
@@ -94,7 +94,7 @@ const EventsPage = ({ go, goBack }) => {
           <button className="tt-btn tt-btn-primary" onClick={() => go('retreat')}>
             View Nature Retreat
           </button>
-          <button className="tt-btn tt-btn-ghost" onClick={() => go('property', { propertyId: 'p4' })}>
+          <button className="tt-btn tt-btn-ghost" onClick={() => go('search', RETREAT_SEARCH)}>
             View Rooms <Ico name="arrow" size={14} />
           </button>
         </div>

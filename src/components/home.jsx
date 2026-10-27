@@ -347,7 +347,12 @@ const HomeScreen = ({ go, setSearchCtx }) => {
     <>
       {/* HERO — Full Bleed Marriott style */}
       <section className="tt-hero-full">
-        <img src="images/hero_resort.png" alt="Hero" className="tt-hero-bg-full" />
+        <picture>
+          <source media="(max-width: 768px)" srcSet="images/hero/hero-mobile.webp" type="image/webp" />
+          <source media="(max-width: 768px)" srcSet="images/hero/hero-mobile.jpg" />
+          <source srcSet="images/hero/hero-desktop.webp" type="image/webp" />
+          <img src="images/hero/hero-desktop.jpg" alt="Temple And Thorpe Resorts Nature Retreat — garden pavilion and lily pond at sunset" className="tt-hero-bg-full" fetchpriority="high" decoding="async" />
+        </picture>
         <div className="tt-hero-overlay-white" />
 
         {/* Sticky floating search pill — sticks to top as you scroll */}
