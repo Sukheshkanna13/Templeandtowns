@@ -409,8 +409,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
         <div className="tt-page">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40, gap: 24, flexWrap: 'wrap' }}>
             <div style={{ maxWidth: 620 }}>
-              <div className="tt-eyebrow">AI IMAGINED</div>
-              <h2 className="tt-h2" style={{ marginTop: 14 }}>Moments from our vacation.</h2>
+              <h2 className="tt-h2" style={{ margin: 0 }}>Moments from our vacation.</h2>
             </div>
             <button className="tt-btn-link" onClick={() => go('search')}>See all stays →</button>
           </div>
