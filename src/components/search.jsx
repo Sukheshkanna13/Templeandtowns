@@ -206,12 +206,17 @@ export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
           <p style={{ color: 'var(--text)', fontSize: 17, lineHeight: 1.6, marginTop: 0, fontWeight: 400 }}>{property.blurb}</p>
 
           <div className="tt-highlights-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 20, marginTop: 32 }}>
-            {[
+            {(property.city === 'auroville' ? [
+              { i: 'wifi', t: 'High Speed Internet', d: 'High-speed Wi-Fi throughout all rooms and shared retreat areas' },
+              { i: 'shield', t: 'Swimming Pool & Bougainvilleas', d: '7:00 AM – 8:00 PM with potted bougainvilleas sit-out' },
+              { i: 'sun', t: '1 Acre Developing Garden', d: 'Lawns, pergola, granite seatings, cactus garden & lily pond' },
+              { i: 'gift', t: 'Near Matrimandir', d: 'Quiet forest backdrop, 5–7 minutes from Matrimandir' },
+            ] : [
               { i: 'wifi', t: 'High-speed Wi-Fi', d: 'Mesh coverage everywhere, fibre uplink' },
               { i: 'sun', t: 'Garden & courtyard', d: 'Open until 22:00, lit at dusk' },
               { i: 'shield', t: 'Verified host', d: 'Personally approved by our team' },
               { i: 'gift', t: 'Welcome amenity', d: 'A small gift from the city, every stay' },
-            ].map(a => (
+            ]).map(a => (
               <div key={a.t} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', borderTop: '1px solid var(--line)', paddingTop: 18 }}>
                 <Ico name={a.i} size={20} />
                 <div>
@@ -221,6 +226,50 @@ export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
               </div>
             ))}
           </div>
+
+          {/* If Nature Retreat, show core features & amenities breakdown */}
+          {property.city === 'auroville' && (
+            <div style={{ marginTop: 40, padding: 24, background: 'var(--bg-soft)', border: '1px solid var(--line)', borderRadius: 4 }}>
+              <div className="tt-eyebrow" style={{ marginBottom: 8 }}>Features Inside Nature Retreat</div>
+              <h4 style={{ margin: '0 0 16px', fontSize: 18, fontWeight: 600 }}>10 Core Amenities & Facilities</h4>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 24 }}>
+                {[
+                  'High Speed Internet',
+                  'Pool Area',
+                  'Common Kitchen',
+                  'Laundry',
+                  'Library',
+                  'Game Area',
+                  'Parking',
+                  'Power Backup',
+                  'Cactus Garden',
+                  'Lily Pond',
+                ].map(f => (
+                  <span key={f} className="tt-chip tt-chip-tonal" style={{ fontSize: 12, padding: '6px 12px', fontWeight: 500 }}>
+                    ✓ {f}
+                  </span>
+                ))}
+              </div>
+
+              {property.theSpace && (
+                <div style={{ marginBottom: 20 }}>
+                  <div style={{ fontWeight: 600, fontSize: 15, marginBottom: 4 }}>The Space</div>
+                  <p style={{ margin: 0, fontSize: 14, color: 'var(--text-soft)', lineHeight: 1.55 }}>{property.theSpace}</p>
+                </div>
+              )}
+
+              {property.houseRules && (
+                <div style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid var(--line)' }}>
+                  <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 8 }}>House Rules & Notes</div>
+                  <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: 'var(--text-soft)', display: 'flex', flexDirection: 'column', gap: 6 }}>
+                    {property.houseRules.map((rule, idx) => (
+                      <li key={idx}>{rule}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
 
           <hr className="tt-hr" style={{ marginTop: 48 }} />
 
@@ -236,7 +285,10 @@ export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
                   <div style={{ fontWeight: 600, fontSize: 17 }}>{r.type}</div>
                   <div className="tt-muted" style={{ fontSize: 13, marginTop: 4 }}>{r.beds} · {r.size} · up to {r.capacity} guests</div>
                   <div style={{ display: 'flex', gap: 6, marginTop: 10, flexWrap: 'wrap' }}>
-                    {r.amenities.slice(0, 3).map(a => <span key={a} className="tt-chip tt-chip-tonal" style={{ fontSize: 11, padding: '4px 10px' }}>{a}</span>)}
+                    {r.amenities.slice(0, 5).map(a => <span key={a} className="tt-chip tt-chip-tonal" style={{ fontSize: 11, padding: '4px 10px' }}>{a}</span>)}
+                    {r.amenities.length > 5 && (
+                      <span className="tt-chip" style={{ fontSize: 11, padding: '4px 8px', color: 'var(--text-muted)' }}>+{r.amenities.length - 5} more</span>
+                    )}
                   </div>
                 </div>
                 <div style={{ textAlign: 'right' }}>

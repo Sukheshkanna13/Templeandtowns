@@ -159,7 +159,7 @@ const PropertyCarousel = ({ p, go }) => {
 // ---------- Moments Carousel — touch-aware, draggable, auto-scroll ----------
 const MOMENTS = [
   { label: 'pottery', cap: 'Pottery, Near Auroville' },
-  { label: 'temple-courtyard', cap: 'Sandalwood courtyards' },
+  { label: 'temple-courtyard', cap: 'Bougainvillea courtyards' },
   { label: 'sea-evening', cap: 'Promenade, dusk' },
   { label: 'street-food', cap: 'White Town evenings' },
   { label: 'morning-yoga', cap: 'Yoga Near Auroville' },
@@ -434,7 +434,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
               {[
                 { cat: 'Retreat', title: 'Mangroove', loc: 'Pondicherry', label: 'nature' },
                 { cat: 'Heritage', title: 'Coastline', loc: 'White-Town', label: 'coastal' },
-                { cat: 'Culture', title: 'Culture', loc: 'Near Auroville', label: 'temple' },
+                { cat: 'Culture', title: 'Culture', loc: 'Near Auroville Matrimandir', label: 'temple' },
               ].map(j => (
                 <div key={j.title} className="tt-journey">
                   <img src={`images/${j.label}.png`} alt={j.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />

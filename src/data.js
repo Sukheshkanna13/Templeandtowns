@@ -12,22 +12,107 @@ const AUROVILLE_IMAGES = [
   'images/Auroville/16.jpeg', 'images/Auroville/17.jpeg',
 ];
 
+export const RETREAT_FEATURES = [
+  'High Speed Internet',
+  'Pool Area',
+  'Common Kitchen',
+  'Laundry',
+  'Library',
+  'Game Area',
+  'Parking',
+  'Power Backup',
+  'Cactus Garden',
+  'Lily Pond',
+];
+
+export const RETREAT_ROOM_AMENITIES = [
+  'Large King Size Bed with smaller Side tables',
+  'Single Folding bed with attached mattress',
+  'Linens, Comforter And Towels',
+  'Soap, Shampoo And Conditioner',
+  'Working Table with two chairs',
+  'Hot Water Kettle',
+  'Stainless Steel Water Bottles',
+  'Cups and Glasses',
+  'Hair Dryer',
+  'Iron (On Request)',
+  'Large Wardrobe',
+  '100 Liter Refrigerator',
+  '42 Inches Smart Google TV',
+  '1.5 Ton Airconditioner',
+  'Ceiling Fan',
+  'Three in one light (Warm, Warm White and White)',
+];
+
+export const RETREAT_BATHROOM_AMENITIES = [
+  'Geyser (Hot Water)',
+  'English Toilet',
+  'Shower Head',
+  'Bucket and Mug',
+  'Seating Stool (On Request)',
+  'Wash Basin',
+  'Liquid Soap',
+  'Brass Hanger (Behind Bathroom Door)',
+  'Steel Towel Hanger',
+  'Mirror with small storage',
+];
+
+export const RETREAT_SHARED_AMENITIES = [
+  'Common Parking (Outdoor Gated Parking)',
+  'Swimming Pool (Timings 7.00 AM - 8.00 PM) — NO LIFEGUARDS ON DUTY',
+  'Swimming Pool Seat out area with Potted Bougainvilleas',
+  'Developing Garden With Granite Seatings, Lawns, Pergola and Lily Pond',
+  'Small Cactus Garden (Near Swimming Pool)',
+  'Fruit Trees (Mango, Jackfruit, Sapota, etc.)',
+  'Common Kitchen (2nd Floor) with Induction Cooking, Utensils, Hot Pots, Pressure Cookers, Mixers, Sandwich Maker, Hot Water Kettle, Microwave, Bowls and Dishes, Large Refrigerator',
+  'Common Laundry (2nd Floor)',
+  'Game Area (Between 1st and 2nd Floor)',
+  'Small Library (Complete Works Of Mother and Sri Aurobindo)',
+  'Large Terrace Seatout area (2nd Floor)',
+  'Power Backup',
+  'Common Water Purifier on all floors',
+  'High Speed Wi-Fi',
+];
+
+export const RETREAT_HOUSE_RULES = [
+  'Kindly keep all gates closed at all times (roaming cows and goats can damage complete gardens in moments, if the gates are left open)',
+  'Kindly shower before using the pool',
+  'Please use swimming pool wear for pool',
+  'Please use striped swimming pool towels for the pool',
+  'Please do not dry clothes on the porch or on the walls. We have drying area on the terrace (second floor)',
+  'No Smoking inside the rooms or premises',
+  'No drugs or alcohol on the premises',
+];
+
 const retreatRoom = (id, name, floor, bookingUrl) => ({
   id,
   city: 'auroville',
   theme: 'nature',
   name,
-  area: `Near Auroville · ${floor}`,
-  blurb: `A private ${floor.toLowerCase()} room at the Temple And Thorpe Resorts Nature Retreat, Near Auroville — designed for resting and simple living. Attached bath, Swimming Pool, Parking and a one acre Garden. 5-7 minutes from Matrimandir.`,
+  area: `Near Auroville Matrimandir · ${floor}`,
+  blurb: `A private ${floor.toLowerCase()} room at TEMPLEANDTHORPE NATURE RETREAT, NEAR AUROVILLE MATRIMANDIR — 12 room boutique stay amidst natural settings with green forest backdrop, swimming pool, developing garden and self-service amenities. 5-7 minutes from Matrimandir.`,
   rating: 4.9,
   from: 'Book now',
   bookingUrl,
   cover: AUROVILLE_IMAGES[0],
   images: AUROVILLE_IMAGES,
+  theSpace: '12 Room Self Service boutique stay, in a quiet forest backdrop, set up in an acre of land. 6 Nos. of Private Rooms, each with attached bath on the ground floor and another 6 Nos. of Private rooms with attached bath on the 1st floor.',
+  roomAmenities: RETREAT_ROOM_AMENITIES,
+  bathroomAmenities: RETREAT_BATHROOM_AMENITIES,
+  sharedAmenities: RETREAT_SHARED_AMENITIES,
+  houseRules: RETREAT_HOUSE_RULES,
 });
 
 const retreatRoomType = (id, type, floor) => (
-  { id, type, capacity: 2, price: 'Book now', beds: '1 Queen', size: `${floor} · Attached Bath`, amenities: ['WiFi', 'Garden View', 'Pool Access'] }
+  {
+    id,
+    type,
+    capacity: 3,
+    price: 'Book now',
+    beds: '1 King Bed + Single Folding Bed',
+    size: `${floor} · Attached Bath`,
+    amenities: RETREAT_FEATURES,
+  }
 );
 
 export const TT_DATA = {
@@ -100,19 +185,24 @@ export const TT_DATA = {
       id: 'p4',
       city: 'auroville',
       theme: 'nature',
-      name: 'Temple And Thorpe Resorts Nature Retreat',
-      area: 'Near Auroville',
-      blurb: 'Nestled in the peaceful surroundings Near Auroville, designed for resting and simple living. 12 Rooms with attached baths, Swimming Pool, Parking, Garden on a one acre facility. 5-7 minutes from Matrimandir.',
+      name: 'TEMPLEANDTHORPE NATURE RETREAT, NEAR AUROVILLE MATRIMANDIR',
+      area: 'Near Auroville Matrimandir',
+      blurb: 'TempleAndThorpe Nature Retreat is a 12 room boutique stay amidst natural settings, with green forest backdrops, swimming pool and developing garden. The Self-Service boutique retreat is inspired by various Indian art forms from all regions. 5-7 minutes from Matrimandir.',
       rating: 4.9,
       from: 'Book now',
       bookingUrl: 'https://www.booking.com/hotel/in/ttr-nature-retreat-auroville.html',
       cover: AUROVILLE_IMAGES[0],
       images: AUROVILLE_IMAGES,
+      theSpace: '12 Room Self Service boutique stay, in a quiet forest backdrop, set up in an acre of land. 6 Nos. of Private Rooms, each with attached bath on the ground floor and another 6 Nos. of Private rooms with attached bath on the 1st floor.',
+      roomAmenities: RETREAT_ROOM_AMENITIES,
+      bathroomAmenities: RETREAT_BATHROOM_AMENITIES,
+      sharedAmenities: RETREAT_SHARED_AMENITIES,
+      houseRules: RETREAT_HOUSE_RULES,
     },
-    retreatRoom('p5', 'TempleAndThorpe Room 206, 1st Floor Near Auroville', '1st Floor', 'https://www.airbnb.co.in/rooms/1771964630881690059'),
-    retreatRoom('p6', 'TempleAndThorpe Room 205, 1st Floor Near Auroville', '1st Floor', 'https://www.airbnb.co.in/rooms/1787003545321046982'),
-    retreatRoom('p7', 'TempleAndThorpe Room 106, Ground Floor Near Auroville', 'Ground Floor', 'https://www.airbnb.co.in/rooms/1784975376331049190'),
-    retreatRoom('p8', 'TempleAndThorpe Room 105, Ground Floor Near Auroville', 'Ground Floor', 'https://www.airbnb.co.in/rooms/1792518932484614919'),
+    retreatRoom('p5', 'TempleAndThorpe Room 206, 1st Floor Near Auroville Matrimandir', '1st Floor', 'https://www.airbnb.co.in/rooms/1771964630881690059'),
+    retreatRoom('p6', 'TempleAndThorpe Room 205, 1st Floor Near Auroville Matrimandir', '1st Floor', 'https://www.airbnb.co.in/rooms/1787003545321046982'),
+    retreatRoom('p7', 'TempleAndThorpe Room 106, Ground Floor Near Auroville Matrimandir', 'Ground Floor', 'https://www.airbnb.co.in/rooms/1784975376331049190'),
+    retreatRoom('p8', 'TempleAndThorpe Room 105, Ground Floor Near Auroville Matrimandir', 'Ground Floor', 'https://www.airbnb.co.in/rooms/1792518932484614919'),
   ],
   rooms: {
     p1: [
@@ -125,7 +215,7 @@ export const TT_DATA = {
       { id: 'r3a', type: '2BHK 1st Floor', capacity: 5, price: 'Book now', beds: '2 Queen + Living Room', size: 'Independent floor', amenities: ['Wi-Fi', 'Kitchen', 'Rajasthani Decor'] },
     ],
     p4: [
-      { id: 'r4a', type: 'Nature Retreat', capacity: 2, price: 'Book now', beds: '1 Queen', size: 'Attached Pool', amenities: ['WiFi', 'Garden View', 'Pool Access'] },
+      { id: 'r4a', type: 'Nature Retreat Room (12 Rooms Total)', capacity: 3, price: 'Book now', beds: '1 King Bed + Single Folding Bed', size: 'Attached Bath · 6 Ground & 6 1st Floor', amenities: RETREAT_FEATURES },
     ],
     p5: [retreatRoomType('r5a', 'Room 206', '1st Floor')],
     p6: [retreatRoomType('r6a', 'Room 205', '1st Floor')],
