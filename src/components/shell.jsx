@@ -57,7 +57,6 @@ const PHOTO_LIBRARY = {
   'cause-artisan': 'photo-1507525428034-b723cf961d3e',
   // moments
   'pottery': 'photo-1565193566173-7a0ee3dbe261',
-  'temple-courtyard': 'photo-1518002054494-3a6f94352e9d',
   'sea-evening': 'photo-1502343334121-26ac28b21c89',
   'street-food': 'photo-1505253758473-96b7015fcd40',
   'morning-yoga': 'photo-1526404746294-6648a44b7e90',

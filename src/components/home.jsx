@@ -159,7 +159,6 @@ const PropertyCarousel = ({ p, go }) => {
 // ---------- Moments Carousel — touch-aware, draggable, auto-scroll ----------
 const MOMENTS = [
   { label: 'pottery', cap: 'Pottery, Near Auroville' },
-  { label: 'temple-courtyard', cap: 'Bougainvillea courtyards' },
   { label: 'sea-evening', cap: 'Promenade, dusk' },
   { label: 'street-food', cap: 'White Town evenings' },
   { label: 'morning-yoga', cap: 'Yoga Near Auroville' },
