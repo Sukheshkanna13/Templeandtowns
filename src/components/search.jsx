@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Ico, StripeImg, tt, BackButton } from './shell';
 import { TT_DATA } from '../data';
+import { NatureRetreatShowcase } from './retreat';
 
 export const StarRating = ({ rating, size = 13 }) => {
   const percent = (rating / 5) * 100;
@@ -117,6 +118,12 @@ export const SearchScreen = ({ go, goBack, params, searchCtx, setSearchCtx }) =>
         ))}
         {matches.length === 0 && <div style={{ textAlign: 'center', padding: 80, color: 'var(--text-muted)' }}>No stays found for this location.</div>}
       </div>
+
+      {cityFilter.toLowerCase().includes('auroville') && (
+        <div style={{ marginTop: 64, paddingTop: 48, borderTop: '2px solid var(--line)' }}>
+          <NatureRetreatShowcase go={go} />
+        </div>
+      )}
     </div>
   );
 };

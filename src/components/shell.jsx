@@ -149,7 +149,7 @@ export const UtilityBar = ({ go }) => (
       </div>
       <div className="tt-utility-right">
         <a onClick={() => go('search')}>Trip Planner</a>
-        <a onClick={() => go('search', RETREAT_SEARCH)}>Nature Retreat</a>
+        <a onClick={() => go('retreat')}>Nature Retreat</a>
       </div>
     </div>
   </div>
@@ -169,13 +169,13 @@ export const Navbar = ({ screen, params, go, searchCtx }) => {
   const links = [
     { id: 'search', label: 'Stays' },
     { id: 'things', label: 'Things to do' },
-    { id: 'retreat', label: 'Nature Retreat', screen: 'search', params: RETREAT_SEARCH },
+    { id: 'retreat', label: 'Nature Retreat', screen: 'retreat' },
     { id: 'cause', label: 'Travel for Cause' },
     { id: 'events', label: 'Events' },
   ];
-  const onRetreatSearch = screen === 'search' && params?.city === RETREAT_SEARCH.city;
+  const onRetreatSearch = screen === 'retreat' || (screen === 'search' && params?.city === RETREAT_SEARCH.city);
   const isActive = (id) => {
-    if (id === 'retreat') return screen === 'retreat' || onRetreatSearch;
+    if (id === 'retreat') return onRetreatSearch;
     if (id === 'search') return !onRetreatSearch && ['search', 'home', 'property', 'book', 'wa-sent'].includes(screen);
     return screen === id;
   };
