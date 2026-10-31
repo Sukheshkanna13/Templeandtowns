@@ -9,6 +9,7 @@ import { SearchScreen, PropertyScreen } from './components/search';
 import { LoyaltyScreen, CauseScreen, ThingsScreen } from './components/account';
 import NatureRetreatScreen from './components/retreat';
 import EventsPage from './components/events';
+import { CancellationScreen, TermsScreen, PrivacyScreen, ContactScreen, SitemapScreen } from './components/legal';
 import { useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakRadio } from './components/tweaks-panel';
 
 const TWEAK_DEFAULTS = {
@@ -16,7 +17,7 @@ const TWEAK_DEFAULTS = {
 };
 
 // ---------- Hash-based routing helpers ----------
-const VALID_SCREENS = ['home', 'search', 'property', 'loyalty', 'things', 'retreat', 'events', 'cause'];
+const VALID_SCREENS = ['home', 'search', 'property', 'loyalty', 'things', 'retreat', 'events', 'cause', 'cancellation', 'terms', 'privacy', 'contact', 'sitemap'];
 
 const parseHash = () => {
   const hash = window.location.hash.replace(/^#\/?/, '');
@@ -108,8 +109,13 @@ function App() {
         {screen === 'retreat'  && <NatureRetreatScreen go={go} goBack={goBack}/>}
         {screen === 'events'   && <EventsPage go={go} goBack={goBack}/>}
         {screen === 'cause'    && <CauseScreen go={go} goBack={goBack}/>}
+        {screen === 'cancellation' && <CancellationScreen go={go} goBack={goBack}/>}
+        {screen === 'terms'    && <TermsScreen go={go} goBack={goBack}/>}
+        {screen === 'privacy'  && <PrivacyScreen go={go} goBack={goBack}/>}
+        {screen === 'contact'  && <ContactScreen go={go} goBack={goBack}/>}
+        {screen === 'sitemap'  && <SitemapScreen go={go} goBack={goBack}/>}
       </main>
-      <Footer screen={screen}/>
+      <Footer screen={screen} go={go}/>
       <WhatsAppFab/>
 
       <TweaksPanel title="Tweaks">

@@ -257,18 +257,13 @@ export const Navbar = ({ screen, params, go, searchCtx }) => {
 };
 
 // ---------- Footer ----------
-export const Footer = ({ screen }) => {
-  const helpWaUrl = (topic) => {
-    const text = `Hi, I need assistance with the following: ${topic}.`;
-    return `https://api.whatsapp.com/send/?phone=0000000000&text=${encodeURIComponent(text)}&type=phone_number&app_absent=0`;
-  };
-
+export const Footer = ({ screen, go }) => {
   return (
     <footer className="tt-footer">
       <div className="tt-page">
         <div className="tt-footer-grid">
           <div>
-            <div className="tt-logo-split" style={{ marginBottom: 18, cursor: 'pointer' }} onClick={() => { go('home'); }}>
+            <div className="tt-logo-split" style={{ marginBottom: 18, cursor: 'pointer' }} onClick={() => { go && go('home'); }}>
               {screen === 'retreat' ? (
                 <img src="nature-retreat-Logo.png" alt="Nature Retreat" className="tt-logo-img" style={{ height: 48, width: 48, objectFit: 'contain' }} />
               ) : (
@@ -288,13 +283,13 @@ export const Footer = ({ screen }) => {
             </div>
           </div>
           <div>
-            <h4>Help</h4>
+            <h4>Help &amp; Legal</h4>
             <ul>
-              <li><a href={helpWaUrl('Cancellation')} target="_blank" rel="noopener noreferrer">Cancellation</a></li>
-              <li><a href={helpWaUrl('Contact host')} target="_blank" rel="noopener noreferrer">Contact host</a></li>
-              <li><a href={helpWaUrl('Privacy')} target="_blank" rel="noopener noreferrer">Privacy</a></li>
-              <li><a href={helpWaUrl('Terms')} target="_blank" rel="noopener noreferrer">Terms</a></li>
-              <li><a href={helpWaUrl('Sitemap')} target="_blank" rel="noopener noreferrer">Sitemap</a></li>
+              <li><a onClick={() => go && go('cancellation')} style={{ cursor: 'pointer' }}>Cancellation Policy</a></li>
+              <li><a onClick={() => go && go('terms')} style={{ cursor: 'pointer' }}>Terms &amp; Conditions</a></li>
+              <li><a onClick={() => go && go('privacy')} style={{ cursor: 'pointer' }}>Privacy Policy</a></li>
+              <li><a onClick={() => go && go('contact')} style={{ cursor: 'pointer' }}>Contact Host</a></li>
+              <li><a onClick={() => go && go('sitemap')} style={{ cursor: 'pointer' }}>Sitemap</a></li>
             </ul>
           </div>
         </div>

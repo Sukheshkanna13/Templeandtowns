@@ -113,7 +113,12 @@ export const BookingWizard = ({ go, ctx, onSubmit }) => {
               </div>
               <label style={{ display: 'flex', gap: 12, alignItems: 'flex-start', marginTop: 24, cursor: 'pointer' }}>
                 <input type="checkbox" checked={agree} onChange={e => setAgree(e.target.checked)} style={{ marginTop: 4, accentColor: 'var(--ink)', flexShrink: 0 }}/>
-                <span style={{ fontSize: 13, color: 'var(--text-soft)' }}>I understand this booking request will be confirmed via WhatsApp. Cancellations are free up to 48 hours before check-in.</span>
+                <span style={{ fontSize: 13, color: 'var(--text-soft)' }}>
+                  I understand this booking request will be confirmed via WhatsApp and agree to the{' '}
+                  <span style={{ textDecoration: 'underline', cursor: 'pointer', color: 'var(--ink)', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); e.stopPropagation(); go('terms'); }}>Terms &amp; Conditions</span>
+                  {' '}and{' '}
+                  <span style={{ textDecoration: 'underline', cursor: 'pointer', color: 'var(--ink)', fontWeight: 500 }} onClick={(e) => { e.preventDefault(); e.stopPropagation(); go('cancellation'); }}>Cancellation Policy</span>.
+                </span>
               </label>
               <div style={{ marginTop: 20, padding: 16, background: 'oklch(0.97 0.05 145)', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
                 <Ico name="wa" size={18}/>
