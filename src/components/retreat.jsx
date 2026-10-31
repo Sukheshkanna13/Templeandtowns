@@ -317,6 +317,9 @@ const NatureRetreatScreen = ({ go, goBack }) => {
 
       {/* Main Page Top Header */}
       <div style={{ marginBottom: 40, textAlign: 'center', maxWidth: 860, margin: '0 auto 40px' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 14px', background: 'var(--bg-soft)', border: '1px solid var(--line)', borderRadius: 'var(--pill)', fontSize: 12, fontWeight: 600, color: 'var(--ink)', marginBottom: 14 }}>
+          <Ico name="shield" size={13} /> Self-Service Boutique Retreat · 2nd Floor Common Kitchen &amp; Laundry
+        </div>
         <div className="tt-eyebrow">Near Auroville Matrimandir</div>
         <h1 className="tt-h1" style={{ marginTop: 12, marginBottom: 16, fontSize: 'clamp(26px, 3.2vw, 42px)', letterSpacing: '-0.02em', textTransform: 'uppercase' }}>
           TEMPLEANDTHORPE NATURE RETREAT, NEAR AUROVILLE MATRIMANDIR
@@ -356,6 +359,7 @@ const NatureRetreatScreen = ({ go, goBack }) => {
                 <img src={p.cover} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 <div className="tt-card-tags">
                   <span className="tt-tag">Near Auroville Matrimandir</span>
+                  <span className="tt-tag tt-tag-dark" style={{ marginLeft: 6 }}>Self-Service Stay</span>
                 </div>
               </div>
               <div style={{ flex: 1, padding: '24px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -377,7 +381,10 @@ const NatureRetreatScreen = ({ go, goBack }) => {
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 20, paddingTop: 16, borderTop: '1px solid var(--line)' }}>
-                  <span className="tt-muted" style={{ fontSize: 13 }}>Online booking · Instant confirmation</span>
+                  <div>
+                    <span className="tt-muted" style={{ fontSize: 13 }}>Online booking · Instant confirmation</span>
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>Self-Service Boutique Stay · Airbnb / Booking</div>
+                  </div>
                   <div style={{ display: 'flex', gap: 10 }}>
                     <button
                       className="tt-btn tt-btn-ghost tt-btn-sm"

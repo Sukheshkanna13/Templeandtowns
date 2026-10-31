@@ -93,6 +93,7 @@ export const SearchScreen = ({ go, goBack, params, searchCtx, setSearchCtx }) =>
               <img src={p.cover} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               <div className="tt-card-tags">
                 <span className="tt-tag">{p.city === 'pondicherry' ? 'White Town' : 'Near Auroville'}</span>
+                <span className="tt-tag tt-tag-dark" style={{ marginLeft: 6 }}>Self-Service Stay</span>
               </div>
             </div>
             <div style={{ flex: 1, padding: '24px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -108,7 +109,10 @@ export const SearchScreen = ({ go, goBack, params, searchCtx, setSearchCtx }) =>
                 </div>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 24, paddingTop: 18, borderTop: '1px solid var(--line)' }}>
-                <span className="tt-muted" style={{ fontSize: 13 }}>{tt.nightsBetween(checkIn, checkOut) || 3} nights · view online</span>
+                <div>
+                  <span className="tt-muted" style={{ fontSize: 13 }}>{tt.nightsBetween(checkIn, checkOut) || 3} nights · view online</span>
+                  <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>Self-service · Airbnb / Booking</div>
+                </div>
                 <div style={{ textAlign: 'right' }}>
                   <button className="tt-btn tt-btn-primary tt-btn-sm">Book now <Ico name="arrow" size={14} /></button>
                 </div>
@@ -172,7 +176,12 @@ export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16, marginBottom: 24 }}>
         <div>
-          <div className="tt-eyebrow">{property.area}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+            <span className="tt-eyebrow">{property.area}</span>
+            <span className="tt-chip tt-chip-tonal" style={{ fontSize: 11, padding: '3px 8px', fontWeight: 600, color: 'var(--ink)' }}>
+              Self-Service Boutique Stay
+            </span>
+          </div>
           <h1 className="tt-h1" style={{ margin: '12px 0 0' }}>{property.name}</h1>
           <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginTop: 12, color: 'var(--text-soft)', fontSize: 15 }}>
             <StarRating rating={property.rating} />
@@ -353,7 +362,14 @@ export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
             <button className="tt-btn tt-btn-primary tt-btn-lg tt-w-full" style={{ marginTop: 20 }} onClick={onBook}>
               Book now <Ico name="arrow" size={14} />
             </button>
-            <p className="tt-muted" style={{ fontSize: 12, textAlign: 'center', marginTop: 12 }}>You will be redirected to {platformName} to complete your booking.</p>
+            <div style={{ marginTop: 14, padding: '12px 14px', background: 'var(--bg-soft)', border: '1px solid var(--line)', borderRadius: 4, textAlign: 'left' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontWeight: 600, fontSize: 12, color: 'var(--ink)' }}>
+                <Ico name="shield" size={13} /> Self-Service Boutique Stay Note
+              </div>
+              <p style={{ margin: '6px 0 0', fontSize: 12, color: 'var(--text-soft)', lineHeight: 1.5 }}>
+                <strong>Please note:</strong> This is a self-service property (with self-service kitchen, laundry &amp; shared facilities). You will be redirected to <strong>{platformName}</strong> to view live calendar availability and reserve.
+              </p>
+            </div>
             <hr className="tt-hr" />
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, fontSize: 16 }}><span>Pricing</span><span>Book now</span></div>
@@ -367,7 +383,7 @@ export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
         <div className="tt-mobile-cta-bar">
           <div>
             <div style={{ fontSize: 18, fontWeight: 700 }}>{property.from}</div>
-            <div className="tt-muted" style={{ fontSize: 12 }}>{nights} nights · online</div>
+            <div className="tt-muted" style={{ fontSize: 11 }}>Self-Service · {platformName}</div>
           </div>
           <button className="tt-btn tt-btn-primary" onClick={onBook}>
             Book Now <Ico name="arrow" size={14} />

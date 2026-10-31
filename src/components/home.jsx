@@ -142,6 +142,7 @@ const PropertyCarousel = ({ p, go }) => {
 
         <div className="tt-card-tags">
           <span className="tt-tag">{p.city === 'pondicherry' ? 'White Town' : 'Near Auroville'}</span>
+          <span className="tt-tag tt-tag-dark">Self-Service</span>
           <span className="tt-tag tt-tag-dark">★ {p.rating}</span>
         </div>
       </div>
