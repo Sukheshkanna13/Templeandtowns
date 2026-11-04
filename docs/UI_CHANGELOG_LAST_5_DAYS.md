@@ -30,6 +30,8 @@ Over the last 5 days (Oct 27 to Oct 31, 2026), a total of **9 commits** were cre
 | 7 | `6f16577` | 2026-10-31 | sukhesh kanna | `feat: add comprehensive Cancellation Policy, Terms & Conditions, Privacy Policy, Contact Host, and Sitemap pages` | `src/components/legal.jsx`, `src/components/shell.jsx`, `src/main.jsx`, `src/components/booking.jsx` |
 | 8 | `a89283d` | 2026-10-31 | sukhesh kanna | `feat: show Nature Retreat booking catalogues at top and previous design showcase as add-on below` | `src/components/retreat.jsx`, `src/components/search.jsx`, `src/components/shell.jsx` |
 | 9 | `c7df546` | 2026-10-31 | sukhesh kanna | `feat: add Self-Service boutique stay notes and badges across Airbnb links and catalogues` | `src/data.js`, `src/components/search.jsx`, `src/components/retreat.jsx`, `src/components/home.jsx` |
+| 10 | `922d969` | 2026-10-31 | sukhesh kanna | `docs: add comprehensive 5-day UI changelog and branch porting guide` | `docs/UI_CHANGELOG_LAST_5_DAYS.md` |
+| 11 | *(Upcoming)* | 2026-11-04 | sukhesh kanna | `fix(ui): restore smooth marquee carousel motion, preserve classic Nature Retreat layout with dropdown drawers, and shuffle distinct room photos` | `src/components/retreat.jsx`, `src/components/home.jsx`, `src/data.js` |
 
 ---
 

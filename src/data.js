@@ -85,26 +85,34 @@ export const RETREAT_HOUSE_RULES = [
   'No drugs or alcohol on the premises',
 ];
 
-const retreatRoom = (id, name, floor, bookingUrl) => ({
-  id,
-  city: 'auroville',
-  theme: 'nature',
-  name,
-  isSelfService: true,
-  selfServiceNotice: '12-Room Self-Service Boutique Retreat · 2nd floor common kitchen & laundry',
-  area: `Near Auroville Matrimandir · ${floor}`,
-  blurb: `A private ${floor.toLowerCase()} room at TEMPLEANDTHORPE NATURE RETREAT, NEAR AUROVILLE MATRIMANDIR — 12 room boutique stay amidst natural settings with green forest backdrop, swimming pool, developing garden and self-service amenities. 5-7 minutes from Matrimandir.`,
-  rating: 4.9,
-  from: 'Book now',
-  bookingUrl,
-  cover: AUROVILLE_IMAGES[0],
-  images: AUROVILLE_IMAGES,
-  theSpace: '12 Room Self Service boutique stay, in a quiet forest backdrop, set up in an acre of land. 6 Nos. of Private Rooms, each with attached bath on the ground floor and another 6 Nos. of Private rooms with attached bath on the 1st floor.',
-  roomAmenities: RETREAT_ROOM_AMENITIES,
-  bathroomAmenities: RETREAT_BATHROOM_AMENITIES,
-  sharedAmenities: RETREAT_SHARED_AMENITIES,
-  houseRules: RETREAT_HOUSE_RULES,
-});
+const makeRetreatGallery = (startIdx = 0) => {
+  const rotated = [...AUROVILLE_IMAGES.slice(startIdx), ...AUROVILLE_IMAGES.slice(0, startIdx)];
+  return rotated;
+};
+
+const retreatRoom = (id, name, floor, bookingUrl, startIdx = 0) => {
+  const images = makeRetreatGallery(startIdx);
+  return {
+    id,
+    city: 'auroville',
+    theme: 'nature',
+    name,
+    isSelfService: true,
+    selfServiceNotice: '12-Room Self-Service Boutique Retreat · 2nd floor common kitchen & laundry',
+    area: `Near Auroville Matrimandir · ${floor}`,
+    blurb: `A private ${floor.toLowerCase()} room at TEMPLEANDTHORPE NATURE RETREAT, NEAR AUROVILLE MATRIMANDIR — 12 room boutique stay amidst natural settings with green forest backdrop, swimming pool, developing garden and self-service amenities. 5-7 minutes from Matrimandir.`,
+    rating: 4.9,
+    from: 'Book now',
+    bookingUrl,
+    cover: images[0],
+    images,
+    theSpace: '12 Room Self Service boutique stay, in a quiet forest backdrop, set up in an acre of land. 6 Nos. of Private Rooms, each with attached bath on the ground floor and another 6 Nos. of Private rooms with attached bath on the 1st floor.',
+    roomAmenities: RETREAT_ROOM_AMENITIES,
+    bathroomAmenities: RETREAT_BATHROOM_AMENITIES,
+    sharedAmenities: RETREAT_SHARED_AMENITIES,
+    houseRules: RETREAT_HOUSE_RULES,
+  };
+};
 
 const retreatRoomType = (id, type, floor) => (
   {
@@ -210,10 +218,10 @@ export const TT_DATA = {
       sharedAmenities: RETREAT_SHARED_AMENITIES,
       houseRules: RETREAT_HOUSE_RULES,
     },
-    retreatRoom('p5', 'TempleAndThorpe Room 206, 1st Floor Near Auroville Matrimandir', '1st Floor', 'https://www.airbnb.co.in/rooms/1771964630881690059'),
-    retreatRoom('p6', 'TempleAndThorpe Room 205, 1st Floor Near Auroville Matrimandir', '1st Floor', 'https://www.airbnb.co.in/rooms/1787003545321046982'),
-    retreatRoom('p7', 'TempleAndThorpe Room 106, Ground Floor Near Auroville Matrimandir', 'Ground Floor', 'https://www.airbnb.co.in/rooms/1784975376331049190'),
-    retreatRoom('p8', 'TempleAndThorpe Room 105, Ground Floor Near Auroville Matrimandir', 'Ground Floor', 'https://www.airbnb.co.in/rooms/1792518932484614919'),
+    retreatRoom('p5', 'TempleAndThorpe Room 206, 1st Floor Near Auroville Matrimandir', '1st Floor', 'https://www.airbnb.co.in/rooms/1771964630881690059', 3),
+    retreatRoom('p6', 'TempleAndThorpe Room 205, 1st Floor Near Auroville Matrimandir', '1st Floor', 'https://www.airbnb.co.in/rooms/1787003545321046982', 6),
+    retreatRoom('p7', 'TempleAndThorpe Room 106, Ground Floor Near Auroville Matrimandir', 'Ground Floor', 'https://www.airbnb.co.in/rooms/1784975376331049190', 9),
+    retreatRoom('p8', 'TempleAndThorpe Room 105, Ground Floor Near Auroville Matrimandir', 'Ground Floor', 'https://www.airbnb.co.in/rooms/1792518932484614919', 12),
   ],
   rooms: {
     p1: [
