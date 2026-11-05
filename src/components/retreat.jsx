@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { Ico, BackButton } from './shell';
-import {
-  TT_DATA,
-  RETREAT_ROOM_AMENITIES,
-  RETREAT_BATHROOM_AMENITIES,
-  RETREAT_HOUSE_RULES
-} from '../data';
+import { TT_DATA } from '../data';
 
 const StarRating = ({ rating, size = 13 }) => (
   <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
@@ -20,9 +15,9 @@ export const NatureRetreatScreen = ({ go, goBack }) => {
   const propertyP4 = TT_DATA.properties.find(p => p.id === 'p4');
   const galleryImgs = (propertyP4?.images || []).slice(0, 8);
 
-  // Accordion open/close state for dropdown sections
+  // Accordion open/close state for dropdown sections (all closed by default)
   const [openAccordions, setOpenAccordions] = useState({
-    amenities: true,
+    amenities: false,
     rooms: false,
     rules: false,
   });
@@ -65,67 +60,38 @@ export const NatureRetreatScreen = ({ go, goBack }) => {
     },
   ];
 
-  const DETAILED_FACILITIES = [
-    {
-      title: '1 Acre Developing Garden, Cactus Garden & Lily Pond',
-      icon: 'sun',
-      tag: 'Nature & Landscape',
-      desc: 'Expansive lush open grounds featuring manicured lawns, shaded walking trails, granite outdoor seatings, potted bougainvilleas, an exotic curated cactus garden, and a tranquil freshwater lily pond. Ideal for morning walks, quiet meditation, or relaxing in nature.',
-    },
-    {
-      title: '2nd Floor Common Self-Service Kitchen',
-      icon: 'gift',
-      tag: 'Self-Service Dining',
-      desc: 'A dedicated, fully equipped guest kitchen on the second floor. Includes dual induction stovetops, microwave oven, double-door refrigerator, electric kettle, cookware, utensils, dinnerware, cutlery, and dining seating so guests can easily prepare breakfast, tea, and warm meals.',
-    },
-    {
-      title: '2nd Floor Common Laundry & Open Terrace',
-      icon: 'lock',
-      tag: 'Guest Laundry',
-      desc: 'Automatic washing machine, complimentary laundry detergent, wash sinks, and heavy-duty drying racks on the second-floor sunny open terrace with tree-canopy breezes. (Note: Drying clothes on room verandas or walls is prohibited).',
-    },
-    {
-      title: 'Swimming Pool Area',
-      icon: 'shield',
-      tag: '7:00 AM – 8:00 PM',
-      desc: 'A pristine freshwater swimming pool nestled in natural greenery, surrounded by potted bougainvilleas and comfortable poolside loungers. Outdoor shower is provided; please use dedicated striped pool towels available in-room.',
-    },
-    {
-      title: 'High Speed Internet (Mesh Wi-Fi)',
-      icon: 'wifi',
-      tag: 'High-Speed Fibre',
-      desc: 'Reliable high-speed fibre mesh Wi-Fi network with uninterrupted coverage across all 12 guest rooms, shared kitchen, dining area, library, and pool patio. Tested for Zoom calls and remote work.',
-    },
-    {
-      title: 'Library & Reading Nook',
-      icon: 'star',
-      tag: 'Books & Literature',
-      desc: 'Quiet reading lounge offering the Complete Works of Sri Aurobindo and The Mother, regional Indian art publications, architectural books, and contemporary literature for calm afternoons.',
-    },
-    {
-      title: 'Game Area & Lawn Recreation',
-      icon: 'sparkle',
-      tag: 'Recreation',
-      desc: 'Indoor and outdoor leisure hub located between the 1st and 2nd floor with Carrom board, Chess, Scrabble, playing cards, board games, and outdoor badminton racquets for family fun.',
-    },
-    {
-      title: 'Secure Gated Parking',
-      icon: 'pin',
-      tag: 'Free On-Site',
-      desc: 'Spacious, gated, and secure parking inside the private 1-acre compound with ample space for multiple cars, SUVs, and rental two-wheelers. Safe access with locked gates.',
-    },
-    {
-      title: '100% Inverter & Power Backup',
-      icon: 'check',
-      tag: 'Uninterrupted Comfort',
-      desc: 'Automated inverter and generator backup system ensuring seamless lighting, ceiling fans, Wi-Fi connectivity, and charging stations remain active during any local power cuts.',
-    },
-    {
-      title: 'Self-Service Hospitality & WhatsApp Concierge',
-      icon: 'heart',
-      tag: '24/7 Host Support',
-      desc: 'Independent self check-in flexibility, digital local travel guides for Auroville and Pondicherry, cafe recommendations, and attentive hosts reachable on call and WhatsApp throughout your stay.',
-    },
+  // 10 Core Facilities — concise one-liners with mapped icons
+  const CORE_FACILITIES = [
+    { title: 'High Speed Internet', icon: 'wifi', oneLiner: 'High-speed fibre Wi-Fi across all 12 rooms, kitchen, and pool patio.' },
+    { title: 'Pool Area', icon: 'shield', oneLiner: 'Freshwater pool (Open 7 AM – 8 PM) with sun loungers and outdoor shower.' },
+    { title: 'Common Kitchen', icon: 'gift', oneLiner: '2nd-floor self-service kitchen with induction, microwave, fridge, and cookware.' },
+    { title: 'Laundry', icon: 'lock', oneLiner: '2nd-floor automatic washing machine with open-air terrace clothes drying area.' },
+    { title: 'Library', icon: 'star', oneLiner: 'Curated reading corner with Sri Aurobindo works, Indian art books, and fiction.' },
+    { title: 'Game Area', icon: 'sparkle', oneLiner: 'Recreation space with Carrom, Chess, Scrabble, cards, and lawn badminton.' },
+    { title: 'Parking', icon: 'pin', oneLiner: 'Free and secure on-site gated parking for cars, SUVs, and rental scooters.' },
+    { title: 'Power Backup', icon: 'check', oneLiner: '100% inverter and generator backup for uninterrupted lights, fans, and Wi-Fi.' },
+    { title: 'Cactus Garden', icon: 'sun', oneLiner: 'Curated desert cactus and succulent rock garden right beside the pool.' },
+    { title: 'Lily Pond', icon: 'heart', oneLiner: 'Tranquil freshwater lily pond with shaded pergola and natural granite seating.' },
+  ];
+
+  // Room Specifications — concise one-liners with mapped icons
+  const ROOM_SPECS = [
+    { title: '12 Boutique Rooms', icon: 'pin', oneLiner: '6 Ground Floor rooms with garden verandas + 6 First Floor rooms with forest canopy views.' },
+    { title: 'Bed Configuration', icon: 'bed', oneLiner: 'Large King Size bed + single folding bed (comfortably accommodates up to 3 guests).' },
+    { title: 'Climate & Comfort', icon: 'sun', oneLiner: '1.5 Ton air conditioner, ceiling fan, and three-in-one warm/white ambient lighting.' },
+    { title: 'Work & Entertainment', icon: 'sparkle', oneLiner: '42-inch Smart Google TV and dedicated work table with two comfortable chairs.' },
+    { title: 'In-Room Fridge & Kettle', icon: 'gift', oneLiner: '100-liter in-room mini fridge, electric hot water kettle, and stainless steel bottles.' },
+    { title: 'Private Attached Bathroom', icon: 'shield', oneLiner: 'En-suite bath with western toilet, high-pressure shower, and 24x7 geyser hot water.' },
+  ];
+
+  // House Rules — concise one-liners with mapped icons
+  const HOUSE_RULES = [
+    { title: 'Swimming Pool (7 AM – 8 PM)', icon: 'shield', oneLiner: 'Shower required before entry; proper swimwear only; use striped pool towels provided.' },
+    { title: 'Self-Service Kitchen', icon: 'gift', oneLiner: 'Wash used cookware and clean the induction cooktop and dining tables after meals.' },
+    { title: 'Terrace Clothes Drying', icon: 'lock', oneLiner: 'Dry laundry on the 2nd-floor terrace; drying on verandas or walls is prohibited.' },
+    { title: 'Keep Compound Gates Closed', icon: 'pin', oneLiner: 'Always close gates immediately to protect garden flora from roaming cattle and goats.' },
+    { title: 'Quiet Hours (10 PM – 7 AM)', icon: 'star', oneLiner: 'Maintain calm, quiet forest ambience; no loud outdoor sound or music late at night.' },
+    { title: '100% Smoke-Free & Alcohol-Free', icon: 'check', oneLiner: 'Strictly no smoking, alcohol, or illicit substances permitted inside rooms or grounds.' },
   ];
 
   return (
@@ -258,7 +224,7 @@ export const NatureRetreatScreen = ({ go, goBack }) => {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          {/* ACCORDION 1: 10 Core Facilities Detailed */}
+          {/* ACCORDION 1: 10 Core Facilities & Amenities */}
           <div style={{ border: '1px solid var(--line)', borderRadius: 4, overflow: 'hidden', background: '#fff' }}>
             <button
               onClick={() => toggleAccordion('amenities')}
@@ -279,10 +245,10 @@ export const NatureRetreatScreen = ({ go, goBack }) => {
                 <span style={{ fontSize: 20 }}>🌿</span>
                 <div>
                   <div style={{ fontWeight: 600, fontSize: 17, color: 'var(--ink)' }}>
-                    10 Core Facilities &amp; Amenities Explained in Detail
+                    10 Core Facilities &amp; Amenities
                   </div>
                   <div className="tt-muted" style={{ fontSize: 13, marginTop: 2 }}>
-                    Gardens, 2nd-floor common kitchen, laundry, swimming pool, Wi-Fi &amp; services
+                    High-speed Wi-Fi, pool, common kitchen, laundry, library, games, parking, power backup &amp; gardens
                   </div>
                 </div>
               </div>
@@ -292,33 +258,45 @@ export const NatureRetreatScreen = ({ go, goBack }) => {
             </button>
 
             {openAccordions.amenities && (
-              <div style={{ padding: '24px', borderTop: '1px solid var(--line)', background: '#fff' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
-                  {DETAILED_FACILITIES.map(f => (
+              <div style={{ padding: '20px 24px', borderTop: '1px solid var(--line)', background: '#fff' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 12 }}>
+                  {CORE_FACILITIES.map(f => (
                     <div
                       key={f.title}
                       style={{
-                        padding: 18,
-                        borderRadius: 4,
-                        background: 'var(--bg-soft)',
-                        border: '1px solid var(--line)',
                         display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
+                        alignItems: 'flex-start',
+                        gap: 12,
+                        padding: '12px 14px',
+                        background: 'var(--bg-soft)',
+                        borderRadius: 4,
+                        border: '1px solid var(--line)',
                       }}
                     >
-                      <div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-                          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontWeight: 600, fontSize: 14, color: 'var(--ink)' }}>
-                            <Ico name={f.icon} size={16} /> {f.title}
-                          </div>
-                          <span className="tt-chip tt-chip-tonal" style={{ fontSize: 10, padding: '3px 8px' }}>
-                            {f.tag}
-                          </span>
+                      <div
+                        style={{
+                          width: 32,
+                          height: 32,
+                          borderRadius: 4,
+                          background: '#fff',
+                          border: '1px solid var(--line)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: 'var(--ink)',
+                          flexShrink: 0,
+                          marginTop: 1,
+                        }}
+                      >
+                        <Ico name={f.icon} size={15} />
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--ink)', marginBottom: 2 }}>
+                          {f.title}
                         </div>
-                        <p style={{ margin: 0, fontSize: 13, color: 'var(--text-soft)', lineHeight: 1.6 }}>
-                          {f.desc}
-                        </p>
+                        <div style={{ fontSize: 13, color: 'var(--text-soft)', lineHeight: 1.45 }}>
+                          {f.oneLiner}
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -348,10 +326,10 @@ export const NatureRetreatScreen = ({ go, goBack }) => {
                 <span style={{ fontSize: 20 }}>🏡</span>
                 <div>
                   <div style={{ fontWeight: 600, fontSize: 17, color: 'var(--ink)' }}>
-                    The Space, 12 Rooms &amp; In-Room Specifications
+                    The Space &amp; In-Room Specifications
                   </div>
                   <div className="tt-muted" style={{ fontSize: 13, marginTop: 2 }}>
-                    Bed configurations, split AC, smart TV, attached bathrooms &amp; furniture
+                    12 boutique rooms across 1 acre, bed configuration, AC, smart TV &amp; en-suite bathroom
                   </div>
                 </div>
               </div>
@@ -361,50 +339,51 @@ export const NatureRetreatScreen = ({ go, goBack }) => {
             </button>
 
             {openAccordions.rooms && (
-              <div style={{ padding: '24px', borderTop: '1px solid var(--line)', background: '#fff' }}>
-                <div style={{ marginBottom: 20 }}>
-                  <h4 style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 600 }}>Architecture &amp; Layout</h4>
-                  <p style={{ margin: 0, fontSize: 14, color: 'var(--text-soft)', lineHeight: 1.6 }}>
-                    TempleAndThorpe Nature Retreat is a 12-room boutique stay set across one full acre of private land with a quiet green forest backdrop.
-                    There are <strong>6 Private Rooms on the Ground Floor</strong> (direct veranda access to lawns and garden) and <strong>6 Private Rooms on the 1st Floor</strong> (elevated tree-canopy views and natural light).
-                  </p>
+              <div style={{ padding: '20px 24px', borderTop: '1px solid var(--line)', background: '#fff' }}>
+                <div style={{ marginBottom: 14, padding: '10px 14px', background: 'var(--bg-soft)', borderRadius: 4, border: '1px solid var(--line)', fontSize: 13, color: 'var(--ink)', lineHeight: 1.5 }}>
+                  <strong>Property Architecture:</strong> 12-room self-service boutique retreat set in 1 acre with quiet forest backdrop — <strong>6 Ground Floor rooms</strong> (garden veranda) &amp; <strong>6 First Floor rooms</strong> (forest canopy views).
                 </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 20, marginTop: 16 }}>
-                  <div style={{ padding: 16, background: 'var(--bg-soft)', borderRadius: 4, border: '1px solid var(--line)' }}>
-                    <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
-                      <Ico name="bed" size={15} /> In-Room Comforts
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 12 }}>
+                  {ROOM_SPECS.map(s => (
+                    <div
+                      key={s.title}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: 12,
+                        padding: '12px 14px',
+                        background: 'var(--bg-soft)',
+                        borderRadius: 4,
+                        border: '1px solid var(--line)',
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 32,
+                          height: 32,
+                          borderRadius: 4,
+                          background: '#fff',
+                          border: '1px solid var(--line)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: 'var(--ink)',
+                          flexShrink: 0,
+                          marginTop: 1,
+                        }}
+                      >
+                        <Ico name={s.icon} size={15} />
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--ink)', marginBottom: 2 }}>
+                          {s.title}
+                        </div>
+                        <div style={{ fontSize: 13, color: 'var(--text-soft)', lineHeight: 1.45 }}>
+                          {s.oneLiner}
+                        </div>
+                      </div>
                     </div>
-                    <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: 'var(--text-soft)', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                      {RETREAT_ROOM_AMENITIES.slice(0, 8).map((a, i) => (
-                        <li key={i}>{a}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div style={{ padding: 16, background: 'var(--bg-soft)', borderRadius: 4, border: '1px solid var(--line)' }}>
-                    <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
-                      <Ico name="sparkle" size={15} /> Electronics &amp; Appliances
-                    </div>
-                    <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: 'var(--text-soft)', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                      {RETREAT_ROOM_AMENITIES.slice(8).map((a, i) => (
-                        <li key={i}>{a}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div style={{ padding: 16, background: 'var(--bg-soft)', borderRadius: 4, border: '1px solid var(--line)' }}>
-                    <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
-                      <Ico name="shield" size={15} /> Private Attached Bathroom
-                    </div>
-                    <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: 'var(--text-soft)', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                      {RETREAT_BATHROOM_AMENITIES.map((a, i) => (
-                        <li key={i}>{a}</li>
-                      ))}
-                      <li>Instant Geyser Hot Water (24x7)</li>
-                      <li>High water pressure shower</li>
-                    </ul>
-                  </div>
+                  ))}
                 </div>
               </div>
             )}
@@ -431,7 +410,7 @@ export const NatureRetreatScreen = ({ go, goBack }) => {
                 <span style={{ fontSize: 20 }}>📋</span>
                 <div>
                   <div style={{ fontWeight: 600, fontSize: 17, color: 'var(--ink)' }}>
-                    House Rules, Pool Etiquette &amp; Self-Service Guidelines
+                    House Rules &amp; Guidelines
                   </div>
                   <div className="tt-muted" style={{ fontSize: 13, marginTop: 2 }}>
                     Pool timings (7 AM–8 PM), terrace drying rule, gate closure &amp; quiet hours
@@ -444,44 +423,48 @@ export const NatureRetreatScreen = ({ go, goBack }) => {
             </button>
 
             {openAccordions.rules && (
-              <div style={{ padding: '24px', borderTop: '1px solid var(--line)', background: '#fff' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
-                  <div style={{ padding: 16, background: 'var(--bg-soft)', borderRadius: 4, border: '1px solid var(--line)' }}>
-                    <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 8, color: 'var(--ink)' }}>
-                      🏊 Swimming Pool Etiquette
+              <div style={{ padding: '20px 24px', borderTop: '1px solid var(--line)', background: '#fff' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 12 }}>
+                  {HOUSE_RULES.map(r => (
+                    <div
+                      key={r.title}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: 12,
+                        padding: '12px 14px',
+                        background: 'var(--bg-soft)',
+                        borderRadius: 4,
+                        border: '1px solid var(--line)',
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 32,
+                          height: 32,
+                          borderRadius: 4,
+                          background: '#fff',
+                          border: '1px solid var(--line)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: 'var(--ink)',
+                          flexShrink: 0,
+                          marginTop: 1,
+                        }}
+                      >
+                        <Ico name={r.icon} size={15} />
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--ink)', marginBottom: 2 }}>
+                          {r.title}
+                        </div>
+                        <div style={{ fontSize: 13, color: 'var(--text-soft)', lineHeight: 1.45 }}>
+                          {r.oneLiner}
+                        </div>
+                      </div>
                     </div>
-                    <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: 'var(--text-soft)', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                      <li>Pool hours are strictly <strong>7:00 AM – 8:00 PM</strong>.</li>
-                      <li>Mandatory shower before stepping into the pool.</li>
-                      <li>Proper nylon/polyester swimming attire required.</li>
-                      <li>Use striped pool towels provided (do not use white bath towels).</li>
-                      <li>No glassware or food permitted near the pool edge.</li>
-                    </ul>
-                  </div>
-
-                  <div style={{ padding: 16, background: 'var(--bg-soft)', borderRadius: 4, border: '1px solid var(--line)' }}>
-                    <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 8, color: 'var(--ink)' }}>
-                      🍳 Kitchen &amp; Laundry Conduct
-                    </div>
-                    <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: 'var(--text-soft)', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                      <li>Common kitchen is self-service on the 2nd floor.</li>
-                      <li>Wash used pots, dishes, and wipe induction cooktop after use.</li>
-                      <li>All clothes must be dried on the <strong>2nd-floor terrace drying area</strong>.</li>
-                      <li>Drying clothes on room porches, verandas, or compound walls is strictly prohibited.</li>
-                    </ul>
-                  </div>
-
-                  <div style={{ padding: 16, background: 'var(--bg-soft)', borderRadius: 4, border: '1px solid var(--line)' }}>
-                    <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 8, color: 'var(--ink)' }}>
-                      🔒 Property &amp; Community Rules
-                    </div>
-                    <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: 'var(--text-soft)', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                      <li><strong>Keep all compound gates closed at all times</strong> to prevent roaming cattle/goats from damaging the gardens.</li>
-                      <li>Quiet hours are observed between <strong>10:00 PM and 7:00 AM</strong>.</li>
-                      <li>Strictly 100% no-smoking inside rooms or enclosed areas.</li>
-                      <li>Zero alcohol and no illicit substances on the premises.</li>
-                    </ul>
-                  </div>
+                  ))}
                 </div>
               </div>
             )}
