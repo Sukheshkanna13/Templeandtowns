@@ -1,54 +1,24 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import { Ico, StripeImg, tt } from './shell';
 import { TT_DATA } from '../data';
 
-// ---------- Floating Hero Overlay ----------
-// Fixed to bottom-center of viewport, fades out on scroll.
-// Positioned purely by viewport dimensions — not dependent on any element.
-const HeroFloatOverlay = ({ onCta }) => {
-  const [opacity, setOpacity] = useState(1);
-  const rafRef = useRef(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(() => {
-        // Fade out completely within 150px of scroll
-        const scrollY = window.scrollY || window.pageYOffset;
-        const fadeEnd = 150;
-        const newOpacity = Math.max(0, 1 - scrollY / fadeEnd);
-        setOpacity(newOpacity);
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // set initial state
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
-
-  // Don't render at all when fully invisible (performance)
-  if (opacity <= 0) return null;
-
-  return (
-    <div
-      className="tt-hero-float-overlay"
-      style={{ opacity, pointerEvents: opacity < 0.1 ? 'none' : 'auto' }}
-      aria-hidden={opacity < 0.1}
-    >
-      <h1 className="tt-display tt-text-c tt-hero-float-title">
-        Explore stays that feel <span className="tt-italic-soft">modern,</span><br />
-        calm, and unmistakably Indian.
-      </h1>
-      <button className="tt-btn tt-btn-primary tt-btn-lg tt-hero-float-btn" onClick={onCta}>
-        Find a stay <Ico name="arrow" size={14} />
-      </button>
-    </div>
-  );
-};
+// ---------- Hero Section Slides (2 images crossfading every 4s with 0.5s transition) ----------
+const HERO_SLIDES = [
+  {
+    desktopWebp: 'images/hero/hero-desktop.webp',
+    desktopJpg: 'images/hero/hero-desktop.jpg',
+    mobileWebp: 'images/hero/hero-mobile.webp',
+    mobileJpg: 'images/hero/hero-mobile.jpg',
+    alt: 'Temple And Thorpe Resorts Nature Retreat — garden pavilion and lily pond at sunset',
+    className: 'tt-hero-slide-1',
+  },
+  {
+    desktopJpg: 'images/hero-2.jpg',
+    mobileJpg: 'images/hero-2.jpg',
+    alt: 'Temple And Thorpe Resorts Nature Retreat — illuminated night garden, gazebo and pathway',
+    className: 'tt-hero-slide-2',
+  },
+];
 
 // ---------- Property Carousel Component ----------
 // Supports: arrow buttons (desktop + mobile) + touch swipe (mobile)
@@ -61,7 +31,7 @@ const PropertyCarousel = ({ p, go }) => {
   const next = (e) => { e.stopPropagation(); setIdx((idx + 1) % imgs.length); };
   const prev = (e) => { e.stopPropagation(); setIdx((idx - 1 + imgs.length) % imgs.length); };
 
-  // Touch swipe handlers
+  // Touch swipe handlers for inner card photos
   const onTouchStart = (e) => {
     const touch = e.touches[0];
     touchRef.current = { startX: touch.clientX, startY: touch.clientY, isDragging: true };
@@ -79,15 +49,14 @@ const PropertyCarousel = ({ p, go }) => {
       return;
     }
 
-    // Prevent page scroll while swiping horizontally
     if (Math.abs(dx) > 10) {
-      e.preventDefault();
+      e.stopPropagation();
     }
 
     // Rubber-band effect at edges: dampen drag when at first/last image
     let offset = dx;
     if ((idx === 0 && dx > 0) || (idx === imgs.length - 1 && dx < 0)) {
-      offset = dx * 0.3; // rubber-band
+      offset = dx * 0.3;
     }
     setDragOffset(offset);
   };
@@ -96,7 +65,7 @@ const PropertyCarousel = ({ p, go }) => {
     if (!touchRef.current.isDragging) return;
     touchRef.current.isDragging = false;
 
-    const threshold = 50; // px needed to trigger slide change
+    const threshold = 40; // px needed to trigger slide change
     if (dragOffset < -threshold && idx < imgs.length - 1) {
       setIdx(idx + 1);
     } else if (dragOffset > threshold && idx > 0) {
@@ -105,9 +74,17 @@ const PropertyCarousel = ({ p, go }) => {
     setDragOffset(0);
   };
 
-  // Calculate transform — base slide position + real-time drag offset
   const trackTransform = `translateX(calc(-${idx * 100}% + ${dragOffset}px))`;
-  const trackTransition = dragOffset !== 0 ? 'none' : undefined; // disable transition while dragging
+  const trackTransition = dragOffset !== 0 ? 'none' : undefined;
+
+  const onBookNow = (e) => {
+    e.stopPropagation();
+    if (p.bookingUrl) {
+      window.open(p.bookingUrl, '_blank', 'noopener,noreferrer');
+    } else {
+      go('property', { propertyId: p.id });
+    }
+  };
 
   return (
     <div className="tt-card" onClick={() => go('property', { propertyId: p.id })}>
@@ -129,41 +106,313 @@ const PropertyCarousel = ({ p, go }) => {
           ))}
         </div>
         
-        {/* SLIDER CONTROLS — visible on desktop (hover) and mobile (always) */}
-        <button className="tt-slider-btn prev" onClick={prev}><Ico name="arrowL" size={14} /></button>
-        <button className="tt-slider-btn next" onClick={next}><Ico name="arrow" size={14} /></button>
+        {/* SLIDER CONTROLS — visible on hover (desktop) and mobile */}
+        <button className="tt-slider-btn prev" onClick={prev} aria-label="Previous photo">
+          <Ico name="arrowL" size={14} />
+        </button>
+        <button className="tt-slider-btn next" onClick={next} aria-label="Next photo">
+          <Ico name="arrow" size={14} />
+        </button>
 
-        {/* DOTS — show a condensed set on mobile */}
+        {/* DOTS */}
         <div className="tt-slider-dots">
-          {imgs.map((_, i) => (
+          {imgs.slice(0, Math.min(imgs.length, 12)).map((_, i) => (
             <div key={i} className={`tt-dot ${i === idx ? 'active' : ''}`} />
           ))}
         </div>
 
+        {/* Top Tags matching revised design: left tags + right rating */}
         <div className="tt-card-tags">
-          <span className="tt-tag">{p.city === 'pondicherry' ? 'White Town' : 'Near Auroville'}</span>
-          <span className="tt-tag tt-tag-dark">Self-Service</span>
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            <span className="tt-tag">{p.city === 'pondicherry' ? 'White Town' : 'Near Auroville'}</span>
+            <span className="tt-tag tt-tag-dark">Self-Service</span>
+          </div>
           <span className="tt-tag tt-tag-dark">★ {p.rating}</span>
         </div>
       </div>
+
       <div className="tt-card-body">
-        <div className="tt-card-row" style={{ alignItems: 'center' }}>
-          <span className="tt-card-name">{p.name}</span>
-          <button className="tt-btn-card-cta" onClick={(e) => { e.stopPropagation(); go('property', { propertyId: p.id }); }}>Book now</button>
+        <div className="tt-card-row" style={{ alignItems: 'flex-start', gap: 12 }}>
+          <span className="tt-card-name" style={{ fontSize: 16, lineHeight: 1.35, fontWeight: 600 }}>
+            {p.name}
+          </span>
+          <button className="tt-btn-card-cta" onClick={onBookNow}>
+            Book now
+          </button>
         </div>
-        <div className="tt-card-area">{p.area}</div>
+        <div className="tt-card-area" style={{ marginTop: 6, fontSize: 13, color: 'var(--text-soft)' }}>
+          {p.area}
+        </div>
       </div>
     </div>
   );
 };
 
-// ---------- Moments Carousel — smooth continuous motion, hover/touch pause ----------
+// ---------- Generic infinite slow-flow carousel (reliable auto-scroll, drag, arrows, pause on hover/touch) ----------
+const FlowCarousel = forwardRef(({ items, renderItem, wrapClass, trackClass, slotClass, step = 374 }, ref) => {
+  const scrollRef = useRef(null);
+  const posRef = useRef(0);
+  const isPausedRef = useRef(false);
+  const isDraggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const scrollLeftRef = useRef(0);
+  const hasDraggedRef = useRef(false);
+  const resumeTimeoutRef = useRef(null);
+
+  // Triple duplicated list for seamless wrap on wide screens
+  const displayList = useMemo(() => [...items, ...items, ...items], [items]);
+
+  // Continuous auto-scroll loop with subpixel precision (~36px/second)
+  useEffect(() => {
+    let animId;
+    let lastTime = performance.now();
+
+    const loop = (now) => {
+      const dt = Math.min(now - lastTime, 64);
+      lastTime = now;
+
+      const el = scrollRef.current;
+      if (!isPausedRef.current && el && !isDraggingRef.current) {
+        posRef.current += 0.036 * dt;
+
+        if (el.children.length >= items.length * 2) {
+          const child0 = el.children[0];
+          const childN = el.children[items.length];
+          if (child0 && childN) {
+            const cycleWidth = childN.offsetLeft - child0.offsetLeft;
+            if (cycleWidth > 0) {
+              if (posRef.current >= cycleWidth) {
+                posRef.current -= cycleWidth;
+                el.scrollLeft -= cycleWidth;
+              } else if (posRef.current < 0) {
+                posRef.current += cycleWidth;
+                el.scrollLeft += cycleWidth;
+              }
+            }
+          }
+        }
+        el.scrollLeft = Math.floor(posRef.current);
+      }
+
+      animId = requestAnimationFrame(loop);
+    };
+
+    animId = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(animId);
+  }, [items.length]);
+
+  const pause = () => {
+    isPausedRef.current = true;
+    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+  };
+
+  const resumeAfter = (ms = 1400) => {
+    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    resumeTimeoutRef.current = setTimeout(() => {
+      if (scrollRef.current) {
+        posRef.current = scrollRef.current.scrollLeft;
+      }
+      isPausedRef.current = false;
+    }, ms);
+  };
+
+  useImperativeHandle(ref, () => ({
+    prev: () => {
+      pause();
+      if (scrollRef.current) {
+        scrollRef.current.scrollBy({ left: -step, behavior: 'smooth' });
+        posRef.current = Math.max(0, scrollRef.current.scrollLeft - step);
+      }
+      resumeAfter(2400);
+    },
+    next: () => {
+      pause();
+      if (scrollRef.current) {
+        scrollRef.current.scrollBy({ left: step, behavior: 'smooth' });
+        posRef.current = scrollRef.current.scrollLeft + step;
+      }
+      resumeAfter(2400);
+    },
+  }));
+
+  // Sync position on native scroll (e.g. mobile horizontal swipe or trackpad)
+  const onNativeScroll = () => {
+    if (isPausedRef.current || isDraggingRef.current) {
+      if (scrollRef.current) {
+        posRef.current = scrollRef.current.scrollLeft;
+      }
+    }
+  };
+
+  const handleTouchStart = () => {
+    pause();
+  };
+
+  const handleTouchEnd = () => {
+    if (scrollRef.current) {
+      posRef.current = scrollRef.current.scrollLeft;
+    }
+    resumeAfter(1600);
+  };
+
+  const handleMouseEnter = () => {
+    pause();
+  };
+
+  const handleMouseLeave = () => {
+    if (scrollRef.current) {
+      posRef.current = scrollRef.current.scrollLeft;
+    }
+    resumeAfter(800);
+  };
+
+  // Mouse Drag Handlers
+  const onMouseDown = (e) => {
+    if (e.button !== 0 || e.target.closest('button')) return;
+    isDraggingRef.current = true;
+    hasDraggedRef.current = false;
+    startXRef.current = e.pageX - scrollRef.current.offsetLeft;
+    scrollLeftRef.current = scrollRef.current.scrollLeft;
+    pause();
+  };
+
+  const onMouseMove = (e) => {
+    if (!isDraggingRef.current) return;
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = x - startXRef.current;
+    if (Math.abs(walk) > 5) {
+      hasDraggedRef.current = true;
+    }
+    scrollRef.current.scrollLeft = scrollLeftRef.current - walk;
+    posRef.current = scrollRef.current.scrollLeft;
+  };
+
+  const onMouseUp = () => {
+    if (isDraggingRef.current) {
+      isDraggingRef.current = false;
+      if (scrollRef.current) {
+        posRef.current = scrollRef.current.scrollLeft;
+      }
+      resumeAfter(1200);
+    }
+  };
+
+  return (
+    <div
+      className={wrapClass}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      <div
+        className={trackClass}
+        ref={scrollRef}
+        onScroll={onNativeScroll}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
+        onMouseLeave={onMouseUp}
+        style={{ cursor: isDraggingRef.current ? 'grabbing' : 'grab' }}
+      >
+        {displayList.map((item, index) => (
+          <div
+            key={index}
+            className={slotClass}
+            aria-hidden={index >= items.length ? true : undefined}
+            onClickCapture={(e) => {
+              if (hasDraggedRef.current) {
+                e.stopPropagation();
+              }
+            }}
+          >
+            {renderItem(item, index)}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+});
+
+// ---------- Real-Time Rooms Infinite Carousel ----------
+const RealtimeRoomsCarousel = forwardRef(({ properties, go }, ref) => (
+  <FlowCarousel
+    ref={ref}
+    items={properties}
+    renderItem={(p) => <PropertyCarousel p={p} go={go} />}
+    wrapClass="tt-realtime-carousel-wrap"
+    trackClass="tt-realtime-carousel-track"
+    slotClass="tt-realtime-card-slot"
+    step={374}
+  />
+));
+
+// ---------- Featured Stays Section with Arrow Nav & Infinite Loop Track ----------
+const FeaturedStaysSection = ({ go }) => {
+  const carouselRef = useRef(null);
+
+  // Ordered real-time rooms matching revised design screenshot:
+  // Nature Retreat rooms first (p5, p7, p8, p6), then White Town stays (p1, p2, p3), then retreat p4
+  const rooms = useMemo(() => {
+    const order = ['p5', 'p7', 'p8', 'p6', 'p1', 'p2', 'p3', 'p4'];
+    const map = new Map(TT_DATA.properties.map(p => [p.id, p]));
+    const list = order.map(id => map.get(id)).filter(Boolean);
+    TT_DATA.properties.forEach(p => {
+      if (!list.includes(p)) list.push(p);
+    });
+    return list;
+  }, []);
+
+  return (
+    <section className="tt-section" style={{ paddingBottom: 24 }}>
+      <div className="tt-page">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 32, flexWrap: 'wrap', gap: 16 }}>
+          <div>
+            <div className="tt-eyebrow" style={{ letterSpacing: '0.12em', textTransform: 'uppercase', fontSize: 12 }}>
+              Featured stays
+            </div>
+            <h2 className="tt-h2" style={{ marginTop: 12, marginBottom: 0 }}>
+              Hand-picked, this season.
+            </h2>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <button
+                className="tt-carousel-arrow-btn"
+                onClick={() => carouselRef.current?.prev()}
+                aria-label="Previous stays"
+                title="Previous stays"
+              >
+                <Ico name="arrowL" size={14} />
+              </button>
+              <button
+                className="tt-carousel-arrow-btn"
+                onClick={() => carouselRef.current?.next()}
+                aria-label="Next stays"
+                title="Next stays"
+              >
+                <Ico name="arrow" size={14} />
+              </button>
+            </div>
+            <button className="tt-btn-link" onClick={() => go('search')} style={{ fontSize: 14 }}>
+              See all stays →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <RealtimeRoomsCarousel ref={carouselRef} properties={rooms} go={go} />
+    </section>
+  );
+};
+
+// ---------- Moments Carousel — reordered as per design screenshot ----------
 const MOMENTS = [
+  { label: 'morning-yoga', cap: 'Yoga Near Auroville' },
+  { label: 'banyan-tree', cap: 'Nature walks in Auroville' },
   { label: 'pottery', cap: 'Pottery, Near Auroville' },
   { label: 'sea-evening', cap: 'Promenade, dusk' },
   { label: 'street-food', cap: 'White Town evenings' },
-  { label: 'morning-yoga', cap: 'Yoga Near Auroville' },
-  { label: 'banyan-tree', cap: 'Nature walks' },
 ];
 
 const MomentsCarousel = () => {
@@ -212,43 +461,167 @@ const MomentsCarousel = () => {
   );
 };
 
-// ---------- HOME ----------
+// ---------- Guest Reviews Section — sliding carousel with compact boxes & "See more" expansion ----------
+const GuestReviewsSection = () => {
+  const carouselRef = useRef(null);
+  const [expanded, setExpanded] = useState(false);
+
+  // Newest first (data.js order); add `initial` for the avatar.
+  const reviews = useMemo(
+    () => TT_DATA.reviews.map((rv) => ({ ...rv, initial: (rv.name || 'G').trim().charAt(0).toUpperCase() })),
+    []
+  );
+
+  return (
+    <section className="tt-section" style={{ paddingTop: 32, paddingBottom: 56 }}>
+      <div className="tt-page">
+        <div style={{ marginBottom: 28, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 24, flexWrap: 'wrap' }}>
+          <div>
+            <div className="tt-eyebrow" style={{ letterSpacing: '0.12em', textTransform: 'uppercase', fontSize: 12 }}>
+              Guest reviews
+            </div>
+            <h2 className="tt-h2" style={{ marginTop: 12, marginBottom: 0 }}>
+              What guests are saying
+            </h2>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <button
+              className="tt-carousel-arrow-btn"
+              onClick={() => carouselRef.current?.prev()}
+              aria-label="Previous reviews"
+              title="Previous reviews"
+            >
+              <Ico name="arrowL" size={14} />
+            </button>
+            <button
+              className="tt-carousel-arrow-btn"
+              onClick={() => carouselRef.current?.next()}
+              aria-label="Next reviews"
+              title="Next reviews"
+            >
+              <Ico name="arrow" size={14} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <FlowCarousel
+        ref={carouselRef}
+        items={reviews}
+        wrapClass="tt-reviews-scroll-container"
+        trackClass="tt-reviews-track"
+        slotClass="tt-review-slot"
+        step={360}
+        renderItem={(rv) => (
+          <div className={`tt-review-card ${expanded ? 'expanded' : 'compact'}`}>
+            <div className="tt-review-card-header">
+              <div className="tt-review-author-wrap">
+                <div className="tt-review-avatar">{rv.initial}</div>
+                <div className="tt-review-meta">
+                  <div className="tt-review-author">{rv.name}</div>
+                  <div className="tt-review-date">
+                    {rv.badge ? `${rv.badge} · ` : ''}{rv.when}
+                  </div>
+                </div>
+              </div>
+              <div className="tt-review-stars">
+                {Array.from({ length: rv.rating || 5 }).map((_, si) => (
+                  <Ico key={si} name="star" size={13} />
+                ))}
+              </div>
+            </div>
+
+            <p className="tt-review-text">{rv.text}</p>
+          </div>
+        )}
+      />
+
+      {/* "See more" trigger button at bottom to pump down / expand all comment boxes */}
+      <div className="tt-page" style={{ marginTop: 24, display: 'flex', justifyContent: 'center' }}>
+        <button
+          className="tt-btn-reviews-expand"
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+        >
+          {expanded ? 'See less' : 'See more'}
+          <span className={`tt-expand-chevron ${expanded ? 'open' : ''}`}>
+            <Ico name="arrow" size={12} />
+          </span>
+        </button>
+      </div>
+    </section>
+  );
+};
+
+// ---------- HOME SCREEN ----------
 const HomeScreen = ({ go, setSearchCtx }) => {
   const [city, setCity] = useState('Both cities');
   const [checkIn, setCheckIn] = useState(tt.todayISO(1));
   const [checkOut, setCheckOut] = useState(tt.todayISO(4));
   const [guests, setGuests] = useState('2 guests · 1 room');
 
+  // Hero section 2 images fading each other with 4s interval & mild 0.5s transition
+  const [heroIdx, setHeroIdx] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroIdx((prev) => (prev === 0 ? 1 : 0));
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
   const submit = () => { setSearchCtx({ city, checkIn, checkOut, guests }); go('search'); };
 
   return (
     <>
-      {/* HERO — Full Bleed Marriott style */}
+      {/* HERO — Full Bleed Marriott style with 2-image 4s crossfade (0.5s transition) */}
       <section className="tt-hero-full">
-        <picture>
-          <source media="(max-width: 768px)" srcSet="images/hero/hero-mobile.webp" type="image/webp" />
-          <source media="(max-width: 768px)" srcSet="images/hero/hero-mobile.jpg" />
-          <source srcSet="images/hero/hero-desktop.webp" type="image/webp" />
-          <img src="images/hero/hero-desktop.jpg" alt="Temple And Thorpe Resorts Nature Retreat — garden pavilion and lily pond at sunset" className="tt-hero-bg-full" fetchpriority="high" decoding="async" />
-        </picture>
+        <div className="tt-hero-slides-wrap">
+          {HERO_SLIDES.map((slide, i) => (
+            <div
+              key={i}
+              className={`tt-hero-slide ${slide.className} ${i === heroIdx ? 'active' : ''}`}
+            >
+              <picture>
+                {slide.mobileWebp && <source media="(max-width: 768px)" srcSet={slide.mobileWebp} type="image/webp" />}
+                {slide.mobileJpg && <source media="(max-width: 768px)" srcSet={slide.mobileJpg} />}
+                {slide.desktopWebp && <source srcSet={slide.desktopWebp} type="image/webp" />}
+                <img
+                  src={slide.desktopJpg}
+                  alt={slide.alt}
+                  className="tt-hero-bg-full"
+                  fetchpriority={i === 0 ? 'high' : 'auto'}
+                  decoding="async"
+                />
+              </picture>
+            </div>
+          ))}
+        </div>
+
         <div className="tt-hero-overlay-white" />
 
-        {/* Sticky floating search pill — sticks to top as you scroll */}
+        {/* Top middle: floating search pill showcasing stays redirect (matching exact screenshot & git logs) */}
         <div className="tt-hero-sticky-pill">
-          <div className="tt-nav-search-pill" onClick={() => go('search')}>
+          <div
+            className="tt-nav-search-pill"
+            onClick={() => go('search')}
+            role="button"
+            tabIndex={0}
+            aria-label="Search stays"
+          >
             <div className="pill-content">
               <div className="cell">
-                <span className="lbl">Where to?</span>
+                <span className="lbl">WHERE TO?</span>
                 <span className="val">{city}</span>
               </div>
               <div className="sep" />
               <div className="cell">
-                <span className="lbl">Check in</span>
+                <span className="lbl">CHECK IN</span>
                 <span className="val">{tt.fmtDate(checkIn)}</span>
               </div>
               <div className="sep" />
               <div className="cell">
-                <span className="lbl">Check out</span>
+                <span className="lbl">CHECK OUT</span>
                 <span className="val">{tt.fmtDate(checkOut)}</span>
               </div>
             </div>
@@ -257,35 +630,23 @@ const HomeScreen = ({ go, setSearchCtx }) => {
             </div>
           </div>
         </div>
-        
-        {/* Hero content removed — now rendered as a floating viewport overlay below */}
-      </section>
 
-      {/* Floating overlay — fixed to bottom-center of viewport, fades on scroll */}
-      <HeroFloatOverlay onCta={submit} />
-
-      {/* FEATURED PROPERTIES — Carousel based */}
-      <section className="tt-section">
-        <div className="tt-page">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40, flexWrap: 'wrap', gap: 16 }}>
-            <div>
-              <div className="tt-eyebrow">Featured stays</div>
-              <h2 className="tt-h2" style={{ marginTop: 14, marginBottom: 0 }}>Hand-picked, this season.</h2>
-            </div>
-            <button className="tt-btn-link" onClick={() => go('search')}>See all stays →</button>
-          </div>
-          <div className="tt-grid-3">
-            {TT_DATA.properties.slice(0, 3).map(p => (
-              <PropertyCarousel key={p.id} p={p} go={go} />
-            ))}
-          </div>
+        {/* Bottom of hero: resort title text at bottom of main page */}
+        <div className="tt-hero-caption-wrap">
+          <h1 className="tt-hero-resort-title">
+            TEMPLEANDTHORPE NATURE RETREAT,<br />
+            NEAR AUROVILLE MATRIMANDIR
+          </h1>
         </div>
       </section>
 
-      {/* MOMENTS — Interactive Carousel with touch pause + drag scroll */}
-      <section className="tt-section" style={{ overflow: 'hidden', paddingTop: 40 }}>
+      {/* 1. FEATURED STAYS — Infinite Looping Real-Time Rooms Carousel + Navigation */}
+      <FeaturedStaysSection go={go} />
+
+      {/* 2. MOMENTS — Interactive Carousel with touch pause + drag scroll */}
+      <section className="tt-section" style={{ overflow: 'hidden', paddingTop: 24, paddingBottom: 40 }}>
         <div className="tt-page">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40, gap: 24, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 36, gap: 24, flexWrap: 'wrap' }}>
             <div style={{ maxWidth: 620 }}>
               <h2 className="tt-h2" style={{ margin: 0 }}>Moments from our vacation.</h2>
             </div>
@@ -296,7 +657,10 @@ const HomeScreen = ({ go, setSearchCtx }) => {
         <MomentsCarousel />
       </section>
 
-      {/* DARK FEATURED JOURNEYS */}
+      {/* 3. GUEST REVIEWS — Horizontal Review Cards Carousel */}
+      <GuestReviewsSection />
+
+      {/* 4. DARK FEATURED JOURNEYS */}
       <section className="tt-section-sm">
         <div className="tt-page">
           <div className="tt-dark-section">
@@ -330,7 +694,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
+      {/* 5. HOW IT WORKS */}
       <section className="tt-section" style={{ paddingTop: 0 }}>
         <div className="tt-page">
           <div style={{ borderTop: '1px solid var(--line)', paddingTop: 80, textAlign: 'center' }}>
@@ -345,7 +709,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
         </div>
       </section>
 
-      {/* WAYFARER REWARDS */}
+      {/* 6. WAYFARER REWARDS */}
       <section className="tt-section-sm" style={{ paddingTop: 0 }}>
         <div className="tt-page">
           <div className="tt-loyalty-teaser" style={{ background: 'var(--bg-soft)', color: 'var(--ink)', padding: '64px 56px', display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 56, alignItems: 'center', border: '1px solid var(--line)' }}>
@@ -380,7 +744,6 @@ const HomeScreen = ({ go, setSearchCtx }) => {
           </div>
         </div>
       </section>
-
     </>
   );
 };

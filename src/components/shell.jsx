@@ -202,17 +202,22 @@ export const Navbar = ({ screen, params, go, searchCtx }) => {
             )}
           </div>
 
-          {/* Compact search pill in navbar */}
-          {isHome && (
-            <div className="tt-nav-pill-inline" onClick={() => go('search')}>
+          {/* Real-time search pill in top place of navbar (Desktop: on search, or on home when scrolled) */}
+          {((isHome && scrolled) || screen === 'search') && (
+            <div className="tt-nav-pill-inline desktop-only-pill" onClick={() => go('search')}>
               <div className="cell">
-                <span className="lbl">Where to?</span>
+                <span className="lbl">WHERE TO?</span>
                 <span className="val">{searchCtx?.city || 'Both cities'}</span>
               </div>
               <div className="sep" />
               <div className="cell">
-                <span className="lbl">Dates</span>
-                <span className="val">{tt.fmtDate(searchCtx?.checkIn)} – {tt.fmtDate(searchCtx?.checkOut)}</span>
+                <span className="lbl">CHECK IN</span>
+                <span className="val">{tt.fmtDate(searchCtx?.checkIn || tt.todayISO(1))}</span>
+              </div>
+              <div className="sep" />
+              <div className="cell">
+                <span className="lbl">CHECK OUT</span>
+                <span className="val">{tt.fmtDate(searchCtx?.checkOut || tt.todayISO(4))}</span>
               </div>
               <div className="search-icon-circle">
                 <Ico name="search" size={14} />
@@ -242,6 +247,26 @@ export const Navbar = ({ screen, params, go, searchCtx }) => {
           </button>
         </div>
       </div>
+
+      {/* MOBILE SEARCH STRIP: Dedicated, spacious row below logo row on mobile (when on search, or on home when scrolled) */}
+      {((isHome && scrolled) || screen === 'search') && (
+        <div className="tt-mobile-search-strip" onClick={() => go('search')}>
+          <div className="cell">
+            <span className="lbl">Where to?</span>
+            <span className="val">{searchCtx?.city || 'Both cities'}</span>
+          </div>
+          <div className="sep" />
+          <div className="cell">
+            <span className="lbl">Dates</span>
+            <span className="val">
+              {tt.fmtDate(searchCtx?.checkIn || tt.todayISO(1))} – {tt.fmtDate(searchCtx?.checkOut || tt.todayISO(4))}
+            </span>
+          </div>
+          <div className="search-icon-circle">
+            <Ico name="search" size={13} />
+          </div>
+        </div>
+      )}
 
       {/* DROPDOWN MENU */}
       {menuOpen && (

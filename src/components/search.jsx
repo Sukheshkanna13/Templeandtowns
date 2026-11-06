@@ -319,19 +319,21 @@ export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
 
           <h3 className="tt-h2" style={{ marginTop: 0 }}>What guests are saying</h3>
           <div style={{ display: 'grid', gap: 16, marginTop: 24 }}>
-            {TT_DATA.reviews.map(rv => (
-              <div key={rv.name} style={{ padding: 24, background: 'var(--bg-soft)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            {TT_DATA.reviews.map((rv, ri) => (
+              <div key={ri} style={{ padding: '24px 28px', background: '#fff', border: '1px solid var(--line)', borderRadius: 0 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 14, borderBottom: '1px solid var(--line)' }}>
                   <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                    <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: 13 }}>{rv.name.split(' ').map(n => n[0]).join('')}</div>
+                    <div style={{ width: 38, height: 38, borderRadius: 0, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: 13 }}>
+                      {(rv.name || 'G').trim().charAt(0).toUpperCase()}
+                    </div>
                     <div>
-                      <div style={{ fontWeight: 500 }}>{rv.name}</div>
-                      <div className="tt-muted" style={{ fontSize: 12 }}>{rv.tier} · {rv.when}</div>
+                      <div style={{ fontWeight: 600, fontSize: 15, color: 'var(--ink)' }}>{rv.name}</div>
+                      <div className="tt-muted" style={{ fontSize: 12, marginTop: 2 }}>{rv.badge ? `${rv.badge} · ` : ''}{rv.when}</div>
                     </div>
                   </div>
-                  <div style={{ display: 'flex', gap: 2 }}>{Array.from({ length: rv.rating }).map((_, i) => <Ico key={i} name="star" size={13} />)}</div>
+                  <div style={{ display: 'flex', gap: 2 }}>{Array.from({ length: rv.rating || 5 }).map((_, i) => <Ico key={i} name="star" size={13} />)}</div>
                 </div>
-                <p style={{ margin: '12px 0 0', color: 'var(--text-soft)', fontSize: 15, lineHeight: 1.6 }}>{rv.text}</p>
+                <p style={{ margin: '16px 0 0', color: 'var(--ink)', fontSize: 14.5, lineHeight: 1.65, whiteSpace: 'pre-line' }}>{rv.text}</p>
               </div>
             ))}
           </div>
