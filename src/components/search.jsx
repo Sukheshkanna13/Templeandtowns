@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Ico, StripeImg, tt, BackButton } from './shell';
 import { TT_DATA } from '../data';
+import { useResortData } from '../dataStore';
 import { NatureRetreatShowcase } from './retreat';
 
 export const StarRating = ({ rating, size = 13 }) => {
@@ -29,15 +30,18 @@ export const SearchScreen = ({ go, goBack, params, searchCtx, setSearchCtx }) =>
   const [checkIn, setCheckIn] = useState(searchCtx?.checkIn || tt.todayISO(1));
   const [checkOut, setCheckOut] = useState(searchCtx?.checkOut || tt.todayISO(4));
   const [guests, setGuests] = useState(searchCtx?.guests || '2 guests · 1 room');
+  const data = useResortData();
 
-  const matches = useMemo(() => TT_DATA.properties.filter(p => {
-    if (cityFilter === 'Both cities') return true;
-    const filterNorm = cityFilter.toLowerCase().includes('auroville') ? 'auroville' : cityFilter.toLowerCase();
-    const cityNorm = p.city.toLowerCase().includes('auroville') ? 'auroville' : p.city.toLowerCase();
-    return cityNorm === filterNorm;
-  // Nature Retreat (Auroville) stays always lead the list, then by rating
-  }).sort((a, b) => (b.theme === 'nature') - (a.theme === 'nature') || b.rating - a.rating),
-    [cityFilter]);
+  const matches = useMemo(() => {
+    const list = data.properties || TT_DATA.properties;
+    return list.filter(p => {
+      if (cityFilter === 'Both cities') return true;
+      const filterNorm = cityFilter.toLowerCase().includes('auroville') ? 'auroville' : cityFilter.toLowerCase();
+      const cityNorm = p.city.toLowerCase().includes('auroville') ? 'auroville' : p.city.toLowerCase();
+      return cityNorm === filterNorm;
+    // Nature Retreat (Auroville) stays always lead the list, then by rating
+    }).sort((a, b) => (b.theme === 'nature') - (a.theme === 'nature') || b.rating - a.rating);
+  }, [cityFilter, data.properties]);
 
   const updateSearch = () => {
     if (setSearchCtx) setSearchCtx({ city: cityFilter, checkIn, checkOut, guests });
@@ -134,10 +138,12 @@ export const SearchScreen = ({ go, goBack, params, searchCtx, setSearchCtx }) =>
 
 // ---------- PROPERTY ----------
 export const PropertyScreen = ({ go, goBack, params, searchCtx }) => {
-  const property = TT_DATA.properties.find(p => p.id === params.propertyId);
-  const rooms = TT_DATA.rooms[property.id] || [];
+  const data = useResortData();
+  const properties = data.properties || TT_DATA.properties;
+  const property = properties.find(p => p.id === params.propertyId) || properties[0];
+  const rooms = (data.rooms || TT_DATA.rooms)[property?.id] || [];
   const [selectedRoom, setSelectedRoom] = useState(rooms[0]?.id);
-  const imgs = property.images || [];
+  const imgs = property?.images || [];
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {

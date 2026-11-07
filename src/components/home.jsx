@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import { Ico, StripeImg, tt } from './shell';
 import { TT_DATA } from '../data';
+import { useResortData } from '../dataStore';
 
 // ---------- Hero Section Slides (2 images crossfading every 4s with 0.5s transition) ----------
 const HERO_SLIDES = [
@@ -149,7 +150,7 @@ const PropertyCarousel = ({ p, go }) => {
 };
 
 // ---------- Generic infinite slow-flow carousel (reliable auto-scroll, drag, arrows, pause on hover/touch) ----------
-const FlowCarousel = forwardRef(({ items, renderItem, wrapClass, trackClass, slotClass, step = 374 }, ref) => {
+const FlowCarousel = forwardRef(({ items, renderItem, wrapClass, trackClass, slotClass, step = 374, autoScroll = true }, ref) => {
   const scrollRef = useRef(null);
   const posRef = useRef(0);
   const isPausedRef = useRef(false);
@@ -164,6 +165,7 @@ const FlowCarousel = forwardRef(({ items, renderItem, wrapClass, trackClass, slo
 
   // Continuous auto-scroll loop with subpixel precision (~36px/second)
   useEffect(() => {
+    if (!autoScroll) return;
     let animId;
     let lastTime = performance.now();
 
@@ -199,7 +201,7 @@ const FlowCarousel = forwardRef(({ items, renderItem, wrapClass, trackClass, slo
 
     animId = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(animId);
-  }, [items.length]);
+  }, [items.length, autoScroll]);
 
   const pause = () => {
     isPausedRef.current = true;
@@ -335,7 +337,7 @@ const FlowCarousel = forwardRef(({ items, renderItem, wrapClass, trackClass, slo
 });
 
 // ---------- Real-Time Rooms Infinite Carousel ----------
-const RealtimeRoomsCarousel = forwardRef(({ properties, go }, ref) => (
+const RealtimeRoomsCarousel = forwardRef(({ properties, go, autoScroll = true }, ref) => (
   <FlowCarousel
     ref={ref}
     items={properties}
@@ -344,24 +346,28 @@ const RealtimeRoomsCarousel = forwardRef(({ properties, go }, ref) => (
     trackClass="tt-realtime-carousel-track"
     slotClass="tt-realtime-card-slot"
     step={374}
+    autoScroll={autoScroll}
   />
 ));
 
 // ---------- Featured Stays Section with Arrow Nav & Infinite Loop Track ----------
 const FeaturedStaysSection = ({ go }) => {
   const carouselRef = useRef(null);
+  const data = useResortData();
+  const autoScroll = data.homepage?.autoScrollStays !== false;
 
   // Ordered real-time rooms matching revised design screenshot:
   // Nature Retreat rooms first (p5, p7, p8, p6), then White Town stays (p1, p2, p3), then retreat p4
   const rooms = useMemo(() => {
     const order = ['p5', 'p7', 'p8', 'p6', 'p1', 'p2', 'p3', 'p4'];
-    const map = new Map(TT_DATA.properties.map(p => [p.id, p]));
+    const properties = data.properties || TT_DATA.properties;
+    const map = new Map(properties.map(p => [p.id, p]));
     const list = order.map(id => map.get(id)).filter(Boolean);
-    TT_DATA.properties.forEach(p => {
+    properties.forEach(p => {
       if (!list.includes(p)) list.push(p);
     });
     return list;
-  }, []);
+  }, [data.properties]);
 
   return (
     <section className="tt-section" style={{ paddingBottom: 24 }}>
@@ -401,61 +407,77 @@ const FeaturedStaysSection = ({ go }) => {
         </div>
       </div>
 
-      <RealtimeRoomsCarousel ref={carouselRef} properties={rooms} go={go} />
+      <RealtimeRoomsCarousel ref={carouselRef} properties={rooms} go={go} autoScroll={autoScroll} />
     </section>
   );
 };
 
-// ---------- Moments Carousel — reordered as per design screenshot ----------
+// ---------- Moments Carousel — dynamic with touch pause, custom links & admin sync ----------
 const MOMENTS = [
-  { label: 'morning-yoga', cap: 'Yoga Near Auroville' },
-  { label: 'banyan-tree', cap: 'Nature walks in Auroville' },
-  { label: 'pottery', cap: 'Pottery, Near Auroville' },
-  { label: 'sea-evening', cap: 'Promenade, dusk' },
-  { label: 'street-food', cap: 'White Town evenings' },
+  { id: 'm1', label: 'pottery', cap: 'Pottery, Near Auroville', img: 'images/pottery.png', link: 'https://www.instagram.com/reel/', type: 'photo' },
+  { id: 'm2', label: 'sea-evening', cap: 'Promenade, dusk', img: 'images/sea-evening.png', link: 'https://www.instagram.com/reel/', type: 'photo' },
+  { id: 'm3', label: 'morning-yoga', cap: 'Yoga Near Auroville', img: 'images/morning-yoga.png', link: 'https://www.instagram.com/reel/', type: 'photo' },
+  { id: 'm4', label: 'banyan-tree', cap: 'Nature walks in Auroville', img: 'images/banyan-tree.png', link: 'https://www.instagram.com/reel/', type: 'photo' },
+  { id: 'm5', label: 'street-food', cap: 'White Town evenings', img: 'images/street-food.png', link: 'https://www.instagram.com/reel/', type: 'photo' },
 ];
 
 const MomentsCarousel = () => {
+  const data = useResortData();
   const [isPaused, setIsPaused] = useState(false);
+  const autoScroll = data.homepage?.autoScrollMoments !== false;
+  const list = (data.moments && data.moments.length > 0) ? data.moments : MOMENTS;
+
+  const renderItem = (m, keyPrefix) => {
+    const imgSrc = m.img || (m.label ? `images/${m.label}.png` : '');
+    const handleClick = () => {
+      if (m.link) {
+        window.open(m.link, '_blank', 'noopener,noreferrer');
+      }
+    };
+
+    return (
+      <div
+        key={`${keyPrefix}-${m.id || m.label}`}
+        className="tt-moments-carousel-item"
+        style={{ cursor: m.link ? 'pointer' : 'default' }}
+        onClick={handleClick}
+        title={m.link ? `Open ${m.cap}` : m.cap}
+      >
+        <img
+          src={imgSrc}
+          alt={m.cap}
+          draggable={false}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.45) 100%)', zIndex: 1 }} />
+        <span className="tt-moment-cap">{m.cap}</span>
+      </div>
+    );
+  };
 
   return (
     <div
       className="tt-moments-carousel-container"
       onTouchStart={() => setIsPaused(true)}
       onTouchEnd={() => setIsPaused(false)}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
     >
       <div
         className="tt-moments-carousel-track"
-        style={{ animationPlayState: isPaused ? 'paused' : 'running' }}
+        style={{
+          animationPlayState: (!autoScroll || isPaused) ? 'paused' : 'running',
+          ...(!autoScroll ? { animation: 'none', display: 'flex', overflowX: 'auto', gap: 16 } : {})
+        }}
       >
         <div className="tt-moments-carousel-group">
-          {MOMENTS.map((m) => (
-            <div key={m.label} className="tt-moments-carousel-item">
-              <img
-                src={`images/${m.label}.png`}
-                alt={m.cap}
-                draggable={false}
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.45) 100%)', zIndex: 1 }} />
-              <span className="tt-moment-cap">{m.cap}</span>
-            </div>
-          ))}
+          {list.map((m) => renderItem(m, 'grp1'))}
         </div>
-        <div className="tt-moments-carousel-group" aria-hidden="true">
-          {MOMENTS.map((m, i) => (
-            <div key={`${m.label}-dup-${i}`} className="tt-moments-carousel-item">
-              <img
-                src={`images/${m.label}.png`}
-                alt={m.cap}
-                draggable={false}
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.45) 100%)', zIndex: 1 }} />
-              <span className="tt-moment-cap">{m.cap}</span>
-            </div>
-          ))}
-        </div>
+        {autoScroll && (
+          <div className="tt-moments-carousel-group" aria-hidden="true">
+            {list.map((m) => renderItem(m, 'grp2'))}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -465,11 +487,12 @@ const MomentsCarousel = () => {
 const GuestReviewsSection = () => {
   const carouselRef = useRef(null);
   const [expanded, setExpanded] = useState(false);
+  const data = useResortData();
 
-  // Newest first (data.js order); add `initial` for the avatar.
+  // Newest first; add `initial` for the avatar.
   const reviews = useMemo(
-    () => TT_DATA.reviews.map((rv) => ({ ...rv, initial: (rv.name || 'G').trim().charAt(0).toUpperCase() })),
-    []
+    () => (data.reviews || TT_DATA.reviews).map((rv) => ({ ...rv, initial: (rv.name || 'G').trim().charAt(0).toUpperCase() })),
+    [data.reviews]
   );
 
   return (
@@ -560,27 +583,38 @@ const HomeScreen = ({ go, setSearchCtx }) => {
   const [checkOut, setCheckOut] = useState(tt.todayISO(4));
   const [guests, setGuests] = useState('2 guests · 1 room');
 
-  // Hero section 2 images fading each other with 4s interval & mild 0.5s transition
+  const resortData = useResortData();
+  const hp = resortData.homepage || {};
+  const heroLine1 = hp.heroLine1 ?? 'TEMPLEANDTHORPE NATURE RETREAT,';
+  const heroLine2 = hp.heroLine2 ?? 'NEAR AUROVILLE MATRIMANDIR';
+  const holdSeconds = Math.max(1, Number(hp.holdSeconds) || 10);
+  const fadeSeconds = Math.max(0.2, Number(hp.fadeSeconds) || 1.2);
+
+  const heroSlides = (hp.heroSlides && hp.heroSlides.length > 0) ? hp.heroSlides : HERO_SLIDES;
+
+  // Hero section fading images with dynamic hold time and fade time
   const [heroIdx, setHeroIdx] = useState(0);
 
   useEffect(() => {
+    if (heroSlides.length <= 1) return;
     const timer = setInterval(() => {
-      setHeroIdx((prev) => (prev === 0 ? 1 : 0));
-    }, 4000);
+      setHeroIdx((prev) => (prev + 1) % heroSlides.length);
+    }, holdSeconds * 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [holdSeconds, heroSlides.length]);
 
   const submit = () => { setSearchCtx({ city, checkIn, checkOut, guests }); go('search'); };
 
   return (
     <>
-      {/* HERO — Full Bleed Marriott style with 2-image 4s crossfade (0.5s transition) */}
+      {/* HERO — Full Bleed Marriott style with dynamic slide crossfade */}
       <section className="tt-hero-full">
         <div className="tt-hero-slides-wrap">
-          {HERO_SLIDES.map((slide, i) => (
+          {heroSlides.map((slide, i) => (
             <div
               key={i}
-              className={`tt-hero-slide ${slide.className} ${i === heroIdx ? 'active' : ''}`}
+              className={`tt-hero-slide ${slide.className || ''} ${i === heroIdx ? 'active' : ''}`}
+              style={{ transition: `opacity ${fadeSeconds}s ease-in-out` }}
             >
               <picture>
                 {slide.mobileWebp && <source media="(max-width: 768px)" srcSet={slide.mobileWebp} type="image/webp" />}
@@ -588,7 +622,7 @@ const HomeScreen = ({ go, setSearchCtx }) => {
                 {slide.desktopWebp && <source srcSet={slide.desktopWebp} type="image/webp" />}
                 <img
                   src={slide.desktopJpg}
-                  alt={slide.alt}
+                  alt={slide.alt || 'Temple And Thorpe Resorts'}
                   className="tt-hero-bg-full"
                   fetchpriority={i === 0 ? 'high' : 'auto'}
                   decoding="async"
@@ -634,8 +668,8 @@ const HomeScreen = ({ go, setSearchCtx }) => {
         {/* Bottom of hero: resort title text at bottom of main page */}
         <div className="tt-hero-caption-wrap">
           <h1 className="tt-hero-resort-title">
-            TEMPLEANDTHORPE NATURE RETREAT,<br />
-            NEAR AUROVILLE MATRIMANDIR
+            {heroLine1}
+            {heroLine2 ? <><br />{heroLine2}</> : null}
           </h1>
         </div>
       </section>

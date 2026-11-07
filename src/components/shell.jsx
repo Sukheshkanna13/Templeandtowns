@@ -317,12 +317,13 @@ export const Footer = ({ screen, go }) => {
               <li><a onClick={() => go && go('privacy')} style={{ cursor: 'pointer' }}>Privacy Policy</a></li>
               <li><a onClick={() => go && go('contact')} style={{ cursor: 'pointer' }}>Contact Host</a></li>
               <li><a onClick={() => go && go('sitemap')} style={{ cursor: 'pointer' }}>Sitemap</a></li>
+              <li><a onClick={() => go && go('admin')} style={{ cursor: 'pointer', color: 'var(--ink)', fontWeight: 500 }}>Admin Portal 🔒</a></li>
             </ul>
           </div>
         </div>
         <div className="tt-footer-bottom" style={{ marginTop: 64, paddingTop: 28, borderTop: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', fontSize: 13, color: 'var(--text-muted)' }}>
           <span>© 2026 Temple And Thorpe Resorts LLP · Pondicherry &amp; Near Auroville</span>
-          <span>INR · English ·</span>
+          <span>INR · English · <a onClick={() => go && go('admin')} style={{ cursor: 'pointer', color: 'inherit', textDecoration: 'none', opacity: 0.6 }}>Staff Portal</a></span>
         </div>
       </div>
     </footer>

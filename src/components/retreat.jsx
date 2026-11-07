@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Ico, BackButton } from './shell';
 import { TT_DATA } from '../data';
+import { useResortData } from '../dataStore';
 
 const StarRating = ({ rating, size = 13 }) => (
   <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
@@ -10,9 +11,11 @@ const StarRating = ({ rating, size = 13 }) => (
 );
 
 export const NatureRetreatScreen = ({ go, goBack }) => {
+  const data = useResortData();
+  const properties = data.properties || TT_DATA.properties;
   // All properties & rooms belonging to Nature Retreat (auroville)
-  const retreatProperties = TT_DATA.properties.filter(p => p.city === 'auroville');
-  const propertyP4 = TT_DATA.properties.find(p => p.id === 'p4');
+  const retreatProperties = properties.filter(p => p.city === 'auroville');
+  const propertyP4 = properties.find(p => p.id === 'p4') || properties[0];
   const galleryImgs = (propertyP4?.images || []).slice(0, 8);
 
   // Accordion open/close state for dropdown sections (all closed by default)

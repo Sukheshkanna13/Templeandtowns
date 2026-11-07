@@ -10,6 +10,8 @@ import { LoyaltyScreen, CauseScreen, ThingsScreen } from './components/account';
 import NatureRetreatScreen from './components/retreat';
 import EventsPage from './components/events';
 import { CancellationScreen, TermsScreen, PrivacyScreen, ContactScreen, SitemapScreen } from './components/legal';
+import AdminScreen from './components/admin';
+import { fetchLiveServerData } from './dataStore';
 import { useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakRadio } from './components/tweaks-panel';
 
 const TWEAK_DEFAULTS = {
@@ -17,7 +19,7 @@ const TWEAK_DEFAULTS = {
 };
 
 // ---------- Hash-based routing helpers ----------
-const VALID_SCREENS = ['home', 'search', 'property', 'loyalty', 'things', 'retreat', 'events', 'cause', 'cancellation', 'terms', 'privacy', 'contact', 'sitemap'];
+const VALID_SCREENS = ['home', 'search', 'property', 'loyalty', 'things', 'retreat', 'events', 'cause', 'cancellation', 'terms', 'privacy', 'contact', 'sitemap', 'admin'];
 
 const parseHash = () => {
   const hash = window.location.hash.replace(/^#\/?/, '');
@@ -63,6 +65,11 @@ function App() {
     window.scrollTo(0, 0);
   }, [screen, params]);
 
+  // Fetch live resort data from Hostinger domain on mount
+  useEffect(() => {
+    fetchLiveServerData();
+  }, []);
+
   // Listen for browser back/forward (hashchange)
   useEffect(() => {
     const onHashChange = () => {
@@ -96,6 +103,11 @@ function App() {
   const goBack = useCallback(() => {
     window.history.back();
   }, []);
+
+  // Admin portal renders full-bleed without public website navbar/footer
+  if (screen === 'admin') {
+    return <AdminScreen go={go} goBack={goBack} />;
+  }
 
   return (
     <>

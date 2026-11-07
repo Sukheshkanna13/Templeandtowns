@@ -349,5 +349,193 @@ export const TT_DATA = {
       when: '2026',
       text: 'It was a great stay, and I am really happy with my experience.',
     },
+  ],
+  homepage: {
+    autoScrollStays: true,
+    autoScrollMoments: true,
+    heroLine1: 'TEMPLEANDTHORPE NATURE RETREAT,',
+    heroLine2: 'NEAR AUROVILLE MATRIMANDIR',
+    holdSeconds: 10,
+    fadeSeconds: 1.2,
+    heroSlides: [
+      {
+        desktopJpg: 'images/hero/hero-desktop.jpg',
+        alt: 'Temple And Thorpe Resorts Nature Retreat — garden pavilion and lily pond at sunset'
+      },
+      {
+        desktopJpg: 'images/hero-2.jpg',
+        alt: 'Temple And Thorpe Nature Retreat — lush green property view'
+      }
+    ]
+  },
+  moments: [
+    {
+      id: 'm1',
+      label: 'pottery',
+      cap: 'Pottery, Near Auroville',
+      img: 'images/pottery.png',
+      link: 'https://www.instagram.com/reel/',
+      type: 'photo'
+    },
+    {
+      id: 'm2',
+      label: 'sea-evening',
+      cap: 'Promenade, dusk',
+      img: 'images/sea-evening.png',
+      link: 'https://www.instagram.com/reel/',
+      type: 'photo'
+    },
+    {
+      id: 'm3',
+      label: 'morning-yoga',
+      cap: 'Yoga Near Auroville',
+      img: 'images/morning-yoga.png',
+      link: 'https://www.instagram.com/reel/',
+      type: 'photo'
+    },
+    {
+      id: 'm4',
+      label: 'banyan-tree',
+      cap: 'Nature walks in Auroville',
+      img: 'images/banyan-tree.png',
+      link: 'https://www.instagram.com/reel/',
+      type: 'photo'
+    },
+    {
+      id: 'm5',
+      label: 'street-food',
+      cap: 'White Town evenings',
+      img: 'images/street-food.png',
+      link: 'https://www.instagram.com/reel/',
+      type: 'photo'
+    }
+  ],
+  thingsToDo: [
+    {
+      id: 'act1',
+      title: 'Matrimandir Meditation & Garden Walk',
+      category: 'Spiritual & Nature',
+      area: 'Near Auroville',
+      desc: 'Experience profound silence and architectural harmony at the golden dome of Matrimandir, surrounded by twelve serene peaceful gardens.',
+      image: 'images/Auroville/1.jpeg'
+    },
+    {
+      id: 'act2',
+      title: 'French Quarter Heritage Walk',
+      category: 'Heritage & Architecture',
+      area: 'Pondicherry White Town',
+      desc: 'Stroll through cobbled boulevards lined with pastel mustard villas, charming bougainvillea-draped cafes, and French colonial heritage.',
+      image: 'images/1F-1BHK/1.jpeg'
+    },
+    {
+      id: 'act3',
+      title: 'Sunrise Walk at Promenade Beach',
+      category: 'Beaches & Ocean',
+      area: 'Goubert Avenue, Pondicherry',
+      desc: 'Watch spectacular golden sunrises over the Bay of Bengal along the scenic 1.5 km vehicular-free seaside promenade.',
+      image: 'images/sea-evening.png'
+    },
+    {
+      id: 'act4',
+      title: 'Artisan Pottery & Clay Workshops',
+      category: 'Workshops & Crafts',
+      area: 'Auroville Village',
+      desc: 'Get hands-on experience on traditional potter wheels guided by master Auroville artisans using organic local terracotta.',
+      image: 'images/pottery.png'
+    }
+  ],
+  events: [
+    {
+      id: 'ev1',
+      title: 'Full Moon Yoga & Sound Bath',
+      date: 'Next Full Moon · 6:30 AM',
+      venue: 'Lotus Pavilion, Nature Retreat',
+      desc: 'Awaken your senses with gentle restorative yoga accompanied by Tibetan singing bowls in our lush open garden pavilion.',
+      rsvpUrl: 'https://wa.me/919999999999'
+    },
+    {
+      id: 'ev2',
+      title: 'Organic Farm-to-Table Dinner',
+      date: 'Every Saturday · 7:30 PM',
+      venue: 'Common Dining Pergola',
+      desc: 'A 5-course artisanal dinner prepared with freshly harvested greens and vegetables from our Auroville partner permaculture gardens.',
+      rsvpUrl: 'https://wa.me/919999999999'
+    }
+  ],
+  cause: {
+    title: 'Travel for a Cause · Green Living & Community',
+    subtitle: 'Every booking directly supports local reforestation and Auroville community artisans.',
+    metrics: [
+      { label: 'Trees Planted', value: '1,200+' },
+      { label: 'Local Artisans Supported', value: '35+' },
+      { label: 'Rainwater Harvested', value: '100%' },
+      { label: 'Solar Powered', value: '80%' }
+    ],
+    initiatives: [
+      {
+        name: 'Indigenous Tree Nursery',
+        desc: 'We propagate native tropical dry evergreen forest trees and offer saplings to visiting guests to plant along the Auroville green belt.'
+      },
+      {
+        name: 'Zero Single-Use Plastic Policy',
+        desc: 'Pure filtered water in stainless steel bottles and glass carafes across all our rooms and apartments.'
+      }
+    ]
+  },
+  rewards: {
+    title: 'Temple & Thorpe Privileges',
+    badge: 'Direct Booking Benefits',
+    perks: [
+      { icon: 'key', title: 'Best Price Guaranteed', desc: 'Book direct with no intermediary commissions or platform service fees.' },
+      { icon: 'clock', title: 'Flexible Check-in / Checkout', desc: 'Complimentary early check-in or late checkout upon availability.' },
+      { icon: 'gift', title: 'Welcome Refreshments', desc: 'Locally brewed organic iced tea and fresh coastal coconut on arrival.' },
+      { icon: 'shield', title: 'Free Cancellation', desc: 'Flexible reschedule or cancellation up to 48 hours before check-in.' }
+    ]
+  },
+  contact: {
+    phone: '+91 94888 88888',
+    whatsapp: '919488888888',
+    email: 'stay@templeandthorperesorts.com',
+    address: 'Temple And Thorpe Nature Retreat, Near Matrimandir, Auroville, Tamil Nadu 605101',
+    checkInTime: '2:00 PM',
+    checkOutTime: '11:00 AM'
+  },
+  bookings: [
+    {
+      id: 'BK-1001',
+      guestName: 'Ananya Sharma',
+      phone: '+91 98765 43210',
+      email: 'ananya@example.com',
+      roomName: 'Nature Retreat - Standard Room (Room 101)',
+      checkIn: '2026-11-15',
+      checkOut: '2026-11-18',
+      guests: '2 Guests',
+      totalAmount: '₹8,400',
+      status: 'Confirmed'
+    },
+    {
+      id: 'BK-1002',
+      guestName: 'Rahul Verma',
+      phone: '+91 98111 22334',
+      email: 'rahul.v@example.com',
+      roomName: 'White Town 1BHK - 1st Floor',
+      checkIn: '2026-11-20',
+      checkOut: '2026-11-23',
+      guests: '2 Guests',
+      totalAmount: '₹14,500',
+      status: 'Pending'
+    },
+    {
+      id: 'BK-1003',
+      guestName: 'Sylvie Laurent',
+      phone: '+33 6 12 34 56 78',
+      email: 'sylvie.l@paris.fr',
+      roomName: 'Nature Retreat - Family Suite (Room 106)',
+      checkIn: '2026-12-01',
+      checkOut: '2026-12-07',
+      guests: '4 Guests',
+      totalAmount: '₹28,000',
+      status: 'Confirmed'
+    }
   ]
 };
